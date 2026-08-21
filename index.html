@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rebolledo de la Torre | Portal Municipal y Turismo</title>
+  <style>
+    :root {
+      --bg-dark: #000000;
+      --bg-card: #121318;
+      --text-main: #f3f4f6;
+      --accent-gold: #f59e0b;
+      --accent-blue: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    /* ---- BARRA DE NAVEGACIÓN (PESTAÑAS) ---- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-brand {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-gold);
+    }
+
+    /* ---- HERO CON VÍDEO ---- */
+    .hero-container {
+      position: relative;
+      width: 100%;
+      height: 85vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.5) 65%,
+        var(--bg-dark) 100%
+      );
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 20px;
+      margin-top: 40px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      margin: 0;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: #d1d5db;
+      margin-top: 10px;
+    }
+
+    /* ---- SECCIÓN PRINCIPAL ---- */
+    .content-section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .card.alta {
+      border-color: var(--accent-gold);
+    }
+
+    .card h3 {
+      color: var(--accent-gold);
+      margin-top: 0;
+    }
+
+    .badge {
+      background-color: var(--accent-blue);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    a.btn-link {
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    /* Estilos adaptativos para móviles */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 15px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN CON PESTAÑAS -->
+  <nav class="navbar">
+    <a href="#" class="nav-brand">Rebolledo de la Torre</a>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios y Horarios</a></li>
+      <li><a href="#astroturismo">AstroTurismo</a></li>
+      <li><a href="#rutas">Rutas</a></li>
+      <li><a href="#huerto">Huerto</a></li>
+      <li><a href="#tablon">Tablón Oficial</a></li>
+      <li><a href="#tienda">Tienda</a></li>
+    </ul>
+  </nav>
+
+  <!-- CABECERA CON VÍDEO EN BUCLE -->
+  <header class="hero-container">
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="cielo-nocturno.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Rebolledo de la Torre</h1>
+      <p class="hero-subtitle">Naturaleza, historia y cielos limpios</p>
+    </div>
+  </header>
+
+  <!-- SECCIÓN DE TABLÓN OFICIAL AUTOMATIZADO -->
+  <main class="content-section" id="tablon">
+    <h2 style="color: var(--accent-gold);">Tablón Oficial de Publicaciones (BOCyL / BOE)</h2>
+    <div id="tablon-container" class="grid-cards">
+      <p>Cargando publicaciones oficiales recientes...</p>
+    </div>
+  </main>
+
+  <script>
+    // Datos de muestra si no se encuentra el archivo JSON local
+    const datosEjemplo = [
+      {
+        origen: "BOCyL",
+        prioridad: "Alta",
+        fecha: "2026-08-20",
+        titulo: "Subvención para la conservación del patrimonio rural en Rebolledo de la Torre",
+        resumen: "Convocatoria de ayudas destinadas a la rehabilitación de edificaciones tradicionales y adecuación de espacios públicos en municipios del norte de Burgos.",
+        enlace: "#"
+      },
+      {
+        origen: "BOE",
+        prioridad: "Media",
+        fecha: "2026-08-18",
+        titulo: "Ayudas para la modernización de explotaciones agrícolas y ganaderas",
+        resumen: "Nuevas líneas de crédito y subvenciones directas para la digitalización e infraestructuras en pequeñas explotaciones agrarias.",
+        enlace: "#"
+      }
+    ];
+
+    function renderizarTarjetas(datos) {
+      const cont = document.getElementById('tablon-container');
+      if (!datos || !datos.length) {
+        cont.innerHTML = '<p>No hay alertas recientes.</p>';
+        return;
+      }
+      cont.innerHTML = datos.map(pub => `
+        <article class="card ${pub.prioridad === 'Alta' ? 'alta' : ''}">
+          <span class="badge">${pub.origen}</span>
+          <small style="float:right; color:#a1a1aa;">${pub.fecha}</small>
+          <h3 style="margin-top:12px;">${pub.titulo}</h3>
+          <p>${pub.resumen}</p>
+          <a href="${pub.enlace}" target="_blank" class="btn-link">Ver disposición en PDF &rarr;</a>
+        </article>
+      `).join('');
+    }
+
+    async function cargarTablon() {
+      try {
+        const res = await fetch('publicaciones_oficiales.json');
+        if (!res.ok) throw new Error('Archivo JSON no encontrado');
+        const datos = await res.json();
+        renderizarTarjetas(datos);
+      } catch (e) {
+        console.warn("No se pudo cargar 'publicaciones_oficiales.json'. Cargando datos de muestra para vista previa local.");
+        renderizarTarjetas(datosEjemplo);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarTablon);
+  </script>
+</body>
+</html>
