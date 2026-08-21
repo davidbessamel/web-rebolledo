@@ -1,0 +1,36 @@
+name: Actualizar Boletines Oficiales y Notificar
+
+on:
+  schedule:
+    - cron: '30 8 * * *'  # Ejecución diaria a las 08:30 AM UTC
+  workflow_dispatch:      # Permite ejecución manual desde GitHub
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: pip install requests
+
+      - name: Ejecutar script de extracción
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python actualizar_boletines.py
+
+      - name: Guardar cambios en el repositorio
+        run: |
+          git config --global user.name 'bot-rebolledo'
+          git config --global user.email 'bot@rebolledodetorrenoticias.local'
+          git add publicaciones_oficiales.json enviados_telegram.txt
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update boletines oficiales [skip ci]" && git push)
+
+
