@@ -15,5 +15,5 @@ Instrucciones rápidas:
         Abrir: http://localhost:8000/boletines.html
 
     Configurar notificaciones Telegram (opcional):
-        Añadir TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID a Settings → Secrets en GitHub para que la workflow pueda enviar notificaciones. EOF
+        Añadir TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID a Settings → Secrets en GitHub para que la workflow pueda enviar notificaciones.
 
