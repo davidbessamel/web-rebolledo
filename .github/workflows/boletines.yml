@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --global user.name 'bot-rebolledo'
           git config --global user.email 'bot@rebolledodetorrenoticias.local'
-          git add publicaciones_oficiales.json enviados_telegram.txt
+          git add -A
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update boletines oficiales [skip ci]" && git push)
 
 
