@@ -1,54 +1,101 @@
-/* ==========================================================================
-   5. TABLA DE HORARIOS (Estilo Responsive y Adaptable)
-   ========================================================================== */
-.tabla-horarios-container {
-  width: 100%;
-  overflow-x: auto; /* Permite scroll horizontal en móviles */
-  margin: 20px 0;
-  border-radius: 8px;
-  box-shadow: var(--sombra-suave);
-  border: 1px solid var(--color-borde);
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Horarios y Servicios</title>
+  <style>
+    /* Contenedor transparente y adaptable */
+    .tabla-horarios-componente {
+      width: 100%;
+      overflow-x: auto;
+      margin: 15px 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: transparent;
+    }
 
-.tabla-horarios {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 15px;
-  color: var(--color-texto-oscuro);
-  background-color: var(--color-texto-claro);
-  text-align: left;
-}
+    .tabla-datos {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      color: #f5f5f5; /* Color Blanco Roto general para el texto */
+      background: transparent;
+      text-align: left;
+    }
 
-.tabla-horarios thead tr {
-  background-color: var(--color-oscuro-base);
-  color: var(--color-texto-claro);
-  font-weight: bold;
-}
+    /* Cabecera de la tabla */
+    .tabla-datos th {
+      background: transparent;
+      color: #ffffff; /* Blanco puro para destacar los títulos principales */
+      font-weight: 600;
+    }
 
-.tabla-horarios th, 
-.tabla-horarios td {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--color-borde);
-  vertical-align: middle;
-}
+    .tabla-datos th, 
+    .tabla-datos td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(245, 245, 245, 0.2); /* Línea divisoria muy sutil en blanco roto */
+      vertical-align: middle;
+    }
 
-/* Efecto cebra para filas pares */
-.tabla-horarios tbody tr:nth-of-type(even) {
-  background-color: var(--color-fila-cebra);
-}
+    /* Capa sutil para las filas pares que respeta la transparencia del fondo general */
+    .tabla-datos tbody tr:nth-of-type(even) {
+      background-color: rgba(245, 245, 245, 0.05);
+    }
 
-/* Efecto iluminado al pasar el ratón por la fila */
-.tabla-horarios tbody tr:hover {
-  background-color: var(--color-fila-hover);
-}
+    /* Resaltado sutil al pasar el cursor */
+    .tabla-datos tbody tr:hover {
+      background-color: rgba(245, 245, 245, 0.1);
+    }
 
-.col-servicio {
-  white-space: nowrap; /* Evita que el nombre del servicio se parta en dos líneas */
-}
+    .col-titulo {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
 
-.col-servicio .icono {
-  margin-right: 8px;
-  font-size: 18px;
-  display: inline-block;
-  vertical-align: middle;
-}
+  <!-- Contenedor del componente de la tabla -->
+  <div class="tabla-horarios-componente">
+    <table class="tabla-datos">
+      <thead>
+        <tr>
+          <th>Servicio / Lugar</th>
+          <th>Horarios</th>
+          <th>Información Adicional</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Fila 1: Visitas Guiadas de la Iglesia -->
+        <tr>
+          <td class="col-titulo">⛪ Visitas Guiadas Iglesia</td>
+          <td>Sábados y Domingos:<br>11:00h - 13:30h / 16:30h - 19:00h</td>
+          <td>Entrada gratuita. Se recomienda consultar disponibilidad en festivos locales.</td>
+        </tr>
+        
+        <!-- Fila 2: Horario del Teleclub -->
+        <tr>
+          <td class="col-titulo">☕ Horario del Teleclub</td>
+          <td>Martes a Domingo:<br>12:00h a 23:00h</td>
+          <td>Lunes cerrado por descanso semanal. Servicio de cafetería y espacio social.</td>
+        </tr>
+        
+        <!-- Fila 3: Horario de Ayuntamiento -->
+        <tr>
+          <td class="col-titulo">🏛️ Horario de Ayuntamiento</td>
+          <td>Lunes, Miércoles y Viernes:<br>09:00h a 14:00h</td>
+          <td>Atención presencial en oficinas. Trámites online disponibles en la sede electrónica.</td>
+        </tr>
+        
+        <!-- Fila 4: Sistema de Transporte a la demanda -->
+        <tr>
+          <td class="col-titulo">🚌 Transporte a la Demanda</td>
+          <td>Días laborables:<br>Salida única a las 08:30h</td>
+          <td><strong>Imprescindible reservar:</strong> Llamar al 900 204 020 el día previo antes de las 19:00h.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
