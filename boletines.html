@@ -1,163 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boletines Oficiales — Rebolledo de la Torre</title>
-  <style>
-    :root {
-      --bg-dark: #000000;
-      --bg-card: #121318;
-      --text-main: #f3f4f6;
-      --accent-gold: #f59e0b;
-      --accent-blue: #3b82f6;
-    }
-
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; }
-
-    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .nav-brand { font-weight: bold; font-size: 1.1rem; color: var(--text-main); text-decoration: none; letter-spacing: 0.5px; }
-    .nav-links { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
-    .nav-links a { color: #d1d5db; text-decoration: none; font-size: 0.95rem; transition: color 0.2s ease; }
-    .nav-links a:hover { color: var(--accent-gold); }
-
-    .content-section { padding: 90px 20px 60px; max-width: 1200px; margin: 0 auto; }
-    .status-bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
-    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-    .card { background-color: var(--bg-card); border: 1px solid #27272a; border-radius: 12px; padding: 24px; }
-    .card.alta { border-color: var(--accent-gold); }
-    .card h3 { color: var(--accent-gold); margin-top: 0; }
-    .badge { background-color: var(--accent-blue); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
-    a.btn-link { color: var(--accent-gold); text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; }
-
-    .loader { text-align:center; padding: 40px; color:#9ca3af }
-    .btn-secondary { background:transparent; border:1px solid #374151; color:#d1d5db; padding:8px 12px; border-radius:8px; text-decoration:none }
-
-    @media (max-width: 768px) {
-      .navbar { flex-direction: column; gap: 10px; padding: 12px 15px; }
-      .nav-links { flex-wrap: wrap; justify-content: center; gap: 12px; font-size: 0.85rem; }
-    }
-
-    .back-link { margin-bottom: 18px; display: inline-block; color: #d1d5db; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Componente embebible — BOCYL</title>
+  <style>body{background:#f3f4f6;color:#0f172a;font-family:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;padding:20px}</style>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="index.html" class="nav-brand">Rebolledo de la Torre</a>
-    <ul class="nav-links">
-      <li><a href="index.html#servicios">Servicios y Horarios</a></li>
-      <li><a href="index.html#astroturismo">AstroTurismo</a></li>
-      <li><a href="index.html#rutas">Rutas</a></li>
-      <li><a href="index.html#huerto">Huerto</a></li>
-      <li><a href="index.html#tablon">Tablón (volver)</a></li>
-      <li><a href="index.html#tienda">Tienda</a></li>
-    </ul>
-  </nav>
 
-  <main class="content-section" id="boletines">
-    <a class="back-link" href="index.html">← Volver al inicio</a>
-    <div class="status-bar">
-      <h2 style="color: var(--accent-gold); margin:0">Tablón Oficial de Publicaciones (BOCyL / BOE)</h2>
-      <div id="last-updated"></div>
+<!-- Componente Embebible BOCYL (sustituido por petición) -->
+<div class="bocyl-contenedor-fijo">
+  <style>
+    .bocyl-contenedor-fijo {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 15px;
+      background-color: #ffffff;
+    }
+    .bocyl-cabecera {
+      font-size: 1.4rem;
+      color: #005a9c;
+      border-bottom: 3px solid #005a9c;
+      padding-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .bocyl-tarjeta {
+      background: #f8fafc;
+      border-left: 4px solid #005a9c;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 0 6px 6px 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .bocyl-metadatos {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .bocyl-enlace-oficial {
+      font-size: 1.1rem;
+      color: #005a9c;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .bocyl-enlace-oficial:hover {
+      text-decoration: underline;
+    }
+    .bocyl-caja-ia {
+      background: #f0f7ff;
+      border: 1px dashed #bae6fd;
+      padding: 10px 14px;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #1e293b;
+      border-radius: 4px;
+    }
+    .bocyl-distintivo-ia {
+      font-size: 0.7rem;
+      background: #005a9c;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+      margin-right: 8px;
+      display: inline-block;
+    }
+  </style>
+
+  <h2 class="bocyl-cabecera">Últimas Publicaciones del BOCYL - Resumen de Inteligencia Artificial</h2>
+  
+  <div class="bocyl-lista-items">
+
+    <!-- Publicación 1 -->
+    <div class="bocyl-tarjeta">
+      <div class="bocyl-metadatos">Publicado el 21/08/2026 | Boletín Nº 162 | CONSEJERÍA DE PRESIDENCIA</div>
+      <a class="bocyl-enlace-oficial" href="https://bocyl.jcyl.es/" target="_blank" rel="noopener noreferrer">
+        RESOLUCIÓN de la Dirección General de la Función Pública, por la que se aprueban las listas definitivas de aspirantes admitidos al proceso selectivo.
+      </a>
+      <div class="bocyl-caja-ia">
+        <span class="bocyl-distintivo-ia">RESUMEN IA</span>
+        Disposición oficial de la Consejería de Presidencia. Se formaliza la publicación de los listados definitivos de admitidos y excluidos para el ingreso en el cuerpo de la administración general. Se fijan las fechas del primer ejercicio de la oposición.
+      </div>
     </div>
 
-    <div id="tablon-container" class="grid-cards">
-      <div class="loader">Cargando publicaciones oficiales recientes…</div>
+    <!-- Publicación 2 -->
+    <div class="bocyl-tarjeta">
+      <div class="bocyl-metadatos">Publicado el 19/08/2026 | Boletín Nº 160 | CONSEJERÍA DE AGRICULTURA, GANADERÍA Y DESARROLLO RURAL</div>
+      <a class="bocyl-enlace-oficial" href="https://bocyl.jcyl.es/" target="_blank" rel="noopener noreferrer">
+        ORDEN por la que se acuerda la declaración de utilidad pública y urgente ejecución de la concentración parcelaria de la zona agrícola delimitada.
+      </a>
+      <div class="bocyl-caja-ia">
+        <span class="bocyl-distintivo-ia">RESUMEN IA</span>
+        Disposición oficial de la Consejería de Agricultura. Ordenación del territorio agrícola que agiliza el proceso de concentración parcelaria por motivos de interés económico y mejora de infraestructuras de riego locales.
+      </div>
     </div>
 
-    <div style="text-align:center; margin-top:18px;">
-      <button id="ver-mas" class="btn-secondary">Ver más</button>
-      <a id="ver-snapshot" class="btn-secondary" href="#" style="margin-left:8px; display:none">Ver snapshot (sin JS)</a>
+    <!-- Publicación 3 -->
+    <div class="bocyl-tarjeta">
+      <div class="bocyl-metadatos">Publicado el 14/08/2026 | Boletín Nº 157 | CONSEJERÍA DE MEDIO AMBIENTE, VIVIENDA Y ORDENACIÓN DEL TERRITORIO</div>
+      <a class="bocyl-enlace-oficial" href="https://bocyl.jcyl.es/" target="_blank" rel="noopener noreferrer">
+        ANUNCIO por el que se somete a información pública el proyecto de impacto ambiental para la instalación de una planta de energía renovable.
+      </a>
+      <div class="bocyl-caja-ia">
+        <span class="bocyl-distintivo-ia">RESUMEN IA</span>
+        Disposición oficial de la Consejería de Medio Ambiente. Se abre el plazo legal de 30 días para la presentación de alegaciones públicas sobre la autorización ambiental del complejo energético fotovoltaico proyectado.
+      </div>
     </div>
-  </main>
 
-  <script>
-    const PAGE_SIZE = 6;
-    let allItems = [];
-    let shown = 0;
+  </div>
+</div>
+<!-- Fin del Componente Embebible -->
 
-    function mkCardHTML(pub) {
-      return `
-        <article class="card ${pub.prioridad === 'Alta' ? 'alta' : ''}">
-          <span class="badge">${pub.origen}</span>
-          <small style="float:right; color:#a1a1aa;">${pub.fecha}</small>
-          <h3 style="margin-top:12px;">${pub.titulo}</h3>
-          <p>${pub.resumen}</p>
-          <a href="${pub.enlace}" target="_blank" class="btn-link">Ver disposición en PDF →</a>
-        </article>
-      `;
-    }
-
-    function renderNextPage() {
-      const cont = document.getElementById('tablon-container');
-      const slice = allItems.slice(shown, shown + PAGE_SIZE);
-      if (shown === 0) cont.innerHTML = '';
-      cont.insertAdjacentHTML('beforeend', slice.map(s => mkCardHTML(s)).join(''));
-      shown += slice.length;
-      document.getElementById('ver-mas').style.display = shown < allItems.length ? 'inline-block' : 'none';
-    }
-
-    function renderAll(items) {
-      allItems = items;
-      shown = 0;
-      if (!items || !items.length) {
-        document.getElementById('tablon-container').innerHTML = '<p>No hay alertas recientes.</p>';
-        document.getElementById('ver-mas').style.display = 'none';
-        return;
-      }
-      renderNextPage();
-    }
-
-    async function tryFetchSnapshot() {
-      try {
-        const head = await fetch('boletines_snapshot.html', { method: 'HEAD' });
-        if (head && head.ok) {
-          const a = document.getElementById('ver-snapshot');
-          a.href = 'boletines_snapshot.html';
-          a.style.display = 'inline-block';
-        }
-      } catch (e) { /* ignore */ }
-    }
-
-    async function cargarTablon() {
-      try {
-        const res = await fetch('publicaciones_oficiales.json');
-        if (!res.ok) throw new Error('Archivo JSON no encontrado');
-        const data = await res.json();
-        const items = data.items || data; // backwards compat
-        if (data.generated_at) document.getElementById('last-updated').innerText = 'Última actualización: ' + (new Date(data.generated_at)).toLocaleString();
-        renderAll(items);
-      } catch (e) {
-        console.warn("No se pudo cargar publicaciones_oficiales.json; intentando snapshot y luego datos de ejemplo.", e);
-        await tryFetchSnapshot();
-        // Intentar cargar snapshot como fallback
-        try {
-          const s = await fetch('boletines_snapshot.html');
-          if (s.ok) {
-            document.getElementById('tablon-container').innerHTML = '<iframe src="boletines_snapshot.html" style="width:100%;height:600px;border:0;background:#000"></iframe>';
-            document.getElementById('ver-mas').style.display = 'none';
-            return;
-          }
-        } catch (ex) { /* ignore */ }
-        // Fallback a datos de ejemplo
-        renderAll([
-          {
-            origen: "BOCyL",
-            prioridad: "Alta",
-            fecha: "2026-08-20",
-            titulo: "Subvención para la conservación del patrimonio rural en Rebolledo de la Torre",
-            resumen: "Convocatoria de ayudas destinadas a la rehabilitación de edificaciones tradicionales y adecuación de espacios públicos en municipios del norte de Burgos.",
-            enlace: "#"
-          }
-        ]);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      cargarTablon();
-      document.getElementById('ver-mas').addEventListener('click', renderNextPage);
-    });
-  </script>
 </body>
 </html>
