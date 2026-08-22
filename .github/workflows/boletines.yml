@@ -1,72 +1,43 @@
 name: Actualizar Boletines Oficiales y Notificar
+permissions: contents: write
 
-permissions:
-  contents: write
+on: schedule: - cron: '30 8 * * *' workflow_dispatch:
+jobs: actualizar: runs-on: ubuntu-latest steps: - name: Descargar repositorio uses: actions/checkout@v3 with: persist-credentials: true fetch-depth: 0
 
-on:
-  schedule:
-    - cron: '30 8 * * *'  # Ejecución diaria a las 08:30 AM UTC
-  workflow_dispatch:      # Permite ejecución manual desde GitHub
+  - name: Configurar Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.10'
 
-jobs:
-  actualizar:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Descargar repositorio
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: true
-          fetch-depth: 0
+  - name: Instalar dependencias
+    run: |
+      python -m pip install --upgrade pip
+      pip install requests
 
-      - name: Configurar Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+  - name: Ejecutar script de extracción (genera JSON y snapshot)
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    run: |
+      python actualizar_boletines.py --emit-html
 
-      - name: Instalar dependencias
-        run: python -m pip install --upgrade pip && pip install requests pyTelegramBotAPI
+  - name: Guardar cambios en el repositorio
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    run: |
+      git config --global user.name 'bot-rebolledo'
+      git config --global user.email 'bot@rebolledodetorrenoticias.local'
+      git add publicaciones_oficiales.json boletines_snapshot.html || true
+      git diff --quiet && git diff --staged --quiet || (
+        git commit -m "Auto-update boletines oficiales [skip ci]" && git push
+      )
 
-      - name: Ejecutar script de extracción
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          python actualizar_boletines.py
-
-      - name: Guardar cambios en el repositorio
-        run: |
-          git config --global user.name 'bot-rebolledo'
-          git config --global user.email 'bot@rebolledodetorrenoticias.local'
-          git add -A
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update boletines oficiales [skip ci]" && git push)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  - name: Subir artifacts (JSON + snapshot) para depuración
+    uses: actions/upload-artifact@v4
+    with:
+      name: boletines-artifacts
+      path: |
+        publicaciones_oficiales.json
+        boletines_snapshot.html
 
 
-- name: Setup Node.js environment
-  uses: actions/setup-node@v6.5.0
-  with:
-    # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
-    node-version: # optional
-    # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.
-    node-version-file: # optional
-    # Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default.
-    architecture: # optional
-    # Set this option if you want the action to check for the latest available version that satisfies the version spec.
-    check-latest: # optional
-    # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
-    registry-url: # optional
-    # Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).
-    scope: # optional
-    # Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
-    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
-    # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
-    cache: # optional
-    # Set to false to disable automatic caching. By default, caching is enabled when either devEngines.packageManager or the top-level packageManager field in package.json specifies npm as the package manager.
-    package-manager-cache: # optional, default is true
-    # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
-    cache-dependency-path: # optional
-    # Used to specify an alternative mirror to download Node.js binaries from
-    mirror: # optional
-    # The token used as Authorization header when fetching from the mirror
-    mirror-token: # optional
