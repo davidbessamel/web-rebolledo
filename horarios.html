@@ -1,0 +1,54 @@
+/* ==========================================================================
+   5. TABLA DE HORARIOS (Estilo Responsive y Adaptable)
+   ========================================================================== */
+.tabla-horarios-container {
+  width: 100%;
+  overflow-x: auto; /* Permite scroll horizontal en móviles */
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: var(--sombra-suave);
+  border: 1px solid var(--color-borde);
+}
+
+.tabla-horarios {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: var(--color-texto-oscuro);
+  background-color: var(--color-texto-claro);
+  text-align: left;
+}
+
+.tabla-horarios thead tr {
+  background-color: var(--color-oscuro-base);
+  color: var(--color-texto-claro);
+  font-weight: bold;
+}
+
+.tabla-horarios th, 
+.tabla-horarios td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--color-borde);
+  vertical-align: middle;
+}
+
+/* Efecto cebra para filas pares */
+.tabla-horarios tbody tr:nth-of-type(even) {
+  background-color: var(--color-fila-cebra);
+}
+
+/* Efecto iluminado al pasar el ratón por la fila */
+.tabla-horarios tbody tr:hover {
+  background-color: var(--color-fila-hover);
+}
+
+.col-servicio {
+  white-space: nowrap; /* Evita que el nombre del servicio se parta en dos líneas */
+}
+
+.col-servicio .icono {
+  margin-right: 8px;
+  font-size: 18px;
+  display: inline-block;
+  vertical-align: middle;
+}
