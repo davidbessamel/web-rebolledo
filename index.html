@@ -83,7 +83,7 @@
 
     
 <!-- Este es el contenedor de destino que se activará al pulsar el enlace -->
-<div id="rutas" class="seccion-rutas">
+<div id="rutas" class="seccion-rutas-izquierda">
   <h2>Nuestras Rutas Disponibles</h2>
   <p>Explora el catálogo completo de rutas y actividades programadas para este mes.</p>
   
@@ -113,6 +113,28 @@
     border: none;     /* Elimina el borde por defecto del iframe */
     background: transparent;
   }
+
+
+.seccion-rutas-izquierda {
+    display: flex;
+    justify-content: flex-start; /* Alinea el contenido completamente a la derecha */
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .iframe-rutas {
+    width: 100%;
+    max-width: 450px; /* Controla el ancho del bloque resumido en la derecha */
+    height: 600px;    /* Ajusta la altura según la cantidad de publicaciones */
+    border: none;     /* Elimina el borde por defecto del iframe */
+    background: transparent;
+  }
+
+
+
+
+  
 </style>
 
 </div>
