@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas de Turismo Activo y Rural - Rebolledo de la Torre</title>
+    <style>
+        :root {
+            --primary-color: #2c5e3b;
+            --secondary-color: #8b5a2b;
+            --bg-color: #f7f9f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(rgba(44, 94, 59, 0.85), rgba(44, 94, 59, 0.95)), url('https://unsplash.com') center/cover;
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 1rem auto 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .category-title {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+            font-size: 1.8rem;
+        }
+
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .route-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .route-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .route-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .route-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            align-self: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .route-badge.geo { background-color: #4a6fa5; }
+        .route-badge.bici { background-color: #d97706; }
+        .route-badge.cultura { background-color: #7c3aed; }
+
+        .route-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.4rem;
+            color: #111827;
+        }
+
+        .route-desc {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .route-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            padding: 0.75rem 0;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .meta-item strong {
+            display: block;
+            color: #1f2937;
+        }
+
+        .route-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 0.6rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e4028;
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+
+        footer {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Entorno de Rebolledo de la Torre</h1>
+        <p>Ecoturismo, Paisaje y Patrimonio Rural en el Geoparque Mundial de la UNESCO "Las Loras". Red de itinerarios en un radio de 15 kilómetros.</p>
+    </header>
+
+    <div class="container">
+
+        <!-- CATEGORÍA: GEOLOGÍA Y PAISAJE -->
+        <h2 class="category-title">Geología y Paisaje Singular</h2>
+        <div class="routes-grid">
+            
+            <!-- RUTA 1: LAS FUERZAS DE LA TIERRA -->
+            <div class="route-card">
+                <div class="route-content">
+                    <span class="route-badge geo">Geología / Senderismo</span>
+                    <h3>Las Fuerzas de la Tierra (Peña Mesa)</h3>
+                    <p class="route-desc">La ruta reina local. Un itinerario geológico señalizado que arranca desde el casco urbano y te adentra en las espectaculares estructuras tectónicas del Cretácico y el relieve de la lora, culminando en la asombrosa formación de Peña Mesa.</p>
+                    <div class="route-meta">
+                        <div class="meta-item"><strong>Distancia</strong>~13.2 km</div>
+                        <div class="meta-item"><strong>Dificultad</strong>Moderada</div>
+                        <div class="meta-item"><strong>Desnivel</strong>+384 m</div>
+                    </div>
+                    <div class="route-links">
+                        <a href="https://es.wikiloc.com/rutas-senderismo/las-fuerzas-de-la-tierra-126481753" target="_blank" class="btn btn-primary">Ver Track Wikiloc</a>
+                        <a href="https://www.rebolledodelatorre.es/rutas/itinerario-geologico-las-fuerzas-de-la-tierra-pena-mesa" target="_blank" class="btn btn-secondary">Info Oficial</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RUTA 2: LAS TUERCES Y CAÑÓN DE LA HORADADA -->
+            <div class="route-card">
+                <div class="route-content">
+                    <span class="route-badge geo">Erosión Kárstica</span>
+                    <h3>Las Tuerces y Cañón de la Horadada</h3>
+                    <p class="route-desc">Ubicada en el límite del radio de 15 km (zona Mave/Villaescusa). Un laberinto de formaciones kársticas esculpidas por el agua y el viento que supone una de las mayores joyas geomorfológicas de la cordillera.</p>
+                    <div class="route-meta">
+                        <div class="meta-item"><strong>Distancia</strong>Variables</div>
+                        <div class="meta-item"><strong>Dificultad</strong>Fácil / Media</div>
+                        <div class="meta-item"><strong>Entorno</strong>Kárstico</div>
+                    </div>
+                    <div class="route-links">
+                        <a href="https://wikiloc.com" target="_blank" class="btn btn-primary">Buscar en Wikiloc</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CATEGORÍA: SENDERISMO Y VALLES RURALES -->
+        <h2 class="category-title">Senderismo y Valles Recónditos</h2>
+        <div class="routes-grid">
+
+            <!-- RUTA 3: VALLE DE VALDELUCIO Y LAS LORAS -->
+            <div class="route-card">
+                <div class="route-content">
+                    <span class="route-badge">Senderismo</span>
+                    <h3>Ruta del Valle de Valdelucio y las Loras</h3>
+                    <p class="route-desc">Recorrido perimetral que comunica los paisajes agrícolas y los valles escondidos de la paramera. Ideal para observar la avifauna de las cortadas rocosas y disfrutar del silencio absoluto de los páramos castellanos.</p>
+                    <div class="route-meta">
+                        <div class="meta-item"><strong>Distancia</strong>Circular</div>
+                        <div class="meta-item"><strong>Dificultad</strong>Moderada</div>
+                        <div class="meta-item"><strong>Interés</strong>Paisajístico</div>
+                    </div>
+                    <div class="route-links">
+                        <a href="https://www.rebolledodelatorre.es/rutas" target="_blank" class="btn btn-primary">Ver en Web Municipal</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CATEGORÍA: HISTORIA Y CULTURA -->
+        <h2 class="category-title">Cultura, Románico e Historia</h2>
+        <div class="routes-grid">
+
+            <!-- RUTA 4: RUTA DEL ROMÁNICO DE LAS LORAS -->
+            <div class="route-card">
+                <div class="route-content">
+                    <span class="route-badge cultura">Cultural</span>
+                    <h3>Circuito Románico: Rebolledo y su entorno</h3>
+                    <p class="route-desc">Ruta de corte histórico-cultural para enlazar monumentos de primer orden. Destaca la Iglesia de San Julián y Santa Basilisa de Rebolledo con su magnífica galería porticada románica (S. XII) y su emblemática torre-castillo.</p>
+                    <div class="route-meta">
+                        <div class="meta-item"><strong>Tipo</strong>Mix Pie/Coche</div>
+                        <div class="meta-item"><strong>Dificultad</strong>Muy baja</div>
+                        <div class="meta-item"><strong>Época</strong>S. XII - XVI</div>
