@@ -47,6 +47,84 @@
 
     .cta { text-align: center; padding: 40px 20px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0)); border-radius: 12px; }
     .cta a { display: inline-block; background: var(--accent-gold); color: black; padding: 10px 16px; border-radius: 8px; font-weight: bold; text-decoration: none; }
+
+  
+  
+  
+  
+  /* -- Estilos para controlar la alineación y el comportamiento visual -- */
+
+  .seccion-bocyl-derecha {
+    display: flex;
+    justify-content: flex-end; /* Alinea el contenido completamente a la derecha */
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .iframe-bocyl {
+    width: 100%;
+    max-width: 450px; /* Controla el ancho del bloque resumido en la derecha */
+    height: 600px;    /* Ajusta la altura según la cantidad de publicaciones */
+    border: none;     /* Elimina el borde por defecto del iframe */
+    background: transparent;
+  }
+
+
+.seccion-rutas-izquierda {
+    display: flex;
+    justify-content: flex-start; /* Alinea el contenido completamente a la ... */
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .iframe-rutas {
+    width: 100%;
+    max-width: 50%; /* Controla el ancho del bloque resumido en la derecha */
+    height: 600px;    /* Ajusta la altura según la cantidad de publicaciones */
+    border: none;     /* Elimina el borde por defecto del iframe */
+    background: transparent;
+  }
+
+
+
+
+    /* submenús Desplegable  */
+  .nav-links > li {
+  position: relative; /* Importante para posicionar el submenú */
+  }
+
+/* --- MAGIA DEL DESPLEGABLE --- */
+
+/* Ocultar el submenú por defecto */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; /* Lo coloca justo debajo del botón principal */
+  left: 0;
+  background-color: #333;
+  min-width: 160px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 100; /* Asegura que quede por encima del banner o contenidos */
+}
+
+/* Estilos de los enlaces del submenú */
+.dropdown-menu a {
+  padding: 12px 16px;
+}
+
+/* Mostrar el submenú al pasar el ratón (Hover) */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+    
+
+  
   </style>
 </head>
 <body>
@@ -63,7 +141,7 @@
 
 <!-- Elemento Desplegable (Dropdown) -->
     <li class="dropdown">
-      <a href="#servicios" class="dropdown-toggle">Servicios ▾</a>
+      <a href="#desplegable" class="dropdown-toggle">Desplegable ▾</a>
       <!-- Submenú oculto por defecto -->
       <ul class="dropdown-menu">
         <li><a href="#diseno">Diseño Web</a></li>
@@ -206,46 +284,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <iframe src="bocylemb.html" class="iframe-bocyl" title="Resumen BOCYL"></iframe>
 </div>
 
-<!-- Estilos para controlar la alineación y el comportamiento visual -->
-<style>
-  .seccion-bocyl-derecha {
-    display: flex;
-    justify-content: flex-end; /* Alinea el contenido completamente a la derecha */
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .iframe-bocyl {
-    width: 100%;
-    max-width: 450px; /* Controla el ancho del bloque resumido en la derecha */
-    height: 600px;    /* Ajusta la altura según la cantidad de publicaciones */
-    border: none;     /* Elimina el borde por defecto del iframe */
-    background: transparent;
-  }
 
-
-.seccion-rutas-izquierda {
-    display: flex;
-    justify-content: flex-start; /* Alinea el contenido completamente a la ... */
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .iframe-rutas {
-    width: 100%;
-    max-width: 50%; /* Controla el ancho del bloque resumido en la derecha */
-    height: 600px;    /* Ajusta la altura según la cantidad de publicaciones */
-    border: none;     /* Elimina el borde por defecto del iframe */
-    background: transparent;
-  }
-
-
-
-
-  
-</style>
 
 </div>
 
