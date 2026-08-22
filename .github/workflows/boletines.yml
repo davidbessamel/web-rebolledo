@@ -1,4 +1,4 @@
-name: Actualizar Boletines Oficiales y Notificar
+name: "Actualizar Boletines Oficiales y Notificar"
 permissions: contents: write
 
 on: schedule: - cron: '30 8 * * *' workflow_dispatch:
