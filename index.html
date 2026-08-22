@@ -61,8 +61,10 @@
       <li><a href="#huerto">Huerto</a></li>
       <li><a href="#tienda">Tienda</a></li>
       <li><a href="#bocyl">BOCYL</a></li>
-      <!--       TELECLUB, album, empresas:SETAS, romana, bascones?, gullon-no, clima, (avisos-noticias)-
-      ASISTENCIA-BOT-TELEGRAM,tv,asmr, coro, juventud, salud--t.demanda   -->
+      <!--       TELECLUB, album bot telegram autoselección enviados directos de usuarios al chat telegram?, empresas:SETAS, romana, bascones?, gullon-no, clima, (avisos-noticias)-
+      ASISTENCIA-BOT-TELEGRAM,tv,asmr, coro (halloween, teatro, tcms), juventud, salud--t.demanda , geoparque, románico-historia-cultura pasada, concurso canción ia o concurso/sorteo de turno, tu cara me suena, 
+      concurso para diseño camiseta: administrar calendario de concursos,
+      cultura actual  -->
     </ul>
   </nav>
 
@@ -82,7 +84,92 @@
   <main class="content-section" id="home">
     <!-- Resto del contenido del sitio (resumen, tarjetas, etc.) -->
 
+/////////////////////////////
+<!-- Contenedor principal del banner rotativo -->
+<div class="banner-rotativo-container">
+  
+  <!-- Slide 1: Widget de Windy (Reemplaza las coordenadas por las de tu pueblo) -->
+  <div class="slide active">
+    <iframe src="https://windy.com" frameborder="0"></iframe>
+  </div>
 
+  <!-- Slide 2: Ejemplo de otro contenido embebido (puedes cambiar la URL) -->
+  <div class="slide">
+    <iframe src="https://example.com" frameborder="0"></iframe>
+  </div>
+
+  <!-- Slide 3: Otro ejemplo de contenido embebido -->
+  <div class="slide">
+    <iframe src="https://example.com" frameborder="0"></iframe>
+  </div>
+
+</div>
+
+<!-- Estilos CSS para que parezca un banner y se adapte a tu web -->
+<style>
+.banner-rotativo-container {
+  position: relative;
+  width: 100%;       /* Ocupa el 100% del ancho disponible */
+  height: 220px;     /* Ajusta la altura según el widget de Windy */
+  overflow: hidden;  /* Oculta los slides que no están activos */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.banner-rotativo-container .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;        /* Oculto por defecto */
+  transition: opacity 0.5s ease-in-out; /* Transición suave de desvanecimiento */
+  z-index: 1;
+}
+
+.banner-rotativo-container .slide.active {
+  opacity: 1;        /* Visible cuando tiene la clase 'active' */
+  z-index: 2;
+}
+
+.banner-rotativo-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+</style>
+
+<!-- JavaScript para gestionar el cambio automático cada 10 segundos -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const slides = document.querySelectorAll('.banner-rotativo-container .slide');
+  let currentSlide = 0;
+  const tiempoCambio = 10000; // 10000 milisegundos = 10 segundos
+
+  function cambiarSlide() {
+    // Quita la clase activa al slide actual
+    slides[currentSlide].classList.remove('active');
+    
+    // Pasa al siguiente slide (vuelve al inicio si llega al final)
+    currentSlide = (currentSlide + 1) % slides.length;
+    
+    // Añade la clase activa al nuevo slide
+    slides[currentSlide].classList.add('active');
+  }
+
+  // Inicia el temporizador cíclico
+  setInterval(cambiarSlide, tiempoCambio);
+});
+</script>
+/////////////////////////
+
+
+
+    
+
+
+
+    
 <!-- banner Windy -->
     <iframe width="650" height="187" 
       src="https://embed.windy.com/embed.html?type=forecast&location=coordinates&detail=true&detailLat=42.6889148&detailLon=-4.2271222999999996&metricTemp=default&metricRain=default&metricWind=default" frameborder="0"></iframe>
