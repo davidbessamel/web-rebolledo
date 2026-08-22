@@ -194,35 +194,69 @@
   <main class="content-section" id="home">
     <!-- Resto del contenido del sitio (resumen, tarjetas, etc.) -->
 
- 
-<a class="weatherwidget-io" position="right" z-index="1" href="https://forecast7.com/es/42d69n4d23/rebolledo-de-la-torre/" data-icons="Climacons Animated" data-mode="Current" data-theme="dark" data-basecolor="rgba(0, 0, 0, 0.02)" >Rebolledo de la Torre, Spain</a>
-<script>
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-</script>
 
-
-/////////////////////////////
 <!-- Contenedor principal del banner rotativo -->
+    <!-- 
+    1.  Widget Windy Forecast       (src Windy)   ...-previsión meteorológica
+    2.  Widget Windy Mapa Isobárico (src Windy)
+    3.  Servicios y Horarios        -horarios.html
+    4.  Astroturismo                -astroturismo.html
+    5.  Huerta                      -huerta.html
+    6.  Noticias                    -noticias.html
+    7.  BOCYL                       -bocylemb.html
+    8.  Rutas                       -rutas.html
+    9.  Galería                     -galeria.html
+
+    
+     -->
 <div class="banner-rotativo-container">
   
   <!-- Slide 1: Widget de Windy (Reemplaza las coordenadas por las de tu pueblo) -->
   <div class="slide active">
     <iframe width="650" height="187" 
       src="https://embed.windy.com/embed.html?type=forecast&location=coordinates&detail=true&detailLat=42.6889148&detailLon=-4.2271222999999996&metricTemp=default&metricRain=default&metricWind=default" frameborder="0"></iframe>
-
   </div>
 
-  <!-- Slide 2: Ejemplo de otro contenido embebido (puedes cambiar la URL) -->
+  <!-- Slide 2: Widget Windy Mapa Isobárico-->
   <div class="slide">
      <iframe width="650" height="450" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=41.212&lon=-3.384&detailLat=42.696567309697&detailLon=-4.226989746093751&marker=true&pressure=true&message=true" frameborder="0"></iframe>
-    
   </div>
 
-  <!-- Slide 3: Otro ejemplo de contenido embebido -->
+  <!-- Slide 3: Servicios y Horarios -->
+  <div class="slide">
+    <iframe src="horarios.html" frameborder="0"></iframe>
+  </div>
+
+  <!-- Slide 4: Astroturismo -->
+  <div class="slide">
+    <iframe src="astroturismo.html" frameborder="0"></iframe>
+  </div>
+
+  <!-- Slide 5: Huerta -->
+  <div class="slide">
+    <iframe src="huerta.html" frameborder="0"></iframe>
+  </div>
+
+  <!-- Slide 6: Noticias -->
+  <div class="slide">
+    <iframe src="noticias.html" frameborder="0"></iframe>
+  </div>
+
+  <!-- Slide 7: BOCYL -->
+  <div class="slide">
+    <iframe src="bocylemb.html" frameborder="0"></iframe>
+  </div>
+
+  <!-- Slide 8: Rutas -->
+  <div class="slide">
+    <iframe src="rutas.html" frameborder="0"></iframe>
+  </div>
+
+  <!-- Slide 9: Galería -->
   <div class="slide">
     <iframe src="https://example.com" frameborder="0"></iframe>
   </div>
-
+  
 </div>
 
 <!-- Estilos CSS para que parezca un banner y se adapte a tu web -->
