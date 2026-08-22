@@ -17,7 +17,7 @@
     body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; }
 
     /* Navigation */
-    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); }
     .nav-brand { font-weight: bold; font-size: 1.1rem; color: var(--text-main); text-decoration: none; letter-spacing: 0.5px; }
     .nav-links { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
     .nav-links a { color: #d1d5db; text-decoration: none; font-size: 0.95rem; transition: color 0.2s ease; }
@@ -59,7 +59,6 @@
       <li><a href="#astroturismo">AstroTurismo</a></li>
       <li><a href="#rutas">Rutas</a></li>
       <li><a href="#huerto">Huerto</a></li>
-      <li><a href="/boletines.html">Tablón Oficial</a></li>
       <li><a href="#tienda">Tienda</a></li>
     </ul>
   </nav>
@@ -76,24 +75,10 @@
     </div>
   </header>
 
-  <!-- CALL-TO-ACTION: Tablón now hosted on boletines.html -->
+  <!-- MAIN CONTENT -->
   <main class="content-section" id="home">
-    <section class="cta">
-      <h2 style="color:var(--accent-gold)">Tablón Oficial de Publicaciones</h2>
-      <p>Hemos trasladado el Tablón Oficial a una página independiente para mejorar su carga y fiabilidad. Pulsa el botón para ver las últimas disposiciones (BOCyL / BOE).</p>
-      <p style="margin-top:12px"><a href="/boletines.html">Abrir Tablón Oficial</a></p>
-    </section>
-
     <!-- Resto del contenido del sitio (resumen, tarjetas, etc.) -->
-
   </main>
-
-  <script>
-    // Si alguien llega a index.html#tablon, redirigir al nuevo boletines.html para compatibilidad
-    if (location.hash && location.hash.toLowerCase() === '#tablon') {
-      window.location.href = '/boletines.html';
-    }
-  </script>
 
 </body>
 </html>
