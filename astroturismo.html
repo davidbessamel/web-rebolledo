@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astroturismo en Rebolledo de la Torre</title>
+</head>
+<body>
+
+  <header>
+    <h1>Astroturismo desde Rebolledo de la Torre</h1>
+    <p>Observación astronómica en el Geoparque Mundial de la UNESCO Las Loras</p>
+  </header>
+
+  <main>
+    <!-- Banner Rotatorio de Constelaciones y Astrofotografía -->
+    <section id="banner-astronomico">
+      <h2>Galeria del Firmamento</h2>
+      <div>
+        <img src="imagenes/constelacion-orion.jpg" alt="Constelación de Orión visible en los cielos de invierno" data-slide="active">
+        <img src="imagenes/via-lactea-loras.jpg" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras">
+        <img src="imagenes/constelacion-osa-mayor.jpg" alt="La Osa Mayor alineada con el norte sobre la Iglesia de San Julián y Santa Basilisa">
+        <img src="imagenes/nebulosas-cielo-profundo.jpg" alt="Fotografía de cielo profundo capturada desde el término municipal">
+      </div>
+    </section>
+
+    <!-- Widgets Astronómicos en Tiempo Real -->
+    <section id="widgets-astronomicos">
+      <h2>Estado de la Observación en Tiempo Real</h2>
+      <p>Consulta las condiciones meteorológicas inmediatas, la cobertura de nubes y el estado de la Luna para planificar tu salida nocturna:</p>
+      <div>
+        <article>
+          <h3>Previsión de Nubes y Meteograma</h3>
+          <iframe src="https://windy.com" frameborder="0"></iframe>
+        </article>
+        <article>
+          <h3>Fase Lunar Actual</h3>
+          <iframe src="https://moongiant.com" frameborder="0" scrolling="no"></iframe>
+        </article>
+      </div>
+    </section>
+
+    <!-- Formulario de Inscripción a Quedadas Nocturnas -->
+    <section id="registro-quedadas">
+      <h2>Inscripción a Quedadas Astronómicas y Alertas de Cielo Limpio</h2>
+      <p>Apúntate para participar en nuestras salidas colectivas o para recibir avisos urgentes cuando se prevean condiciones excepcionales de observación (cielo de transparencia máxima o lluvias de estrellas):</p>
+      
+      <form action="#" method="POST">
+        <fieldset>
+          <legend>Datos Personales</legend>
+          
+          <label for="nombre">Nombre Completo:</label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
+          
+          <label for="email">Correo Electrónico:</label>
+          <input type="email" id="email" name="email" required placeholder="nombre@ejemplo.com">
+          
+          <label for="telefono">Teléfono Móvil (para alertas SMS/WhatsApp):</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="600 000 000">
+        </fieldset>
+
+        <fieldset>
+          <legend>Nivel y Equipamiento</legend>
+          
+          <label for="nivel-experiencia">Tu nivel de experiencia:</label>
+          <select id="nivel-experiencia" name="nivel-experiencia">
+            <option value="iniciacion">Iniciación (Sin equipo / Curioso)</option>
+            <option value="intermedio">Intermedio (Uso prismáticos / Telescopio básico)</option>
+            <option value="avanzado">Avanzado (Equipo GoTo / Astrofotografía)</option>
+          </select>
+
+          <label for="material">Equipo que traerás (si aplica):</label>
+          <textarea id="material" name="material" rows="3" placeholder="Ej. Telescopio reflector 150/750, cámara réflex, trípode..."></textarea>
+        </fieldset>
+
+        <fieldset>
+          <legend>Preferencias de Notificación</legend>
+          
+          <label>
+            <input type="checkbox" name="notificaciones" value="quedadas" checked>
+            Deseo recibir avisos de quedadas organizadas de fin de semana.
+          </label>
+          <br>
+          <label>
+            <input type="checkbox" name="notificaciones" value="alertas-meteorologicas">
+            Deseo recibir alertas de "última hora" (cielos despejados inesperados o eventos fugaces).
+          </label>
+        </fieldset>
+
+        <div>
+          <label>
+            <input type="checkbox" name="privacidad" required>
+            Acepto la política de protección de datos para la gestión de las actividades de astronomía en el municipio.
+          </label>
+        </div>
+
+        <button type="submit">Enviar Inscripción</button>
+      </form>
+    </section>
+
+    <!-- Mapas de Contaminación Lumínica -->
+    <section id="mapas-contaminacion">
+      <h2>Mapas Satelitales de Contaminación Lumínica</h2>
+      <p>Accede a herramientas cartográficas científicas para comprobar la calidad del cielo y el índice de oscuridad en Rebolledo de la Torre y el espacio natural de Las Loras:</p>
+      <ul>
+        <li>
+          <a href="https://lightpollutionmap.info" target="_blank" rel="noopener noreferrer">
+            Light Pollution Map - Rebolledo de la Torre
+          </a>
+        </li>
+        <li>
+          <a href="https://clearoutside.com" target="_blank" rel="noopener noreferrer">
+            Clear Outside - Previsión Astronómica Rebolledo
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Coordenadas GPS y Puntos de Observación -->
+    <section id="coordenadas-gps">
+      <h2>Coordenadas GPS y Geolocalización de Puntos de Observación</h2>
+      <ul>
+        <li><strong>Punto 1: Entorno del Castillo de los Velasco:</strong> Latitud: 42.6917° N | Longitud: 4.2255° W | Altitud: 960 m</li>
+        <li><strong>Punto 2: Mirador Alto de la Lora (Acceso Norte):</strong> Latitud: 42.7042° N | Longitud: 4.2110° W | Altitud: 1.045 m</li>
+        <li><strong>Punto 3: Base de la Iglesia de San Julián y Santa Basilisa:</strong> Latitud: 42.6919° N | Longitud: 4.2263° W | Altitud: 955 m</li>
+      </ul>
+    </section>
+
+    <!-- Información de Contexto Real sobre la Calidad del Cielo -->
+    <section id="calidad-cielo">
+      <h2>Calidad y Condiciones del Cielo Nocturno</h2>
+      <p>Rebolledo de la Torre goza de una ubicación privilegiada para la práctica de la astronomía. Al encontrarse resguardado por las formaciones geológicas de Las Loras y alejado de grandes urbes industriales, el municipio presenta niveles muy bajos de contaminación lumínica, ofreciendo cielos limpios de clase Bortle idóneos tanto para la observación visual como para la astrofotografía de cielo profundo.</p>
+    </section>
+
+    <!-- Qué observar según la época del año -->
+    <section id="calendario-astronomico">
+      <h2>Qué observar en el Firmamento de Rebolledo</h2>
+      <dl>
+        <dt>Primavera</dt> <dd>Galaxias lejanas en Virgo y Leo.</dd>
+        <dt>Verano</dt> <dd>Brazo de la Vía Láctea, el Triángulo de Verano y las Perseidas.</dd>
+        <dt>Otoño</dt> <dd>Galaxia de Andrómeda (M31) y el cúmulo de las Pléyades.</dd>
+        <dt>Invierno</dt> <dd>Constelación de Orión y la Gran Nebulosa (M42).</dd>
+      </dl>
+    </section>
+
+    <!-- Consejos Prácticos -->
+    <section id="consejos-viaje">
+      <h2>Recomendaciones para la Actividad</h2>
+      <ol>
+        <li>Consultar previamente la fase lunar.</li>
+        <li>Llevar ropa de abrigo técnica durante todo el año debido a la altitud de Las Loras.</li>
+        <li>Utilizar linternas de luz roja.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <p>Asociación de Astroturismo y Conservación del Cielo Nocturno - Rebolledo de la Torre</p>
+  </footer>
+
+  <!-- Lógica de Rotación del Banner (Cada 10 segundos) -->
+  <script>
+    (function() {
+      const imagenesBanner = document.querySelectorAll('#banner-astronomico img');
+      let indiceActual = 0;
+      const intervaloTiempo = 10000;
+
+      function rotarImagen() {
+        if (imagenesBanner.length <= 1) return;
+        imagenesBanner[indiceActual].removeAttribute('data-slide');
+        indiceActual = (indiceActual + 1) % imagenesBanner.length;
+        imagenesBanner[indiceActual].setAttribute('data-slide', 'active');
+      }
+
+      if (imagenesBanner.length > 1) {
+        setInterval(rotarImagen, intervaloTiempo);
+      }
+    })();
+  </script>
+
+</body>
+</html>
