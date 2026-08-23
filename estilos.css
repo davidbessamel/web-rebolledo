@@ -134,3 +134,38 @@
   height: 100%;
   border: none;
 }
+
+
+
+
+
+/* ==========================================================================
+   FRAGMENTO CSS PARA LA ANIMACIÓN DEL BANNER ASTRONÓMICO
+   ========================================================================== */
+
+/* Contenedor del banner (opcional, ajusta la altura que desees) */
+#banner-astronomico div {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Define la altura que mejor se adapte a tus imágenes */
+  overflow: hidden;
+}
+
+/* Oculta todas las imágenes del banner por defecto */
+#banner-astronomico img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen al contenedor sin deformarla */
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.8s ease-in-out; /* Transición suave de desvanecimiento */
+}
+
+/* Muestra únicamente la imagen activa controlada por el JavaScript */
+#banner-astronomico img[data-slide="active"] {
+  opacity: 1;
+  z-index: 2;
+}
