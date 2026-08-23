@@ -169,3 +169,69 @@
   opacity: 1;
   z-index: 2;
 }
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   ESTILOS DE LA HUERTA (TEXTO BLANCO ROTO Y TRANSPARENCIA)
+   ========================================================================== */
+
+/* Fondo general transparente y texto blanco roto para la zona de la huerta */
+#seccion-huerta, 
+#seccion-huerta table, 
+#seccion-huerta section {
+  background: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+/* Encabezados en blanco puro para contrastar */
+#seccion-huerta h1, 
+#seccion-huerta h2, 
+#seccion-huerta h3, 
+#seccion-huerta th {
+  color: #ffffff !important;
+}
+
+/* Líneas divisorias de la tabla-calendario */
+#seccion-huerta th, 
+#seccion-huerta td {
+  border-bottom: 1px solid rgba(245, 245, 245, 0.15) !important;
+}
+
+/* Efecto cebra translúcido para la tabla de 100 vegetales */
+#seccion-huerta tbody tr:nth-of-type(even) {
+  background-color: rgba(245, 245, 245, 0.04) !important;
+}
+
+#seccion-huerta tbody tr:hover {
+  background-color: rgba(245, 245, 245, 0.08) !important;
+}
+
+/* --- BANNER DE LA HUERTA (Ajustado a 3 segundos) --- */
+#banner-huerta div {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+#banner-huerta img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.5s ease-in-out; /* Transición rápida para ciclo de 3s */
+}
+
+#banner-huerta img[data-slide="active"] {
+  opacity: 1;
+  z-index: 2;
+}
