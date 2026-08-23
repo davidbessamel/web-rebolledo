@@ -52,57 +52,58 @@
 
 
 
- <form action="#" method="POST">
-        <fieldset>
-          <legend>Datos Personales</legend>
-          
-          <label for="nombre">Nombre Completo:</label>
-          <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
-          
-          <label for="email">Correo Electrónico:</label>
-          <input type="email" id="email" name="email" required placeholder="nombre@ejemplo.com">
-          
-          <label for="telefono">Teléfono Móvil (para alertas SMS/WhatsApp):</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="600 000 000">
-        </fieldset>
+<form id="form-astronomia">
+  <fieldset>
+    <legend>Datos Personales</legend>
+    
+    <label for="nombre">Nombre Completo:</label>
+    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
+    
+    <label for="email">Correo Electrónico:</label>
+    <input type="email" id="email" name="email" required placeholder="nombre@ejemplo.com">
+    
+    <label for="telefono">Teléfono Móvil (para alertas SMS/WhatsApp):</label>
+    <input type="tel" id="telefono" name="telefono" placeholder="600 000 000">
+  </fieldset>
 
-        <fieldset>
-          <legend>Nivel y Equipamiento</legend>
-          
-          <label for="nivel-experiencia">Tu nivel de experiencia:</label>
-          <select id="nivel-experiencia" name="nivel-experiencia">
-            <option value="iniciacion">Iniciación (Sin equipo / Curioso)</option>
-            <option value="intermedio">Intermedio (Uso prismáticos / Telescopio básico)</option>
-            <option value="avanzado">Avanzado (Equipo GoTo / Astrofotografía)</option>
-          </select>
+  <fieldset>
+    <legend>Nivel y Equipamiento</legend>
+    
+    <label for="nivel-experiencia">Tu nivel de experiencia:</label>
+    <select id="nivel-experiencia" name="nivel-experiencia">
+      <option value="iniciacion">Iniciación (Sin equipo / Curioso)</option>
+      <option value="intermedio">Intermedio (Uso prismáticos / Telescopio básico)</option>
+      <option value="avanzado">Avanzado (Equipo GoTo / Astrofotografía)</option>
+    </select>
 
-          <label for="material">Equipo que traerás (si aplica):</label>
-          <textarea id="material" name="material" rows="3" placeholder="Ej. Telescopio reflector 150/750, cámara réflex, trípode..."></textarea>
-        </fieldset>
+    <label for="material">Equipo que traerás (si aplica):</label>
+    <textarea id="material" name="material" rows="3" placeholder="Ej. Telescopio reflector 150/750, cámara réflex, trípode..."></textarea>
+  </fieldset>
 
-        <fieldset>
-          <legend>Preferencias de Notificación</legend>
-          
-          <label>
-            <input type="checkbox" name="notificaciones" value="quedadas" checked>
-            Deseo recibir avisos de quedadas organizadas de fin de semana.
-          </label>
-          <br>
-          <label>
-            <input type="checkbox" name="notificaciones" value="alertas-meteorologicas">
-            Deseo recibir alertas de "última hora" (cielos despejados inesperados o eventos fugaces).
-          </label>
-        </fieldset>
+  <fieldset>
+    <legend>Preferencias de Notificación</legend>
+    
+    <label>
+      <input type="checkbox" id="check-quedadas" name="notificaciones" value="quedadas" checked>
+      Deseo recibir avisos de quedadas organizadas de fin de semana.
+    </label>
+    <br>
+    <label>
+      <input type="checkbox" id="check-alertas" name="notificaciones" value="alertas-meteorologicas">
+      Deseo recibir alertas de "última hora" (cielos despejados inesperados o eventos fugaces).
+    </label>
+  </fieldset>
 
-        <div>
-          <label>
-            <input type="checkbox" name="privacidad" required>
-            Acepto la política de protección de datos para la gestión de las actividades de astronomía en el municipio.
-          </label>
-        </div>
+  <div>
+    <label>
+      <input type="checkbox" id="check-privacidad" name="privacidad" required>
+      Acepto la política de protección de datos para la gestión de las actividades de astronomía en el municipio.
+    </label>
+  </div>
 
-        <button type="submit">Enviar Inscripción</button>
-      </form>
+  <button type="submit">Enviar Inscripción</button>
+</form>
+
 
 
 
@@ -110,28 +111,28 @@
 
 
       
-
 <script>
 document.getElementById('form-astronomia').addEventListener('submit', function(evento) {
   evento.preventDefault(); 
 
-  // PEGA AQUÍ LA URL COMPLETA QUE TE HA DADO CLOUDFLARE
-  const urlWorkerCloudflare = 'https://formulario-telegram-bot.david-bessamel.workers.dev'; 
+  // REEMPLAZA ESTA URL POR LA TUVA EXACTA DE CLOUDFLARE WORKERS
+  const urlWorkerCloudflare = 'https://workers.dev'; 
 
-  // Recorremos los datos limpios del HTML
+  // Empaquetado exacto de las variables recolectadas
   const datosFormulario = {
     nombre: document.getElementById('nombre').value,
     email: document.getElementById('email').value,
     telefono: document.getElementById('telefono').value,
     experiencia: document.getElementById('nivel-experiencia').value,
     material: document.getElementById('material').value,
-    quedadas: document.getElementsByName('notificaciones')[0].checked,
-    alertas: document.getElementsByName('notificaciones')[1].checked
+    quedadas: document.getElementById('check-quedadas').checked,
+    alertas: document.getElementById('check-alertas').checked
   };
 
-  // Enviamos los datos de forma segura al Worker externo
+  // Petición de red asíncrona hacia el Worker
   fetch(urlWorkerCloudflare, {
     method: 'POST',
+    mode: 'cors',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -146,7 +147,7 @@ document.getElementById('form-astronomia').addEventListener('submit', function(e
     }
   })
   .catch(error => {
-    console.error('Error:', error);
+    console.error('Error de red:', error);
     alert('Error de conexión con el servidor de inscripciones.');
   });
 });
