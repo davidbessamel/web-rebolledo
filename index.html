@@ -51,47 +51,8 @@
 
   
   
-  
-  
-  /* -- Estilos para controlar la alineación y el comportamiento visual -- */
 
-  .seccion-bocyl-derecha {
-    display: flex;
-    justify-content: flex-end; /* Alinea el contenido completamente a la derecha */
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .iframe-bocyl {
-    width: 100%;
-    max-width: 450px; /* Controla el ancho del bloque resumido en la derecha */
-    height: 600px;    /* Ajusta la altura según la cantidad de publicaciones */
-    border: none;     /* Elimina el borde por defecto del iframe */
-    background: transparent;
-  }
-
-
-.seccion-izquierda {
-    display: flex;
-    justify-content: flex-start; /* Alinea el contenido completamente a la ... */
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .iframe-marcotodo {
-    width: 100%;
-    max-width: 80%; /* Controla el ancho del bloque resumido en la derecha */
-    height: 600px;    /* Ajusta la altura según la cantidad de publicaciones */
-    border: none;     /* Elimina el borde por defecto del iframe */
-    background: transparent;
-  }
-
-
-
-
-    /* submenús Desplegable  */
+    /* CSS submenús Desplegable  */
   .nav-links > li {
   position: relative; /* Importante para posicionar el submenú */
   }
@@ -123,10 +84,7 @@
   display: block;
 }
   </style>
-
 </head>
-
-  
 <body>
 
   
@@ -171,9 +129,7 @@
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
 </script>
 
-
-
-      
+ 
 
       
       
@@ -340,7 +296,7 @@ document.addEventListener("DOMContentLoaded", function() {
     src="horarios.html" frameborder="0"></iframe>
 </div>
  
-<div id="astroturismo">
+<div id="astroturismo" class="root">
 <iframe src="astroturismo.html" title="Astroturismo"></iframe>
 </div>
 
