@@ -8,7 +8,7 @@
     }
 
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background-color: var(transparent); color: var(--text-main); line-height: 1.5; }
+    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; }
 
     /* Navigation */
     .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); }
