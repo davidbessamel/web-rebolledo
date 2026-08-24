@@ -12,8 +12,8 @@
 
     /* Navigation */
     .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); }
-    .nav-brand { font-weight: bold; font-size: 1.1rem; color: var(--text-main); text-decoration: none; letter-spacing: 0.5px; }
-    .nav-links { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
+    /*.nav-brand { font-weight: bold; font-size: 1.1rem; color: var(--text-main); text-decoration: none; letter-spacing: 0.5px; }
+   */ .nav-links { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
     .nav-links a { color: #d1d5db; text-decoration: none; font-size: 0.95rem; transition: color 0.2s ease; }
     .nav-links a:hover { color: var(--accent-gold); }
 
