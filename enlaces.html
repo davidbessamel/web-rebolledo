@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enlaces 3.1 — Doble Carril Entrelazado</title>
+  <style>
+    :root {
+      --lane-height: 70px;  /* ← EDITA AQUÍ la altura de cada carril */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0a;
+      overflow: hidden;
+      font-family: Tahoma, Verdana, Segoe UI, sans-serif;
+      cursor: none;
+    }
+
+    .lanes {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .lane {
+      height: var(--lane-height);
+      display: flex;
+      align-items: center;
+      overflow: visible;  /* clave: deja que las letras grandes se desborden y se entrelacen */
+      position: relative;
+    }
+
+    .lane-track {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      white-space: nowrap;
+      will-change: transform;
+      padding: 0 2rem;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s, text-shadow 0.3s;
+      opacity: 0.88;
+      background: transparent;
+    }
+    .ticker-item:hover {
+      color: #6cb6ff;
+      text-shadow: 0 0 20px rgba(108,182,255,0.5);
+      opacity: 1;
+    }
+    .ticker-item .item-icon { opacity: 0.4; flex-shrink: 0; }
+    .ticker-item .item-title { font-weight: 400; }
+    .ticker-item .item-url { color: #6cb6ff; opacity: 0.45; font-size: 0.5em; }
+    .ticker-separator { color: rgba(255,255,255,0.08); flex-shrink: 0; }
+
+    .ticker-controls {
+      position: fixed;
+      bottom: 14px;
+      right: 16px;
+      display: flex;
+      gap: 8px;
+      z-index: 20;
+      transition: opacity 0.5s;
+    }
+    .ctrl-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, opacity 0.5s;
+    }
+    .ctrl-btn:hover { background: rgba(0,0,0,0.7); }
+
+    .speed-info {
+      position: fixed;
+      bottom: 18px;
+      left: 16px;
+      color: rgba(255,255,255,0.2);
+      font-size: 0.7rem;
+      z-index: 20;
+      transition: opacity 0.5s;
+      font-family: Tahoma, monospace;
+    }
+
+    .controls-hidden .ticker-controls,
+    .controls-hidden .speed-info { opacity: 0; pointer-events: none; }
+
+    .empty-msg { color: #333; display: flex; align-items: center; justify-content: center; height: 100%; font-size: 1rem; }
+    .loading-msg { color: #222; display: flex; align-items: center; justify-content: center; height: 100%; font-size: 1rem; }
+  </style>
+</head>
+<body>
+
+  <div class="lanes" id="lanes">
+    <div class="lane" id="lane1"><div class="loading-msg">Cargando enlaces…</div></div>
+    <div class="lane" id="lane2"></div>
+    <div class="speed-info" id="speedInfo">Carril 1: 100% ←  |  Carril 2: 100% →</div>
+    <div class="ticker-controls">
+      <button class="ctrl-btn" id="speedDown" title="Más lento">−</button>
+      <button class="ctrl-btn" id="speedUp" title="Más rápido">+</button>
+      <button class="ctrl-btn" id="pauseBtn" title="Pausar / Reanudar">⏸</button>
+    </div>
+  </div>
+
+  <script>
+    var WORKER_URL = 'https://formulario-telegram-bot.david-bessamel.workers.dev';
+    var SPEED_LANE1 = 35;
+    var SPEED_LANE2 = 50;
+    var CONTROLS_TIMEOUT = 4000;
+
+    var MIN_FONT = 1.5;
+    var MAX_FONT = 6.0;
+
+    var SEPARATORS = ['◆', '●', '■', '★', '›', '·'];
+
+    var links = [];
+    var speedMultiplier = 1;
+    var isPaused = false;
+    var controlsTimer = null;
+    var lanes = [];
+    var lastTime = 0;
+    var rafId = null;
+
+    async function init() {
+      try {
+        var resp = await fetch(WORKER_URL + '/links');
+        links = await resp.json();
+      } catch (err) { console.error('Error cargando enlaces:', err); links = []; }
+      renderLanes();
+      startAnimation();
+      startControlsTimer();
+    }
+
+    function seedFrom(str) {
+      var h = 0;
+      for (var i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+      return Math.abs(h);
+    }
+
+    function pick(arr, seed) { return arr[seed % arr.length]; }
+
+    function randomSize(seed) {
+      var n = (seed % 100) / 100;
+      var extreme = n < 0.5 ? n * 2 : (n - 0.5) * 2;
+      extreme = extreme * extreme;
+      var isUpper = (seed % 2) === 0;
+      if (isUpper) {
+        return MIN_FONT + extreme * (MAX_FONT - MIN_FONT);
+      } else {
+        return MAX_FONT - extreme * (MAX_FONT - MIN_FONT);
+      }
+    }
+
+    function renderLanes() {
+      var lane1El = document.getElementById('lane1');
+      var lane2El = document.getElementById('lane2');
+      lane1El.innerHTML = '';
+      lane2El.innerHTML = '';
+
+      if (links.length === 0) {
+        lane1El.innerHTML = '<div class="empty-msg">No hay enlaces en el canal</div>';
+        return;
+      }
+
+      var lane1Links = [];
+      var lane2Links = [];
+      links.forEach(function(link, i) {
+        if (i % 2 === 0) lane1Links.push(link);
+        else lane2Links.push(link);
+      });
+
+      if (lane2Links.length === 0 && lane1Links.length > 1) {
+        lane2Links.push(lane1Links.pop());
+      }
+
+      lanes = [
+        { el: lane1El, links: lane1Links, pos: 0, dir: -1, speed: SPEED_LANE1, trackWidth: 0 },
+        { el: lane2El, links: lane2Links, pos: 0, dir: 1, speed: SPEED_LANE2, trackWidth: 0 },
+      ];
+
+      lanes.forEach(function(lane, idx) {
+        var track = document.createElement('div');
+        track.className = 'lane-track';
+        track.id = 'track' + idx;
+
+        appendLinksToTrack(track, lane.links, idx);
+        var sep = document.createElement('span');
+        sep.className = 'ticker-separator';
+        sep.style.fontSize = '1.5rem';
+        sep.textContent = pick(SEPARATORS, idx * 7 + 3);
+        track.appendChild(sep);
+        appendLinksToTrack(track, lane.links, idx);
+        var sep2 = document.createElement('span');
+        sep2.className = 'ticker-separator';
+        sep2.style.fontSize = '1.5rem';
+        sep2.textContent = pick(SEPARATORS, idx * 7 + 3);
+        track.appendChild(sep2);
+
+        lane.el.appendChild(track);
+        lane.trackEl = track;
+      });
+
+      requestAnimationFrame(function() {
+        lanes.forEach(function(lane) {
+          lane.trackWidth = lane.trackEl.scrollWidth / 2;
+        });
+      });
+    }
+
+    function appendLinksToTrack(track, linkList, laneIdx) {
+      linkList.forEach(function(link, i) {
+        var seed = seedFrom(link.url + link.title + i + laneIdx);
+
+        var a = document.createElement('a');
+        a.className = 'ticker-item';
+        a.href = link.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+
+        var size = randomSize(seed);
+        a.style.fontSize = size.toFixed(2) + 'rem';
+
+        var icon = document.createElement('span');
+        icon.className = 'item-icon';
+        icon.textContent = '🔗';
+        icon.style.fontSize = (size * 0.5).toFixed(2) + 'rem';
+
+        var title = document.createElement('span');
+        title.className = 'item-title';
+        title.textContent = link.title || link.url;
+
+        var urlLabel = document.createElement('span');
+        urlLabel.className = 'item-url';
+        try {
+          var domain = new URL(link.url).hostname.replace(/^www\./, '');
+          urlLabel.textContent = domain;
+        } catch (e) { urlLabel.textContent = ''; }
+
+        a.appendChild(icon);
+        a.appendChild(title);
+        a.appendChild(urlLabel);
+        track.appendChild(a);
+
+        var sep = document.createElement('span');
+        sep.className = 'ticker-separator';
+        sep.textContent = pick(SEPARATORS, seed + 1);
+        sep.style.fontSize = (size * 0.3).toFixed(2) + 'rem';
+        track.appendChild(sep);
+      });
+    }
+
+    function animate(time) {
+      if (!lastTime) lastTime = time;
+      var delta = time - lastTime;
+      lastTime = time;
+
+      if (!isPaused) {
+        lanes.forEach(function(lane) {
+          if (lane.trackWidth <= 0) return;
+          var speed = lane.speed * speedMultiplier;
+          lane.pos += (speed * delta) / 1000 * lane.dir;
+
+          if (lane.dir < 0 && Math.abs(lane.pos) >= lane.trackWidth) {
+            lane.pos = 0;
+          } else if (lane.dir > 0 && lane.pos >= lane.trackWidth) {
+            lane.pos = 0;
+          }
+
+          lane.trackEl.style.transform = 'translateX(' + lane.pos + 'px)';
+        });
+      }
+
+      rafId = requestAnimationFrame(animate);
+    }
+
+    function startAnimation() {
+      if (!rafId) rafId = requestAnimationFrame(animate);
+    }
+
+    function updateSpeedInfo() {
+      document.getElementById('speedInfo').textContent =
+        'Carril 1: ' + Math.round(speedMultiplier * 100) + '% ←  |  Carril 2: ' + Math.round(speedMultiplier * 100) + '% →';
+    }
+
+    function speedUp() { speedMultiplier = Math.min(speedMultiplier + 0.25, 3); updateSpeedInfo(); showControls(); }
+    function speedDown() { speedMultiplier = Math.max(speedMultiplier - 0.25, 0.25); updateSpeedInfo(); showControls(); }
+    function togglePause() {
+      isPaused = !isPaused;
+      var btn = document.getElementById('pauseBtn');
+      btn.textContent = isPaused ? '▶' : '⏸';
+      btn.title = isPaused ? 'Reanudar' : 'Pausar';
+      showControls();
+    }
+
+    function showControls() {
+      var container = document.getElementById('lanes');
+      container.classList.remove('controls-hidden');
+      document.body.style.cursor = 'default';
+      clearTimeout(controlsTimer);
+      controlsTimer = setTimeout(hideControls, CONTROLS_TIMEOUT);
+    }
+    function hideControls() {
+      document.getElementById('lanes').classList.add('controls-hidden');
+      document.body.style.cursor = 'none';
+    }
+    function startControlsTimer() { showControls(); }
+
+    document.getElementById('speedUp').onclick = speedUp;
+    document.getElementById('speedDown').onclick = speedDown;
+    document.getElementById('pauseBtn').onclick = togglePause;
+
+    document.addEventListener('mousemove', showControls);
+    document.addEventListener('click', showControls);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === ' ') { e.preventDefault(); togglePause(); }
+      if (e.key === '+' || e.key === '=') speedUp();
+      if (e.key === '-') speedDown();
+    });
+
+    init();
+    setInterval(function() {
+      fetch(WORKER_URL + '/links').then(function(r) { return r.json(); }).then(function(data) {
+        var same = data.length === links.length;
+        if (!same) { links = data; renderLanes(); }
+      }).catch(function() {});
+    }, 60000);
+  </script>
+</body>
+</html>
