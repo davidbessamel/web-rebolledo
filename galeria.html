@@ -59,46 +59,11 @@
 </head>
 <body>
   <div class="carousel-section">
-    <iframe src="https://carrusel-bot.david-bessamel.workers.dev/carousel" title="Fotos de la Quedada"></iframe>
+    <iframe src="https://carrusel-bot.david-bessamel.workers.dev" title="Galeria"></iframe>
   </div>
 
-  <div class="container">
-    <h1>Inscripcion a la Quedada</h1>
-    <p class="subtitle">Rellena el formulario para apuntarte. Te confirmaremos en el grupo de Telegram.</p>
 
-    <form id="form">
-      <label for="nombre">Nombre completo <span class="req">*</span></label>
-      <input type="text" id="nombre" name="nombre" required>
-
-      <label for="telefono">Telefono <span class="req">*</span></label>
-      <input type="tel" id="telefono" name="telefono" required>
-
-      <label for="email">Email <span class="req">*</span></label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="nivel">Nivel de experiencia <span class="req">*</span></label>
-      <select id="nivel" name="nivel" required>
-        <option value="">-- Selecciona --</option>
-        <option value="Principiante">Principiante</option>
-        <option value="Intermedio">Intermedio</option>
-        <option value="Avanzado">Avanzado</option>
-        <option value="Experto">Experto</option>
-      </select>
-
-      <label for="equipo">Equipo que traeras <span class="opt">(opcional)</span></label>
-      <textarea id="equipo" name="equipo" rows="2" placeholder="Ej: portatil, raton, auriculares..."></textarea>
-
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="check1"> Quiero recibir notificaciones por email sobre futuras quedadas</label>
-        <label><input type="checkbox" name="check2"> Estoy disponible para ayudar con la organizacion</label>
-        <label><input type="checkbox" name="condiciones" required> He leido y acepto las <a href="#" onclick="return false">condiciones de participacion</a> <span class="req">*</span></label>
-      </div>
-
-      <button type="submit" id="btn">Enviar inscripcion</button>
-    </form>
-    <div id="msg"></div>
-  </div>
-
+  
   <script>
     const WORKER_URL = 'https://carrusel-bot.david-bessamel.workers.dev';
 
