@@ -2,18 +2,18 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <title>Banner Rotatorio Dinámico - Rebolledo de la Torre</title>
+  <title>Banners Rotatorios - Rebolledo de la Torre</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   
   <style>
-    /* Ocultamos el diseño antiguo del chat para mostrar solo el banner */
+    /* Ocultamos el diseño antiguo del chat para mostrar solo los banners */
     .page_wrap, .page_header, .chat_page { display: none; }
 
-    /* --- ESTILOS DEL NUEVO BANNER ROTATORIO --- */
+    /* --- ESTILOS DE LOS BANNERS ROTATORIOS --- */
     .banner-container {
       width: 100%;
       max-width: 900px;
-      margin: 20px auto;
+      margin: 30px auto;
       overflow: hidden;
       position: relative;
       background: #222;
@@ -114,14 +114,23 @@
 </head>
 <body>
 
-  <!-- CONTENEDOR DONDE SE GENERARÁ EL BANNER AUTOMÁTICAMENTE -->
-  <div id="dinamicBanner"></div>
+  <!-- CONTENEDOR PARA EL PRIMER BANNER (GENERAL) -->
+  <div id="dinamicBannerGeneral"></div>
+
+  <!-- CONTENEDOR PARA EL SEGUNDO BANNER (POR MESES) -->
+  <div id="dinamicBannerMeses"></div>
 
   <!-- ================================================================= -->
-  /* PEGA AQUÍ DEBAJO TODO TU CÓDIGO HTML ORIGINAL COMPLETAMENTE */
+  <!-- PEGA AQUÍ DEBAJO TODO TU CÓDIGO HTML ORIGINAL COMPLETAMENTE -->
   <!-- ================================================================= -->
   <div class="page_wrap">
-     <!-- Aquí continúa todo tu código con los divs "message default", "media_wrap", "photo_wrap", etc. -->
+     <!-- Aquí continúa tu código exportado con los divs "message default", "media_wrap", "photo_wrap", etc. -->
+
+
+
+
+
+
 
 
 
@@ -224,145 +233,7 @@ Rebolledo de la Torre - Huerta pinned <a href="#go_to_message2" onclick="return 
 
      </div>
 
-     <div class="message default clearfix" id="message4">
-
-      <div class="pull_left userpic_wrap">
-
-       <div class="userpic userpic6" style="width: 42px; height: 42px">
-
-        <div class="initials" style="line-height: 42px">
-R
-        </div>
-
-       </div>
-
-      </div>
-
-      <div class="body">
-
-       <div class="pull_right date details" title="24.08.2026 12:27:16 UTC+01:00">
-12:27
-       </div>
-
-       <div class="from_name">
-Rebolledo de la Torre - Huerta 
-       </div>
-
-       <div class="media_wrap clearfix">
-
-        <a class="photo_wrap clearfix pull_left" href="photos/photo_1@24-08-2026_12-27-16.jpg">
-
-         <img class="photo" src="photos/photo_1@24-08-2026_12-27-16_thumb.jpg" style="width: 260px; height: 173px"/>
-
-        </a>
-
-       </div>
-
-       <div class="text">
-<blockquote>Tomate de Penjar</blockquote><br><strong>Siembra:</strong> marzo, abril, mayo<br><strong>Cosecha:</strong>  agosto, septiembre, octubre<br><strong>Info:</strong> Variedad rústica muy resistente a la sequía.
-       </div>
-
-      </div>
-
-     </div>
-
-     <div class="message default clearfix joined" id="message5">
-
-      <div class="body">
-
-       <div class="pull_right date details" title="24.08.2026 12:32:52 UTC+01:00">
-12:32
-       </div>
-
-       <div class="media_wrap clearfix">
-
-        <a class="photo_wrap clearfix pull_left" href="photos/photo_2@24-08-2026_12-32-52.jpg">
-
-         <img class="photo" src="photos/photo_2@24-08-2026_12-32-52_thumb.jpg" style="width: 260px; height: 172px"/>
-
-        </a>
-
-       </div>
-
-       <div class="text">
-<blockquote>Pepino Español</blockquote><br><strong>Siembra:</strong> abril, mayo, junio<br><strong>Cosecha:</strong> junio, julio, septiembre<br><strong>Info: </strong>Se recomienda sombreado parcial en horas críticas.
-       </div>
-
-      </div>
-
-     </div>
-
      <div class="message service" id="message-2">
-
-      <div class="body details">
-29 August 2026
-      </div>
-
-     </div>
-
-     <div class="message default clearfix" id="message6">
-
-      <div class="pull_left userpic_wrap">
-
-       <div class="userpic userpic6" style="width: 42px; height: 42px">
-
-        <div class="initials" style="line-height: 42px">
-R
-        </div>
-
-       </div>
-
-      </div>
-
-      <div class="body">
-
-       <div class="pull_right date details" title="29.08.2026 16:17:05 UTC+01:00">
-16:17
-       </div>
-
-       <div class="from_name">
-Rebolledo de la Torre - Huerta 
-       </div>
-
-       <div class="pull_left forwarded userpic_wrap">
-
-        <div class="userpic userpic6" style="width: 42px; height: 42px">
-
-         <div class="initials" style="line-height: 42px">
-R
-         </div>
-
-        </div>
-
-       </div>
-
-       <div class="forwarded body">
-
-        <div class="from_name">
-Rebolledo de la Torre - Huerta <span class="date details" title="24.08.2026 12:27:16 UTC+01:00"> 24.08.2026 12:27:16</span>
-        </div>
-
-        <div class="media_wrap clearfix">
-
-         <a class="photo_wrap clearfix pull_left" href="photos/photo_1@24-08-2026_12-27-16.jpg">
-
-          <img class="photo" src="photos/photo_1@24-08-2026_12-27-16_thumb (1).jpg" style="width: 260px; height: 173px"/>
-
-         </a>
-
-        </div>
-
-        <div class="text">
-<blockquote>Tomate de Penjar</blockquote><br><strong>Siembra:</strong> marzo, abril, mayo<br><strong>Cosecha:</strong>  agosto, septiembre, octubre<br><strong>Info:</strong> Variedad rústica muy resistente a la sequía.
-        </div>
-
-       </div>
-
-      </div>
-
-     </div>
-
-     <div class="message service" id="message-3">
 
       <div class="body details">
 30 August 2026
@@ -396,9 +267,9 @@ Rebolledo de la Torre - Huerta
 
        <div class="media_wrap clearfix">
 
-        <a class="photo_wrap clearfix pull_left" href="photos/photo_4@30-08-2026_00-03-33.jpg">
+        <a class="photo_wrap clearfix pull_left" href="photos/photo_1@30-08-2026_00-03-33.jpg">
 
-         <img class="photo" src="photos/photo_4@30-08-2026_00-03-33_thumb.jpg" style="width: 260px; height: 146px"/>
+         <img class="photo" src="photos/photo_1@30-08-2026_00-03-33_thumb.jpg" style="width: 260px; height: 146px"/>
 
         </a>
 
@@ -422,9 +293,9 @@ Históricamente, la subsistencia de <strong>Rebolledo de la Torre</strong> ha es
 
        <div class="media_wrap clearfix">
 
-        <a class="photo_wrap clearfix pull_left" href="photos/photo_5@30-08-2026_00-06-27.jpg">
+        <a class="photo_wrap clearfix pull_left" href="photos/photo_2@30-08-2026_00-06-27.jpg">
 
-         <img class="photo" src="photos/photo_5@30-08-2026_00-06-27_thumb.jpg" style="width: 260px; height: 173px"/>
+         <img class="photo" src="photos/photo_2@30-08-2026_00-06-27_thumb.jpg" style="width: 260px; height: 173px"/>
 
         </a>
 
@@ -448,9 +319,9 @@ El sistema de cultivo tradicional combinaba técnicas de secano para el cereal y
 
        <div class="media_wrap clearfix">
 
-        <a class="photo_wrap clearfix pull_left" href="photos/photo_6@30-08-2026_00-08-19.jpg">
+        <a class="photo_wrap clearfix pull_left" href="photos/photo_3@30-08-2026_00-08-19.jpg">
 
-         <img class="photo" src="photos/photo_6@30-08-2026_00-08-19_thumb.jpg" style="width: 260px; height: 146px"/>
+         <img class="photo" src="photos/photo_3@30-08-2026_00-08-19_thumb.jpg" style="width: 260px; height: 146px"/>
 
         </a>
 
@@ -476,9 +347,9 @@ El uso de acequias rudimentarias, pozos de noria y pozas de decantación permit�
 
          <div class="media_wrap clearfix">
 
-          <a class="photo_wrap clearfix pull_left" href="photos/photo_7@30-08-2026_00-09-33.jpg">
+          <a class="photo_wrap clearfix pull_left" href="photos/photo_4@30-08-2026_00-09-33.jpg">
 
-           <img class="photo" src="photos/photo_7@30-08-2026_00-09-33_thumb.jpg" style="width: 260px; height: 173px"/>
+           <img class="photo" src="photos/photo_4@30-08-2026_00-09-33_thumb.jpg" style="width: 260px; height: 173px"/>
 
           </a>
 
@@ -514,9 +385,9 @@ Sin embargo, este escenario también presenta serios desafíos: las olas de calo
 
          <div class="media_wrap clearfix">
 
-          <a class="photo_wrap clearfix pull_left" href="photos/photo_8@30-08-2026_00-14-03.jpg">
+          <a class="photo_wrap clearfix pull_left" href="photos/photo_5@30-08-2026_00-14-03.jpg">
 
-           <img class="photo" src="photos/photo_8@30-08-2026_00-14-03_thumb.jpg" style="width: 260px; height: 146px"/>
+           <img class="photo" src="photos/photo_5@30-08-2026_00-14-03_thumb.jpg" style="width: 260px; height: 146px"/>
 
           </a>
 
@@ -542,9 +413,9 @@ Sin embargo, este escenario también presenta serios desafíos: las olas de calo
 
        <div class="media_wrap clearfix">
 
-        <a class="photo_wrap clearfix pull_left" href="photos/photo_9@30-08-2026_00-16-02.jpg">
+        <a class="photo_wrap clearfix pull_left" href="photos/photo_6@30-08-2026_00-16-02.jpg">
 
-         <img class="photo" src="photos/photo_9@30-08-2026_00-16-02_thumb.jpg" style="width: 173px; height: 260px"/>
+         <img class="photo" src="photos/photo_6@30-08-2026_00-16-02_thumb.jpg" style="width: 173px; height: 260px"/>
 
         </a>
 
@@ -552,6 +423,74 @@ Sin embargo, este escenario también presenta serios desafíos: las olas de calo
 
        <div class="text">
 Técnicas de acolchado <em>(mulching)</em>
+       </div>
+
+      </div>
+
+     </div>
+
+     <div class="message default clearfix" id="message14">
+
+      <div class="pull_left userpic_wrap">
+
+       <div class="userpic userpic6" style="width: 42px; height: 42px">
+
+        <div class="initials" style="line-height: 42px">
+R
+        </div>
+
+       </div>
+
+      </div>
+
+      <div class="body">
+
+       <div class="pull_right date details" title="30.08.2026 00:48:33 UTC+01:00">
+00:48
+       </div>
+
+       <div class="from_name">
+Rebolledo de la Torre - Huerta 
+       </div>
+
+       <div class="media_wrap clearfix">
+
+        <a class="photo_wrap clearfix pull_left" href="photos/photo_7@30-08-2026_00-48-33.jpg">
+
+         <img class="photo" src="photos/photo_7@30-08-2026_00-48-33_thumb.jpg" style="width: 260px; height: 173px"/>
+
+        </a>
+
+       </div>
+
+       <div class="text">
+<blockquote>Tomate de Penjar</blockquote><br><strong>Siembra:</strong> marzo, abril, mayo<br><strong>Cosecha:</strong>  agosto, septiembre, octubre<br><strong>Info:</strong> Variedad rústica muy resistente a la sequía.<br><a href="" onclick="return ShowHashtag(&quot;marzo&quot;)">#marzo</a>
+       </div>
+
+      </div>
+
+     </div>
+
+     <div class="message default clearfix joined" id="message15">
+
+      <div class="body">
+
+       <div class="pull_right date details" title="30.08.2026 00:49:04 UTC+01:00">
+00:49
+       </div>
+
+       <div class="media_wrap clearfix">
+
+        <a class="photo_wrap clearfix pull_left" href="photos/photo_8@30-08-2026_00-49-04.jpg">
+
+         <img class="photo" src="photos/photo_8@30-08-2026_00-49-04_thumb.jpg" style="width: 260px; height: 172px"/>
+
+        </a>
+
+       </div>
+
+       <div class="text">
+<blockquote>Pepino Español</blockquote><br><strong>Siembra:</strong> abril, mayo, junio<br><strong>Cosecha:</strong> junio, julio, septiembre<br><strong>Info: </strong>Se recomienda sombreado parcial en horas críticas.<br><a href="" onclick="return ShowHashtag(&quot;abril&quot;)">#abril</a>
        </div>
 
       </div>
@@ -578,7 +517,9 @@ Técnicas de acolchado <em>(mulching)</em>
 
 
 
-    
+
+
+
 
 
 
@@ -592,35 +533,48 @@ Técnicas de acolchado <em>(mulching)</em>
   <!-- ================================================================= -->
 
 
-  <!-- SCRIPT PROCESADOR Y CONTROLADOR DEL BANNER -->
+  <!-- SCRIPT PROCESADOR Y CONTROLADOR DE LOS BANNERS INDEPENDIENTES -->
   <script>
+    // Expresión regular que detecta si el texto empieza por # seguido de un mes válido
+    const regexMes = /^#(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i;
+
+    // Estructuras de control aisladas para asegurar la total independencia
+    const bannersConfig = {
+      general: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesGeneral', dotsClass: 'dot-general' },
+      meses: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesMeses', dotsClass: 'dot-meses' }
+    };
+
     document.addEventListener("DOMContentLoaded", function() {
-      // 1. Buscar todos los mensajes del chat que contienen imágenes de la exportación
       const originalMessages = document.querySelectorAll('.message.default');
-      let slidesHTML = '';
-      let dotsHTML = '';
-      let validSlideCount = 0;
+      
+      let generalSlidesHTML = '';
+      let generalDotsHTML = '';
+      let generalCount = 0;
+
+      let mesesSlidesHTML = '';
+      let mesesDotsHTML = '';
+      let mesesCount = 0;
 
       originalMessages.forEach((msg) => {
-        // Buscamos el contenedor de la foto y el enlace
         const photoWrap = msg.querySelector('.media_wrap .photo_wrap');
         
         if (photoWrap) {
-          // Extraemos la ruta de la imagen (ej: "fotos/photo_1@...jpg") desde el atributo href o el src de la img interna
           const imgElement = photoWrap.querySelector('img');
           const imgSrc = imgElement ? imgElement.getAttribute('src') : photoWrap.getAttribute('href');
           
-          // Extraemos el comentario del mensaje adjunto a esa foto
           const textElement = msg.querySelector('.body > .text');
           const commentText = textElement ? textElement.innerHTML : 'Sin descripción';
           
-          // Extraemos el nombre del remitente o título
+          // Limpiamos etiquetas HTML para verificar el patrón de texto
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = commentText;
+          const textPure = tempDiv.textContent.trim();
+
           const fromNameElement = msg.querySelector('.from_name');
           const slideTitle = fromNameElement ? fromNameElement.textContent.trim() : 'Rebolledo de la Torre - Huerta';
 
           if (imgSrc) {
-            // Generamos la estructura limpia para este slide del banner
-            slidesHTML += `
+            const slideHTML = `
               <div class="slide" style="background-image: url('${imgSrc}');">
                 <div class="slide-content">
                   <div class="banner-title">${slideTitle}</div>
@@ -628,75 +582,87 @@ Técnicas de acolchado <em>(mulching)</em>
                 </div>
               </div>
             `;
-            
-            // Generamos sus puntos de navegación correspondientes
-            dotsHTML += `<span class="dot ${validSlideCount === 0 ? 'active' : ''}" onclick="currentSlide(${validSlideCount})"></span>`;
-            validSlideCount++;
+
+            // Discernimiento exclusivo entre banners
+            if (regexMes.test(textPure)) {
+              mesesSlidesHTML += slideHTML;
+              mesesDotsHTML += `<span class="dot dot-meses ${mesesCount === 0 ? 'active' : ''}" onclick="currentSlide('meses', ${mesesCount})"></span>`;
+              mesesCount++;
+            } else {
+              generalSlidesHTML += slideHTML;
+              generalDotsHTML += `<span class="dot dot-general ${generalCount === 0 ? 'active' : ''}" onclick="currentSlide('general', ${generalCount})"></span>`;
+              generalCount++;
+            }
           }
         }
       });
 
-      // Si encontramos imágenes en tu archivo, renderizamos el esqueleto del banner
-      if (validSlideCount > 0) {
-        const bannerWrapper = document.getElementById('dinamicBanner');
-        bannerWrapper.innerHTML = `
+      // Renderización y arranque del Banner General
+      if (generalCount > 0) {
+        bannersConfig.general.totalSlides = generalCount;
+        document.getElementById('dinamicBannerGeneral').innerHTML = `
           <div class="banner-container">
-            <div class="banner-slides" id="bannerSlides">${slidesHTML}</div>
-            <button class="nav-btn prev" onclick="moveSlide(-1)">&#10094;</button>
-            <button class="nav-btn next" onclick="moveSlide(1)">&#10095;</button>
-            <div class="dots-container">${dotsHTML}</div>
+            <div class="banner-slides" id="slidesGeneral">${generalSlidesHTML}</div>
+            <button class="nav-btn prev" onclick="moveSlide('general', -1)">❮</button>
+            <button class="nav-btn next" onclick="moveSlide('general', 1)">❯</button>
+            <div class="dots-container">${generalDotsHTML}</div>
           </div>
         `;
-        
-        // Inicializar el movimiento del banner recién creado
-        initBannerEngine(validSlideCount);
+        startTimer('general');
+      }
+
+      // Renderización y arranque del Banner por Meses
+      if (mesesCount > 0) {
+        bannersConfig.meses.totalSlides = mesesCount;
+        document.getElementById('dinamicBannerMeses').innerHTML = `
+          <div class="banner-container">
+            <div class="banner-slides" id="slidesMeses">${mesesSlidesHTML}</div>
+            <button class="nav-btn prev" onclick="moveSlide('meses', -1)">❮</button>
+            <button class="nav-btn next" onclick="moveSlide('meses', 1)">❯</button>
+            <div class="dots-container">${mesesDotsHTML}</div>
+          </div>
+        `;
+        startTimer('meses');
       }
     });
 
-    // Motor de animación y rotación del banner
-    let currentIndex = 0;
-    let totalSlides = 0;
-    const intervalTime = 6000; 
-    let slideInterval;
+    const intervalTime = 6000; // Tiempo de rotación: 6 segundos
 
-    function initBannerEngine(slideCount) {
-      totalSlides = slideCount;
-      startTimer();
-    }
-
-    function updateBanner() {
-      const slides = document.getElementById('bannerSlides');
-      const dots = document.querySelectorAll('.dot');
+    function updateBanner(key) {
+      const config = bannersConfig[key];
+      const slides = document.getElementById(config.slidesId);
+      const dots = document.querySelectorAll('.' + config.dotsClass);
       if (slides) {
-        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slides.style.transform = `translateX(-${config.currentIndex * 100}%)`;
         dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentIndex);
+          dot.classList.toggle('active', index === config.currentIndex);
         });
       }
     }
 
-    function moveSlide(direction) {
-      if (totalSlides === 0) return;
-      currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
-      updateBanner();
-      resetTimer();
+    function moveSlide(key, direction) {
+      const config = bannersConfig[key];
+      if (config.totalSlides === 0) return;
+      config.currentIndex = (config.currentIndex + direction + config.totalSlides) % config.totalSlides;
+      updateBanner(key);
+      resetTimer(key);
     }
 
-    function currentSlide(index) {
-      currentIndex = index;
-      updateBanner();
-      resetTimer();
+    function currentSlide(key, index) {
+      bannersConfig[key].currentIndex = index;
+      updateBanner(key);
+      resetTimer(key);
     }
 
-    function startTimer() {
-      slideInterval = setInterval(() => {
-        moveSlide(1);
+    function startTimer(key) {
+      bannersConfig[key].interval = setInterval(() => {
+        moveSlide(key, 1);
       }, intervalTime);
     }
 
-    function resetTimer() {
-      clearInterval(slideInterval);
-      startTimer();
+    function resetTimer(key) {
+      clearInterval(bannersConfig[key].interval);
+      startTimer(key);
     }
   </script>
 
