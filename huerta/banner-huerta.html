@@ -138,8 +138,6 @@
 
 
 
-
-
 <!DOCTYPE html>
 <html>
 
@@ -529,16 +527,21 @@ Rebolledo de la Torre - Huerta
 
 
 
+
+
+
+
+
+
+
   </div>
   <!-- ================================================================= -->
 
 
   <!-- SCRIPT PROCESADOR Y CONTROLADOR DE LOS BANNERS INDEPENDIENTES -->
   <script>
-    // Expresión regular que detecta si el texto empieza por # seguido de un mes válido
-    const regexMes = /^#(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i;
+    const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
-    // Estructuras de control aisladas para asegurar la total independencia
     const bannersConfig = {
       general: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesGeneral', dotsClass: 'dot-general' },
       meses: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesMeses', dotsClass: 'dot-meses' }
@@ -565,10 +568,29 @@ Rebolledo de la Torre - Huerta
           const textElement = msg.querySelector('.body > .text');
           const commentText = textElement ? textElement.innerHTML : 'Sin descripción';
           
-          // Limpiamos etiquetas HTML para verificar el patrón de texto
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = commentText;
-          const textPure = tempDiv.textContent.trim();
+          let esMensajeDeMes = false;
+
+          if (textElement) {
+            const hashtags = textElement.querySelectorAll('a');
+            let primerTexto = textElement.textContent.trim().toLowerCase();
+
+            const empiezaPorMes = mesesValidos.some(mes => primerTexto.startsWith(mes) || primerTexto.startsWith('#' + mes));
+            
+            if (empiezaPorMes) {
+              esMensajeDeMes = true;
+            } else if (hashtags.length > 0) {
+              const primerHashtag = hashtags[0];
+              const primerHashtagAttr = primerHashtag.getAttribute('onclick') || '';
+              const textoHashtag = primerHashtag.textContent.trim().toLowerCase();
+              
+              const contieneMesEnOnclick = mesesValidos.some(mes => primerHashtagAttr.toLowerCase().includes(`"${mes}"`) || primerHashtagAttr.toLowerCase().includes(`&quot;${mes}&quot;`));
+              const contieneMesEnTexto = mesesValidos.some(mes => textoHashtag === mes || textoHashtag === '#' + mes);
+
+              if ((contieneMesEnOnclick || contieneMesEnTexto) && textElement.innerHTML.trim().startsWith('<a')) {
+                esMensajeDeMes = true;
+              }
+            }
+          }
 
           const fromNameElement = msg.querySelector('.from_name');
           const slideTitle = fromNameElement ? fromNameElement.textContent.trim() : 'Rebolledo de la Torre - Huerta';
@@ -583,8 +605,7 @@ Rebolledo de la Torre - Huerta
               </div>
             `;
 
-            // Discernimiento exclusivo entre banners
-            if (regexMes.test(textPure)) {
+            if (esMensajeDeMes) {
               mesesSlidesHTML += slideHTML;
               mesesDotsHTML += `<span class="dot dot-meses ${mesesCount === 0 ? 'active' : ''}" onclick="currentSlide('meses', ${mesesCount})"></span>`;
               mesesCount++;
@@ -597,7 +618,6 @@ Rebolledo de la Torre - Huerta
         }
       });
 
-      // Renderización y arranque del Banner General
       if (generalCount > 0) {
         bannersConfig.general.totalSlides = generalCount;
         document.getElementById('dinamicBannerGeneral').innerHTML = `
@@ -611,7 +631,6 @@ Rebolledo de la Torre - Huerta
         startTimer('general');
       }
 
-      // Renderización y arranque del Banner por Meses
       if (mesesCount > 0) {
         bannersConfig.meses.totalSlides = mesesCount;
         document.getElementById('dinamicBannerMeses').innerHTML = `
@@ -626,7 +645,7 @@ Rebolledo de la Torre - Huerta
       }
     });
 
-    const intervalTime = 6000; // Tiempo de rotación: 6 segundos
+    const intervalTime = 6000;
 
     function updateBanner(key) {
       const config = bannersConfig[key];
