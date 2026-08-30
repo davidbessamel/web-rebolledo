@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>Banners Rotatorios Dinámicos - Rebolledo de la Torre</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <style>
+    /* --- ESTILOS DE LOS BANNERS ROTATORIOS --- */
+    .banner-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 30px auto;
+      overflow: hidden;
+      position: relative;
+      background: #222;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .banner-slides {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      width: 100%;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      min-height: 450px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%);
+      z-index: 1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      color: #ffffff;
+      padding: 30px 40px 45px 40px;
+      width: 100%;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    }
+
+    .banner-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #e8f5e9;
+    }
+
+    .banner-text {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      max-width: 700px;
+      color: #f5f5f5;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: 20px;
+      border-radius: 50%;
+      z-index: 3;
+      transition: all 0.3s;
+    }
+
+    .nav-btn:hover { background: rgba(255, 255, 255, 0.8); color: #333; }
+    .prev { left: 20px; }
+    .next { right: 20px; }
+
+    .dots-container {
+      text-align: center;
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      z-index: 3;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 10px;
+      width: 10px;
+      margin: 0 6px;
+      background-color: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      display: inline-block;
+      transition: all 0.4s ease;
+    }
+
+    .active, .dot:hover { background-color: #ffffff; transform: scale(1.3); }
+
+    /* Buffer invisible para procesar el archivo local */
+    #sandbox-data { display: none; }
+    .error-msg { color: #ff6b6b; text-align: center; padding: 30px; font-family: sans-serif; }
+  </style>
+</head>
+<body>
+
+  <!-- CONTENEDORES DE LOS BANNERS DEDICADOS -->
+  <div id="dinamicBannerGeneral"></div>
+  <div id="dinamicBannerMeses"></div>
+
+  <!-- CAJA EN LA SOMBRA PARA EL PARSEO -->
+  <div id="sandbox-data"></div>
+
+  <script>
+    const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+    // Banco de imágenes online (Unsplash) optimizadas para la huerta basadas en el índice del slide
+    const fondosGeneral = [
+      "https://unsplash.com",
+      "https://unsplash.com",
+      "https://unsplash.com"
+    ];
+
+    const fondosMeses = [
+      "https://unsplash.com",
+      "https://unsplash.com",
+      "https://unsplash.com"
+    ];
+
+    const bannersConfig = {
+      general: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesGeneral', dotsClass: 'dot-general' },
+      meses: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesMeses', dotsClass: 'dot-meses' }
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      // Petición asíncrona para leer el fichero messages.html
+      fetch('messages.html')
+        .then(response => {
+          if (!response.ok) throw new Error('No se encuentra el archivo messages.html.');
+          return response.text();
+        })
+        .then(html => {
+          const sandbox = document.getElementById('sandbox-data');
+          sandbox.innerHTML = html;
+          
+          procesarMensajesHibridos();
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('dinamicBannerGeneral').innerHTML = `<p class="error-msg">Error: Asegúrate de hospedar este archivo y "messages.html" bajo un servidor local de pruebas (Live Server o similar).</p>`;
+        });
+    });
+
+    function procesarMensajesHibridos() {
+      const sandbox = document.getElementById('sandbox-data');
+      
+      // Extracción del título directo de tu archivo local
+      const headerTextEl = sandbox.querySelector('.page_header .content .text.bold');
+      const nombreGrupoExtraido = headerTextEl ? headerTextEl.textContent.trim() : 'Rebolledo de la Torre - Huerta';
+
+      const originalMessages = sandbox.querySelectorAll('.message.default');
+      
+      let generalSlidesHTML = '';
+      let generalDotsHTML = '';
+      let generalCount = 0;
+
+      let mesesSlidesHTML = '';
+      let mesesDotsHTML = '';
+      let mesesCount = 0;
+
+      originalMessages.forEach((msg) => {
+        const photoWrap = msg.querySelector('.media_wrap .photo_wrap');
+        
+        if (photoWrap) {
+          const textElement = msg.querySelector('.body > .text');
+          const commentText = textElement ? textElement.innerHTML : 'Sin descripción';
+          
+          let esMensajeDeMes = false;
+          if (textElement) {
+            const textoBuscador = textElement.textContent.toLowerCase();
+            esMensajeDeMes = mesesValidos.some(mes => textoBuscador.includes(mes));
+          }
+
+          // Asignación de imagen remota cíclica del banco de fondos para no saturar
+          let backgroundUrl = '';
+          if (esMensajeDeMes) {
+            backgroundUrl = fondosMeses[mesesCount % fondosMeses.length];
+          } else {
+            backgroundUrl = fondosGeneral[generalCount % fondosGeneral.length];
+          }
+
+          const slideHTML = `
+            <div class="slide" style="background-image: url('${backgroundUrl}');">
+              <div class="slide-content">
+                <div class="banner-title">${nombreGrupoExtraido}</div>
+                <div class="banner-text">${commentText}</div>
+              </div>
+            </div>
+          `;
+
+          if (esMensajeDeMes) {
+            mesesSlidesHTML += slideHTML;
+            mesesDotsHTML += `<span class="dot dot-meses ${mesesCount === 0 ? 'active' : ''}" onclick="currentSlide('meses', ${mesesCount})"></span>`;
+            mesesCount++;
+          } else {
+            generalSlidesHTML += slideHTML;
+            generalDotsHTML += `<span class="dot dot-general ${generalCount === 0 ? 'active' : ''}" onclick="currentSlide('general', ${generalCount})"></span>`;
+            generalCount++;
+          }
+        }
+      });
+
+      // Pintar Banner General
+      if (generalCount > 0) {
+        bannersConfig.general.totalSlides = generalCount;
+        document.getElementById('dinamicBannerGeneral').innerHTML = `
+          <div class="banner-container">
+            <div class="banner-slides" id="slidesGeneral">${generalSlidesHTML}</div>
+            <button class="nav-btn prev" onclick="moveSlide('general', -1)">❮</button>
+            <button class="nav-btn next" onclick="moveSlide('general', 1)">❯</button>
+            <div class="dots-container">${generalDotsHTML}</div>
+          </div>
+        `;
+        startTimer('general');
+      }
+
+      // Pintar Banner de Meses
+      if (mesesCount > 0) {
+        bannersConfig.meses.totalSlides = mesesCount;
+        document.getElementById('dinamicBannerMeses').innerHTML = `
+          <div class="banner-container">
+            <div class="banner-slides" id="slidesMeses">${mesesSlidesHTML}</div>
+            <button class="nav-btn prev" onclick="moveSlide('meses', -1)">❮</button>
+            <button class="nav-btn next" onclick="moveSlide('meses', 1)">❯</button>
+            <div class="dots-container">${mesesDotsHTML}</div>
+          </div>
+        `;
+        startTimer('meses');
+      }
+
+      sandbox.innerHTML = '';
+    }
+
+    const intervalTime = 6000;
+
+    function updateBanner(key) {
+      const config = bannersConfig[key];
+      const slides = document.getElementById(config.slidesId);
+      const dots = document.querySelectorAll('.' + config.dotsClass);
+      if (slides) {
+        slides.style.transform = `translateX(-${config.currentIndex * 100}%)`;
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === config.currentIndex);
+        });
+      }
+    }
+
+    function moveSlide(key, direction) {
+      const config = bannersConfig[key];
+      if (config.totalSlides === 0) return;
+      config.currentIndex = (config.currentIndex + direction + config.totalSlides) % config.totalSlides;
+      updateBanner(key);
+      resetTimer(key);
+    }
+
+    function currentSlide(key, index) {
+      bannersConfig[key].currentIndex = index;
+      updateBanner(key);
+      resetTimer(key);
+    }
+
+    function startTimer(key) {
+      bannersConfig[key].interval = setInterval(() => {
+        moveSlide(key, 1);
+      }, intervalTime);
+    }
+
+    function resetTimer(key) {
+      clearInterval(bannersConfig[key].interval);
+      startTimer(key);
+    }
+  </script>
+
+</body>
+</html>
