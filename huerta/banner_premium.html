@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>Rebolledo de la Torre - Huerta - Banners Premium</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <style>
+    :root { --banner-radius: 16px; --transition-speed: 0.6s; }
+    body { background-color: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; }
+    
+    .banner-container { 
+      width: 100%; 
+      max-width: 900px; 
+      margin: 40px auto; 
+      overflow: hidden; 
+      position: relative; 
+      background: #222; 
+      border-radius: var(--banner-radius); 
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15); 
+      box-sizing: border-box; 
+    }
+    
+    .banner-viewport { width: 100%; overflow: hidden; position: relative; }
+    .banner-slides { display: flex; transition: transform var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
+    
+    /* CAPA DE FONDO: Imagen pura de Telegram */
+    .slide { 
+      min-width: 100%; 
+      box-sizing: border-box; 
+      background-size: cover; 
+      background-position: center; 
+      min-height: 480px; 
+      position: relative; 
+      display: flex; 
+      align-items: flex-end; 
+    }
+    
+    /* CAPA INTERMEDIA: Degradado oscuro para asegurar legibilidad del texto blanco */
+    .slide::before { 
+      content: ''; 
+      position: absolute; 
+      top: 0; left: 0; right: 0; bottom: 0; 
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%); 
+      z-index: 1; 
+    }
+    
+    /* PRIMERA CAPA: Texto flotante y limpio */
+    .slide-content { 
+      position: relative; 
+      z-index: 2; 
+      color: #ffffff; 
+      padding: 35px 45px 50px 45px; 
+      width: 100%; 
+      box-sizing: border-box;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6); 
+    }
+    
+    .banner-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; color: #e8f5e9; letter-spacing: 0.5px; }
+    .banner-text { font-size: 1.15rem; line-height: 1.5; max-width: 750px; color: #f5f5f5; }
+    .banner-text a { color: #38bdf8; text-decoration: none; font-weight: 600; }
+    .banner-text a:hover { text-decoration: underline; }
+    
+    /* Controles */
+    .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(4px); color: white; border: 1px solid rgba(255,255,255,0.2); width: 46px; height: 46px; cursor: pointer; font-size: 20px; border-radius: 50%; z-index: 10; display: flex; justify-content: center; align-items: center; transition: all 0.2s; }
+    .nav-btn:hover { background: rgba(255, 255, 255, 0.9); color: #222; }
+    .prev { left: 20px; } .next { right: 20px; }
+    .dots-container { text-align: center; position: absolute; bottom: 15px; width: 100%; z-index: 10; display: flex; justify-content: center; gap: 8px; }
+    .dot { cursor: pointer; height: 8px; width: 8px; background-color: rgba(255,255,255,0.4); border-radius: 4px; transition: all 0.3s ease; }
+    .dot.active { background-color: #ffffff; width: 24px; }
+  </style>
+</head>
+<body>
+
+  <div class="banner-container" id="containerGeneral" style="display:block">
+    <div class="banner-viewport"><div class="banner-slides" id="slidesGeneral"><div class="slide" style="background-image: url('https://t.me/rebolledodelatorrehuerta/7.jpg');">
+                  <div class="slide-content">
+                    <div class="banner-title">Rebolledo de la Torre - Huerta</div>
+                    <div class="banner-text">
+Históricamente, la subsistencia de <strong>Rebolledo de la Torre</strong> ha estado fuertemente ligada al aprovechamiento de sus recursos hídricos. Las huertas tradicionales de la localidad se han nutrido históricamente de los cauces y escorrentías que descienden de las plataformas calizas de Las Loras, así como de las llanuras aluviales asociadas al curso alto del río <strong>Odra</strong>.
+       </div>
+                  </div>
+                </div>
+<div class="slide" style="background-image: url('https://t.me/rebolledodelatorrehuerta/8.jpg');">
+                  <div class="slide-content">
+                    <div class="banner-title">Rebolledo de la Torre - Huerta</div>
+                    <div class="banner-text">
+El sistema de cultivo tradicional combinaba técnicas de secano para el cereal y leguminosas en los páramos, con parcelas de regadío intensivo localizadas en los minifundios más protegidos del viento del norte.
+       </div>
+                  </div>
+                </div>
+<div class="slide" style="background-image: url('https://t.me/rebolledodelatorrehuerta/9.jpg');">
+                  <div class="slide-content">
+                    <div class="banner-title">Rebolledo de la Torre - Huerta</div>
+                    <div class="banner-text">
+El uso de acequias rudimentarias, pozos de noria y pozas de decantación permitía asegurar cosechas críticas de <strong>patatas, cebolla horcal y berzas</strong>, alimentos fundamentales para soportar los duros y prolongados inviernos de la comarca burgalesa. La rotación de cultivos y el uso de abono animal procedente del pastoreo ovino garantizaban la fertilidad de la tierra de generación en generación.
+       </div>
+                  </div>
+                </div>
+<div class="slide" style="background-image: url('https://t.me/rebolledodelatorrehuerta/10.jpg');">
+                  <div class="slide-content">
+                    <div class="banner-title">Rebolledo de la Torre - Huerta</div>
+                    <div class="banner-text">
+<figure class="rich_block rich_media_item" data-photo-id="5809690781588065876" data-rich-kind="photo" data-spoiler="false">
+<div class="media_wrap clearfix">
+<a class="photo_wrap clearfix pull_left" href="photos/photo_4@30-08-2026_00-09-33.jpg">
+<img class="photo" src="photos/photo_4@30-08-2026_00-09-33_thumb.jpg" style="width: 260px; height: 173px"/>
+</a>
+</div>
+</figure>
+<h1 class="rich_block rich_heading" data-level="1" data-rich-kind="heading">
+<br/>Adaptación de la Huerta al Cambio Climático
+        </h1>
+<p class="rich_block rich_paragraph" data-rich-kind="paragraph" dir="auto">
+<br/><br/>El cambio climático global está transformando el calendario agrícola de Rebolledo de la Torre. El ascenso de las temperaturas medias estivales y la reducción de las heladas tardías primaverales permiten, hoy en día, ensayar el cultivo con éxito de especies históricamente inviables en el norte de Burgos, tales como el boniato, melones de ciclo corto, variedades de pimientos más tardíos o incluso plantas subtropicales de huerta como la okra.
+        </p>
+</div>
+                  </div>
+                </div>
+<div class="slide" style="background-image: url('https://t.me/rebolledodelatorrehuerta/11.jpg');">
+                  <div class="slide-content">
+                    <div class="banner-title">Rebolledo de la Torre - Huerta</div>
+                    <div class="banner-text">
+<p class="rich_block rich_paragraph" data-rich-kind="paragraph" dir="auto">
+Sin embargo, este escenario también presenta serios desafíos: las olas de calor extremas obligan a generalizar el uso de técnicas de acolchado <em>(mulching) </em>para evitar la evaporación del agua, 
+        </p>
+<figure class="rich_block rich_media_item" data-photo-id="5809690781588065878" data-rich-kind="photo" data-spoiler="false">
+<div class="media_wrap clearfix">
+<a class="photo_wrap clearfix pull_left" href="photos/photo_5@30-08-2026_00-14-03.jpg">
+<img class="photo" src="photos/photo_5@30-08-2026_00-14-03_thumb.jpg" style="width: 260px; height: 146px"/>
+</a>
+</div>
+</figure>
+<p class="rich_block rich_paragraph" data-rich-kind="paragraph" dir="auto">
+ redes de sombreado en las horas centrales del verano para prevenir quemaduras en frutos y una planificación estricta del riego por goteo ante la irregularidad de las lluvias estivales.
+        </p>
+</div>
+                  </div>
+                </div>
+<div class="slide" style="background-image: url('https://t.me/rebolledodelatorrehuerta/12.jpg');">
+                  <div class="slide-content">
+                    <div class="banner-title">Rebolledo de la Torre - Huerta</div>
+                    <div class="banner-text">
+Técnicas de acolchado <em>(mulching)</em>
+</div>
+                  </div>
+                </div>
+</div></div>
+    <button class="nav-btn prev" onclick="moveSlide('general', -1)">❮</button>
+    <button class="nav-btn next" onclick="moveSlide('general', 1)">❯</button>
+    <div class="dots-container" id="dotsGeneral"><span class="dot dot-general active" onclick="currentSlide('general', 0)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 1)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 2)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 3)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 4)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 5)"></span>
+</div>
+  </div>
+
+  <div class="banner-container" id="containerMeses" style="display:block">
+    <div class="banner-viewport"><div class="banner-slides" id="slidesMeses"><div class="slide" style="background-image: url('https://t.me/rebolledodelatorrehuerta/14.jpg');">
+                  <div class="slide-content">
+                    <div class="banner-title">Rebolledo de la Torre - Huerta</div>
+                    <div class="banner-text">
+<blockquote>Tomate de Penjar</blockquote><br/><strong>Siembra:</strong> marzo, abril, mayo<br/><strong>Cosecha:</strong>  agosto, septiembre, octubre<br/><strong>Info:</strong> Variedad rústica muy resistente a la sequía.<br/><a href="" onclick='return ShowHashtag("marzo")'>#marzo</a>
+</div>
+                  </div>
+                </div>
+<div class="slide" style="background-image: url('https://t.me/rebolledodelatorrehuerta/15.jpg');">
+                  <div class="slide-content">
+                    <div class="banner-title">Rebolledo de la Torre - Huerta</div>
+                    <div class="banner-text">
+<blockquote>Pepino Español</blockquote><br/><strong>Siembra:</strong> abril, mayo, junio<br/><strong>Cosecha:</strong> junio, julio, septiembre<br/><strong>Info: </strong>Se recomienda sombreado parcial en horas críticas.<br/><a href="" onclick='return ShowHashtag("abril")'>#abril</a>
+</div>
+                  </div>
+                </div>
+</div></div>
+    <button class="nav-btn prev" onclick="moveSlide('meses', -1)">❮</button>
+    <button class="nav-btn next" onclick="moveSlide('meses', 1)">❯</button>
+    <div class="dots-container" id="dotsMeses"><span class="dot dot-meses active" onclick="currentSlide('meses', 0)"></span>
+<span class="dot dot-meses " onclick="currentSlide('meses', 1)"></span>
+</div>
+  </div>
+
+  <script>
+    const bannersConfig = {
+      general: { currentIndex: 0, totalSlides: 6, interval: null, slidesId: 'slidesGeneral', dotClass: 'dot-general' },
+      meses: { currentIndex: 0, totalSlides: 2, interval: null, slidesId: 'slidesMeses', dotClass: 'dot-meses' }
+    };
+
+    const intervalTime = 7000;
+
+    function updateBanner(key) {
+      const config = bannersConfig[key];
+      const slides = document.getElementById(config.slidesId);
+      const dots = document.querySelectorAll('.' + config.dotClass);
+      if (slides) {
+        slides.style.transform = 'translateX(-' + (config.currentIndex * 100) + '%)';
+        dots.forEach((dot, index) => { dot.classList.toggle('active', index === config.currentIndex); });
+      }
+    }
+
+    function moveSlide(key, direction) {
+      const config = bannersConfig[key];
+      if (config.totalSlides === 0) return;
+      config.currentIndex = (config.currentIndex + direction + config.totalSlides) % config.totalSlides;
+      updateBanner(key);
+      resetTimer(key);
+    }
+
+    function currentSlide(key, index) {
+      bannersConfig[key].currentIndex = index;
+      updateBanner(key);
+      resetTimer(key);
+    }
+
+    function startTimer(key) {
+      bannersConfig[key].interval = setInterval(() => { moveSlide(key, 1); }, intervalTime);
+    }
+
+    function resetTimer(key) { clearInterval(bannersConfig[key].interval); startTimer(key); }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if(6 > 0) startTimer('general');
+      if(2 > 0) startTimer('meses');
+    });
+  </script>
+</body>
+</html>
