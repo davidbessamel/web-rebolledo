@@ -126,7 +126,7 @@
     };
 
     document.addEventListener("DOMContentLoaded", function() {
-      // Carga asíncrona automática desde tu misma carpeta
+      // Carga asíncrona desde tu misma carpeta local
       fetch('messages.html')
         .then(response => {
           if (!response.ok) throw new Error('No se detectó el archivo messages.html.');
@@ -139,7 +139,7 @@
         })
         .catch(err => {
           console.error(err);
-          document.getElementById('containerGeneral').innerHTML = `<p class="error-msg">Asegúrate de que "messages.html" esté en la misma carpeta y ejecuta este archivo en un servidor web local (Live Server o similar).</p>`;
+          document.getElementById('containerGeneral').innerHTML = `<p class="error-msg">Asegúrate de tener "messages.html" al lado de este archivo y ejecutarlo en un servidor local (Live Server o un comando HTTP).</p>`;
           document.getElementById('containerGeneral').style.display = 'block';
         });
     });
@@ -152,6 +152,7 @@
       const nombreGrupoRaw = headerTextEl ? headerTextEl.textContent.trim() : 'Rebolledo de la Torre - Huerta';
 
       // 2. CONVERTIR AUTOMÁTICAMENTE AL ALIAS OFICIAL EN MINÚSCULAS
+      // Quita acentos, elimina espacios y fuerza minúsculas estrictas
       const aliasTelegramPublico = nombreGrupoRaw
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
@@ -159,8 +160,8 @@
         .toLowerCase();
 
       // Ajustamos los títulos visuales
-      document.getElementById('titleGeneral').textContent = `${nombreGrupoRaw} - General`;
-      document.getElementById('titleMeses').textContent = `${nombreGrupoRaw} - Calendario Laboral`;
+      document.getElementById('titleGeneral').textContent = nombreGrupoRaw + " - General";
+      document.getElementById('titleMeses').textContent = nombreGrupoRaw + " - Calendario Laboral";
 
       const originalMessages = sandbox.querySelectorAll('.message.default');
       
@@ -187,21 +188,23 @@
           }
 
           if (msgNum) {
-            const slideHTML = `
-              <div class="slide">
-                <blockquote class="telegram-post" data-telegram-post="${aliasTelegramPublico}/${msgNum}" data-width="100%">
-                  <a href="https://t.me{aliasTelegramPublico}/${msgNum}">Ver en Telegram</a>
-                </blockquote>
-              </div>
-            `;
+            // CORRECCIÓN SINTÁCTICA ESTRICTA: Concatenación limpia de cadenas tradicionales
+            const postPath = aliasTelegramPublico + "/" + msgNum;
+            const linkUrl = "https://t.me" + aliasTelegramPublico + "/" + msgNum;
+
+            const slideHTML = '<div class="slide">' +
+                                '<blockquote class="telegram-post" data-telegram-post="' + postPath + '" data-width="100%">' +
+                                  '<a href="' + linkUrl + '">Ver en Telegram</a>' +
+                                '</blockquote>' +
+                              '</div>';
 
             if (esMensajeDeMes) {
               mesesSlidesHTML += slideHTML;
-              mesesDotsHTML += `<span class="dot dot-meses ${mesesCount === 0 ? 'active' : ''}" onclick="currentSlide('meses', ${mesesCount})"></span>`;
+              mesesDotsHTML += '<span class="dot dot-meses ' + (mesesCount === 0 ? 'active' : '') + '" onclick="currentSlide(\'meses\', ' + mesesCount + ')"></span>';
               mesesCount++;
             } else {
               generalSlidesHTML += slideHTML;
-              generalDotsHTML += `<span class="dot dot-general ${generalCount === 0 ? 'active' : ''}" onclick="currentSlide('general', ${generalCount})"></span>`;
+              generalDotsHTML += '<span class="dot dot-general ' + (generalCount === 0 ? 'active' : '') + '" onclick="currentSlide(\'general\', ' + generalCount + ')"></span>';
               generalCount++;
             }
           }
@@ -227,7 +230,7 @@
       }
 
       // 3. INYECCIÓN BAJO DEMANDA DEL SCRIPT OFICIAL DE TELEGRAM
-      // Esto fuerza a que se ejecute después de haber creado los bloques blockquote
+      // Se ejecuta de manera segura asegurando la existencia de los blockquotes
       const telegramScript = document.createElement('script');
       telegramScript.async = true;
       telegramScript.src = "https://telegram.org";
@@ -243,7 +246,7 @@
       const slides = document.getElementById(config.slidesId);
       const dots = document.querySelectorAll('.' + config.dotClass);
       if (slides) {
-        slides.style.transform = `translateX(-${config.currentIndex * 100}%)`;
+        slides.style.transform = 'translateX(-' + (config.currentIndex * 100) + '%)';
         dots.forEach((dot, index) => {
           dot.classList.toggle('active', index === config.currentIndex);
         });
@@ -269,12 +272,7 @@
         moveSlide(key, 1);
       }, intervalTime);
     }
+clearInterval(bannersConfig[key].interval);startTimer(key);}
+    
 
     function resetTimer(key) {
-      clearInterval(bannersConfig[key].interval);
-      startTimer(key);
-    }
-  </script>
-
-</body>
-</html>
