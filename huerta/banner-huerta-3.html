@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>Banners Oficiales Telegram - Rebolledo de la Torre</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <style>
+    /* --- ESTILOS DE LOS CONTENEDORES --- */
+    .banner-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 30px auto;
+      overflow: hidden;
+      position: relative;
+      background: #f1f5f9;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .banner-header-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 15px;
+      border-left: 4px solid #0284c7;
+      padding-left: 10px;
+    }
+
+    .banner-slides {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      width: 100%;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+
+    /* Estilo para que el Widget de Telegram se ajuste de forma panorámica */
+    .slide iframe {
+      width: 100% !important;
+      max-width: 100% !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(15, 23, 42, 0.05);
+      color: #1e293b;
+      border: 1px solid rgba(15, 23, 42, 0.1);
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: 20px;
+      border-radius: 50%;
+      z-index: 3;
+      transition: all 0.3s;
+    }
+
+    .nav-btn:hover { background: rgba(15, 23, 42, 0.8); color: white; }
+    .prev { left: 20px; }
+    .next { right: 20px; }
+
+    .dots-container {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 10px;
+      width: 10px;
+      margin: 0 6px;
+      background-color: #cbd5e1;
+      border-radius: 50%;
+      display: inline-block;
+      transition: all 0.4s ease;
+    }
+
+    .active, .dot:hover { background-color: #0284c7; transform: scale(1.3); }
+
+    #sandbox-data { display: none; }
+    .error-msg { color: #ff6b6b; text-align: center; padding: 20px; font-family: sans-serif; }
+  </style>
+</head>
+<body>
+
+  <!-- CONTENEDOR PARA EL PRIMER BANNER (GENERAL) -->
+  <div class="banner-container" id="containerGeneral" style="display:none;">
+    <div class="banner-header-title" id="titleGeneral">Novedades</div>
+    <div class="banner-slides" id="slidesGeneral"></div>
+    <button class="nav-btn prev" onclick="moveSlide('general', -1)">❮</button>
+    <button class="nav-btn next" onclick="moveSlide('general', 1)">❯</button>
+    <div class="dots-container" id="dotsGeneral"></div>
+  </div>
+
+  <!-- CONTENEDOR PARA EL SEGUNDO BANNER (POR MESES) -->
+  <div class="banner-container" id="containerMeses" style="display:none;">
+    <div class="banner-header-title" id="titleMeses">Calendario Mensual</div>
+    <div class="banner-slides" id="slidesMeses"></div>
+    <button class="nav-btn prev" onclick="moveSlide('meses', -1)">❮</button>
+    <button class="nav-btn next" onclick="moveSlide('meses', 1)">❯</button>
+    <div class="dots-container" id="dotsMeses"></div>
+  </div>
+
+  <!-- BUFFER INTERNO EN LA SOMBRA PARA LEER EL ARCHIVO -->
+  <div id="sandbox-data"></div>
+
+  <!-- Script Oficial de Inserciones Remotas de Telegram -->
+  <script async src="https://telegram.org"></script>
+
+  <script>
+    const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+    // Alias oficial de tu canal público de Telegram
+    const aliasTelegramPublico = "rebolledodelatorrehuerta";
+
+    const bannersConfig = {
+      general: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesGeneral', dotsContainerId: 'dotsGeneral', dotClass: 'dot-general' },
+      meses: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesMeses', dotsContainerId: 'dotsMeses', dotClass: 'dot-meses' }
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      // Petición dinámica local para leer el listado de IDs de tus mensajes
+      fetch('messages.html')
+        .then(response => {
+          if (!response.ok) throw new Error('No se encuentra el archivo messages.html.');
+          return response.text();
+        })
+        .then(html => {
+          const sandbox = document.getElementById('sandbox-data');
+          sandbox.innerHTML = html;
+          procesarYMontarWidgets();
+        })
+        .catch(err => {
+          console.error(err);
+          document.body.innerHTML = `<p class="error-msg">Error: Asegúrate de guardar este código al lado de "messages.html" y ejecutarlo bajo un entorno de servidor web local.</p>`;
+        });
+    });
+
+    function procesarYMontarWidgets() {
+      const sandbox = document.getElementById('sandbox-data');
+      
+      // Capturamos automáticamente el nombre textual del grupo puesto tras el body
+      const headerTextEl = sandbox.querySelector('.page_header .content .text.bold');
+      const nombreGrupoRaw = headerTextEl ? headerTextEl.textContent.trim() : 'Rebolledo de la Torre - Huerta';
+
+      document.getElementById('titleGeneral').textContent = `${nombreGrupoRaw} - General`;
+      document.getElementById('titleMeses').textContent = `${nombreGrupoRaw} - Calendario Laboral`;
+
+      const originalMessages = sandbox.querySelectorAll('.message.default');
+      
+      let generalSlidesHTML = '';
+      let generalDotsHTML = '';
+      let generalCount = 0;
+
+      let mesesSlidesHTML = '';
+      let mesesDotsHTML = '';
+      let mesesCount = 0;
+
+      originalMessages.forEach((msg) => {
+        const photoWrap = msg.querySelector('.media_wrap .photo_wrap');
+        
+        if (photoWrap) {
+          const msgIdAttr = msg.getAttribute('id') || '';
+          const msgNum = msgIdAttr.replace('message', '').trim();
+          
+          const textElement = msg.querySelector('.body > .text');
+          let esMensajeDeMes = false;
+          if (textElement) {
+            const textoBuscador = textElement.textContent.toLowerCase();
+            esMensajeDeMes = mesesValidos.some(mes => textoBuscador.includes(mes));
+          }
+
+          if (msgNum) {
+            // Generación de inserción limpia apuntando de forma exacta al alias público
+            const slideHTML = `
+              <div class="slide">
+                <blockquote class="telegram-post" data-telegram-post="${aliasTelegramPublico}/${msgNum}" data-width="100%">
+                  <a href="https://t.me{aliasTelegramPublico}/${msgNum}">Cargando contenido desde Telegram...</a>
+                </blockquote>
+              </div>
+            `;
+
+            if (esMensajeDeMes) {
+              mesesSlidesHTML += slideHTML;
+              mesesDotsHTML += `<span class="dot dot-meses ${mesesCount === 0 ? 'active' : ''}" onclick="currentSlide('meses', ${mesesCount})"></span>`;
+              mesesCount++;
+            } else {
+              generalSlidesHTML += slideHTML;
+              generalDotsHTML += `<span class="dot dot-general ${generalCount === 0 ? 'active' : ''}" onclick="currentSlide('general', ${generalCount})"></span>`;
+              generalCount++;
+            }
+          }
+        }
+      });
+
+      // Render e inicio de rotación automática del Banner General
+      if (generalCount > 0) {
+        bannersConfig.general.totalSlides = generalCount;
+        document.getElementById('slidesGeneral').innerHTML = generalSlidesHTML;
+        document.getElementById('dotsGeneral').innerHTML = generalDotsHTML;
+        document.getElementById('containerGeneral').style.display = 'block';
+        startTimer('general');
+      }
+
+      // Render e inicio de rotación automática del Banner de Meses
+      if (mesesCount > 0) {
+        bannersConfig.meses.totalSlides = mesesCount;
+        document.getElementById('slidesMeses').innerHTML = mesesSlidesHTML;
+        document.getElementById('dotsMeses').innerHTML = mesesDotsHTML;
+        document.getElementById('containerMeses').style.display = 'block';
+        startTimer('meses');
+      }
+
+      // Solicitamos a Telegram que renderice las cajas inyectadas con sus imágenes reales
+      if (window.Telegram && window.Telegram.MyWidgets) {
+        window.Telegram.MyWidgets.init();
+      }
+
+      sandbox.innerHTML = '';
+    }
+
+    const intervalTime = 7000; 
+
+    function updateBanner(key) {
+      const config = bannersConfig[key];
+      const slides = document.getElementById(config.slidesId);
+      const dots = document.querySelectorAll('.' + config.dotClass);
+      if (slides) {
+        slides.style.transform = `translateX(-${config.currentIndex * 100}%)`;
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === config.currentIndex);
+        });
+      }
+    }
+
+    function moveSlide(key, direction) {
+      const config = bannersConfig[key];
+      if (config.totalSlides === 0) return;
+      config.currentIndex = (config.currentIndex + direction + config.totalSlides) % config.totalSlides;
+      updateBanner(key);
+      resetTimer(key);
+    }
+
+    function currentSlide(key, index) {
+      bannersConfig[key].currentIndex = index;
+      updateBanner(key);
+      resetTimer(key);
+    }
+
+    function startTimer(key) {
+      bannersConfig[key].interval = setInterval(() => {
+        moveSlide(key, 1);
+      }, intervalTime);
+    }
+
+    function resetTimer(key) {
+      clearInterval(bannersConfig[key].interval);
+      startTimer(key);
+    }
+  </script>
+
+</body>
+</html>
