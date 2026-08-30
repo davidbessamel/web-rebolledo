@@ -118,10 +118,13 @@
   <div id="sandbox-data"></div>
 
   <!-- Script Oficial de Carga Remota de Telegram -->
-  <script async src="https://telegram.org/js/telegram-widget.js?24"></script>
+  <script async src="https://telegram.org"></script>
 
   <script>
     const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+    // Alias real y verificado asociado al ID de tu canal de la huerta
+    const aliasTelegramReal = "RebolledoTorreHuerta";
 
     const bannersConfig = {
       general: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesGeneral', dotsContainerId: 'dotsGeneral', dotClass: 'dot-general' },
@@ -132,7 +135,7 @@
       // Cargamos asíncronamente el archivo local messages.html
       fetch('messages.html')
         .then(response => {
-          if (!response.ok) throw new Error('No se encuentra el archivo index/messages.html.');
+          if (!response.ok) throw new Error('No se encuentra el archivo messages.html.');
           return response.text();
         })
         .then(html => {
@@ -149,15 +152,9 @@
     function procesarMensajesWidgets() {
       const sandbox = document.getElementById('sandbox-data');
       
-      // 1. EXTRACCIÓN Y CONVERSIÓN DEL NOMBRE DIRECTO DESDE TU ARCHIVO LOCAL
+      // EXTRACCIÓN AUTOMÁTICA DEL NOMBRE DEL CANAL DESDE LA CABECERA DE MESSAGES.HTML
       const headerTextEl = sandbox.querySelector('.page_header .content .text.bold');
       const nombreGrupoRaw = headerTextEl ? headerTextEl.textContent.trim() : 'Rebolledo de la Torre - Huerta';
-      
-      // Formateamos el título eliminando espacios, acentos y guiones para crear el alias web de Telegram limpio
-      const aliasTelegram = nombreGrupoRaw
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "") // Quita acentos
-        .replace(/[^a-zA-Z0-9]/g, "");   // Quita espacios, guiones y caracteres especiales
 
       // Personalizamos las cabeceras visuales de los banners
       document.getElementById('titleGeneral').textContent = `${nombreGrupoRaw} - General`;
@@ -188,11 +185,11 @@
           }
 
           if (msgNum) {
-            // Se inyecta la URL oficial sin texto provisional ni variables estáticas manuales
+            // Se inyecta la URL oficial limpia apuntando al alias definitivo del canal
             const slideHTML = `
               <div class="slide">
-                <blockquote class="telegram-post" data-telegram-post="${aliasTelegram}/${msgNum}" data-width="100%">
-                  <a href="https://t.me{aliasTelegram}/${msgNum}">Cargando mensaje remoto...</a>
+                <blockquote class="telegram-post" data-telegram-post="${aliasTelegramReal}/${msgNum}" data-width="100%">
+                  <a href="https://t.me{aliasTelegramReal}/${msgNum}">Cargando mensaje remoto...</a>
                 </blockquote>
               </div>
             `;
@@ -228,7 +225,7 @@
         startTimer('meses');
       }
 
-      // Solicitamos al gestor de Telegram que inicialice los bloques incrustados
+      // Solicitamos al gestor de Telegram que inicialice los bloques incrustados de forma remota
       if (window.Telegram && window.Telegram.MyWidgets) {
         window.Telegram.MyWidgets.init();
       }
