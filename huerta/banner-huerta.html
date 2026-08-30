@@ -45,7 +45,7 @@
       min-height: 350px;
     }
 
-    /* Estilo para ajustar el Widget nativo de Telegram */
+    /* Estilo para el Widget nativo de Telegram */
     .slide iframe {
       width: 100% !important;
       max-width: 100% !important;
@@ -91,7 +91,7 @@
     .active, .dot:hover { background-color: #0284c7; transform: scale(1.3); }
 
     #sandbox-data { display: none; }
-    .error-msg { color: #ff6b6b; text-align: center; padding: 20px; }
+    .error-msg { color: #ff6b6b; text-align: center; padding: 20px; font-family: sans-serif; }
   </style>
 </head>
 <body>
@@ -114,9 +114,10 @@
     <div class="dots-container" id="dotsMeses"></div>
   </div>
 
+  <!-- BUFFER INTERNO EN LA SOMBRA -->
   <div id="sandbox-data"></div>
 
-  <!-- Script Oficial de Widgets de Telegram -->
+  <!-- Script Oficial de Carga Remota de Telegram -->
   <script async src="https://telegram.org/js/telegram-widget.js?24"></script>
 
   <script>
@@ -128,9 +129,10 @@
     };
 
     document.addEventListener("DOMContentLoaded", function() {
+      // Cargamos asíncronamente el archivo local messages.html
       fetch('messages.html')
         .then(response => {
-          if (!response.ok) throw new Error('No se encuentra messages.html.');
+          if (!response.ok) throw new Error('No se encuentra el archivo index/messages.html.');
           return response.text();
         })
         .then(html => {
@@ -140,22 +142,24 @@
         })
         .catch(err => {
           console.error(err);
-          document.body.innerHTML = `<p class="error-msg">Error crítico: Asegúrate de servir el archivo bajo un servidor HTTP local y tener messages.html al lado.</p>`;
+          document.body.innerHTML = `<p class="error-msg">Error: Asegúrate de tener "messages.html" al lado de este archivo y cargarlo con un servidor local de pruebas.</p>`;
         });
     });
 
     function procesarMensajesWidgets() {
       const sandbox = document.getElementById('sandbox-data');
       
-      // EXTRAEMOS EL NOMBRE DEL GRUPO DESDE LA CABECERA
+      // 1. EXTRACCIÓN Y CONVERSIÓN DEL NOMBRE DIRECTO DESDE TU ARCHIVO LOCAL
       const headerTextEl = sandbox.querySelector('.page_header .content .text.bold');
       const nombreGrupoRaw = headerTextEl ? headerTextEl.textContent.trim() : 'Rebolledo de la Torre - Huerta';
       
-      // Limpiamos espacios y caracteres raros para convertirlo en el alias web aproximado de Telegram
-      // Nota: Si el alias real difiere del nombre en texto de la cabecera, sustituye esta variable manualmente
-      const aliasTelegram = "RebolledoDeLaTorreHuerta"; 
+      // Formateamos el título eliminando espacios, acentos y guiones para crear el alias web de Telegram limpio
+      const aliasTelegram = nombreGrupoRaw
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // Quita acentos
+        .replace(/[^a-zA-Z0-9]/g, "");   // Quita espacios, guiones y caracteres especiales
 
-      // Ajustamos los títulos visibles de los banners con el nombre extraído
+      // Personalizamos las cabeceras visuales de los banners
       document.getElementById('titleGeneral').textContent = `${nombreGrupoRaw} - General`;
       document.getElementById('titleMeses').textContent = `${nombreGrupoRaw} - Calendario Laboral`;
 
@@ -184,12 +188,11 @@
           }
 
           if (msgNum) {
-            // CONSTRUCCIÓN DEL EMBED OFICIAL DE TELEGRAM
-            // Esto le dice al script oficial de Telegram que renderice el post de forma segura
+            // Se inyecta la URL oficial sin texto provisional ni variables estáticas manuales
             const slideHTML = `
               <div class="slide">
                 <blockquote class="telegram-post" data-telegram-post="${aliasTelegram}/${msgNum}" data-width="100%">
-                  <a href="https://t.me{aliasTelegram}/${msgNum}">Ver post en Telegram</a>
+                  <a href="https://t.me{aliasTelegram}/${msgNum}">Cargando mensaje remoto...</a>
                 </blockquote>
               </div>
             `;
@@ -225,7 +228,7 @@
         startTimer('meses');
       }
 
-      // Forzar al script oficial de Telegram a renderizar los bloques inyectados
+      // Solicitamos al gestor de Telegram que inicialice los bloques incrustados
       if (window.Telegram && window.Telegram.MyWidgets) {
         window.Telegram.MyWidgets.init();
       }
@@ -233,7 +236,7 @@
       sandbox.innerHTML = '';
     }
 
-    const intervalTime = 8000; // Aumentado a 8s ya que los widgets cargan contenido dinámico
+    const intervalTime = 8000; 
 
     function updateBanner(key) {
       const config = bannersConfig[key];
