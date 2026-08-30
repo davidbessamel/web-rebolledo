@@ -2,10 +2,55 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <title>Banners Oficiales Telegram - Rebolledo de la Torre</title>
+  <title>Plantilla Universal de Banners - Telegram Widgets</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   
   <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8fafc;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* --- CARGADOR INICIAL --- */
+    .upload-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      border: 2px dashed #cbd5e1;
+    }
+
+    .upload-container h2 {
+      margin-top: 0;
+      color: #1e293b;
+    }
+
+    .upload-container p {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    .file-input-btn {
+      background-color: #0284c7;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .file-input-btn:hover {
+      background-color: #0369a1;
+    }
+
     /* --- ESTILOS DE LOS CONTENEDORES --- */
     .banner-container {
       width: 100%;
@@ -16,7 +61,6 @@
       background: #f1f5f9;
       border-radius: 12px;
       box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
       box-sizing: border-box;
     }
@@ -45,7 +89,7 @@
       min-height: 400px;
     }
 
-    /* Estilo para que el Widget de Telegram se ajuste de forma panorámica */
+    /* Ajuste responsivo de la inserción oficial de Telegram */
     .slide iframe {
       width: 100% !important;
       max-width: 100% !important;
@@ -91,14 +135,21 @@
     .active, .dot:hover { background-color: #0284c7; transform: scale(1.3); }
 
     #sandbox-data { display: none; }
-    .error-msg { color: #ff6b6b; text-align: center; padding: 20px; font-family: sans-serif; }
   </style>
 </head>
 <body>
 
+  <!-- CARGADOR INTERACTIVO INICIAL -->
+  <div class="upload-container" id="uploaderBox">
+    <h2>Cargar Archivo del Canal</h2>
+    <p>Selecciona tu archivo <strong>messages.html</strong> exportado para generar los banners automáticamente en local.</p>
+    <input type="file" id="fileSelector" accept=".html" style="display:none;" onchange="cargarArchivoLocal(this)">
+    <button class="file-input-btn" onclick="document.getElementById('fileSelector').click()">Seleccionar messages.html</button>
+  </div>
+
   <!-- CONTENEDOR PARA EL PRIMER BANNER (GENERAL) -->
   <div class="banner-container" id="containerGeneral" style="display:none;">
-    <div class="banner-header-title" id="titleGeneral">Novedades</div>
+    <div class="banner-header-title" id="titleGeneral">General</div>
     <div class="banner-slides" id="slidesGeneral"></div>
     <button class="nav-btn prev" onclick="moveSlide('general', -1)">❮</button>
     <button class="nav-btn next" onclick="moveSlide('general', 1)">❯</button>
@@ -107,57 +158,62 @@
 
   <!-- CONTENEDOR PARA EL SEGUNDO BANNER (POR MESES) -->
   <div class="banner-container" id="containerMeses" style="display:none;">
-    <div class="banner-header-title" id="titleMeses">Calendario Mensual</div>
+    <div class="banner-header-title" id="titleMeses">Calendario</div>
     <div class="banner-slides" id="slidesMeses"></div>
     <button class="nav-btn prev" onclick="moveSlide('meses', -1)">❮</button>
     <button class="nav-btn next" onclick="moveSlide('meses', 1)">❯</button>
     <div class="dots-container" id="dotsMeses"></div>
   </div>
 
-  <!-- BUFFER INTERNO EN LA SOMBRA PARA LEER EL ARCHIVO -->
+  <!-- BUFFER EN LA SOMBRA PARA EL PROCESAMIENTO -->
   <div id="sandbox-data"></div>
 
-  <!-- Script Oficial de Inserciones Remotas de Telegram -->
+  <!-- Cargador de Inserciones Oficiales de Telegram -->
   <script async src="https://telegram.org"></script>
 
   <script>
     const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-
-    // Alias oficial de tu canal público de Telegram
-    const aliasTelegramPublico = "rebolledodelatorrehuerta";
 
     const bannersConfig = {
       general: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesGeneral', dotsContainerId: 'dotsGeneral', dotClass: 'dot-general' },
       meses: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesMeses', dotsContainerId: 'dotsMeses', dotClass: 'dot-meses' }
     };
 
-    document.addEventListener("DOMContentLoaded", function() {
-      // Petición dinámica local para leer el listado de IDs de tus mensajes
-      fetch('messages.html')
-        .then(response => {
-          if (!response.ok) throw new Error('No se encuentra el archivo messages.html.');
-          return response.text();
-        })
-        .then(html => {
-          const sandbox = document.getElementById('sandbox-data');
-          sandbox.innerHTML = html;
-          procesarYMontarWidgets();
-        })
-        .catch(err => {
-          console.error(err);
-          document.body.innerHTML = `<p class="error-msg">Error: Asegúrate de guardar este código al lado de "messages.html" y ejecutarlo bajo un entorno de servidor web local.</p>`;
-        });
-    });
+    function cargarArchivoLocal(input) {
+      const file = input.files[0];
+      if (!file) return;
 
-    function procesarYMontarWidgets() {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const sandbox = document.getElementById('sandbox-data');
+        sandbox.innerHTML = e.target.result;
+        
+        // Ocultamos el selector de archivo inicial
+        document.getElementById('uploaderBox').style.display = 'none';
+        
+        // Procesamos la plantilla universal
+        procesarPlantillaUniversal();
+      };
+      reader.readAsText(file);
+    }
+
+    function procesarPlantillaUniversal() {
       const sandbox = document.getElementById('sandbox-data');
       
-      // Capturamos automáticamente el nombre textual del grupo puesto tras el body
+      // 1. EXTRACCIÓN MAESTRA DEL TÍTULO DE LA CABECERA ORIGINAL
       const headerTextEl = sandbox.querySelector('.page_header .content .text.bold');
-      const nombreGrupoRaw = headerTextEl ? headerTextEl.textContent.trim() : 'Rebolledo de la Torre - Huerta';
+      const nombreGrupoRaw = headerTextEl ? headerTextEl.textContent.trim() : 'Canal de Telegram';
 
+      // 2. CONVERSIÓN INTELIGENTE EN ALIAS VÁLIDO PARA TELEGRAM
+      const aliasTelegramPublico = nombreGrupoRaw
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // Quita acentos
+        .replace(/[^a-zA-Z0-9]/g, "")   // Quita espacios y símbolos
+        .toLowerCase();                 // Todo a minúsculas estándar de URL
+
+      // Modificamos los títulos dinámicos con el nombre extraído
       document.getElementById('titleGeneral').textContent = `${nombreGrupoRaw} - General`;
-      document.getElementById('titleMeses').textContent = `${nombreGrupoRaw} - Calendario Laboral`;
+      document.getElementById('titleMeses').textContent = `${nombreGrupoRaw} - Calendario Mensual`;
 
       const originalMessages = sandbox.querySelectorAll('.message.default');
       
@@ -184,7 +240,7 @@
           }
 
           if (msgNum) {
-            // Generación de inserción limpia apuntando de forma exacta al alias público
+            // Incrustación oficial construida dinámicamente
             const slideHTML = `
               <div class="slide">
                 <blockquote class="telegram-post" data-telegram-post="${aliasTelegramPublico}/${msgNum}" data-width="100%">
@@ -206,7 +262,7 @@
         }
       });
 
-      // Render e inicio de rotación automática del Banner General
+      // Renderizar y arrancar Banner General
       if (generalCount > 0) {
         bannersConfig.general.totalSlides = generalCount;
         document.getElementById('slidesGeneral').innerHTML = generalSlidesHTML;
@@ -215,7 +271,7 @@
         startTimer('general');
       }
 
-      // Render e inicio de rotación automática del Banner de Meses
+      // Renderizar y arrancar Banner de Meses
       if (mesesCount > 0) {
         bannersConfig.meses.totalSlides = mesesCount;
         document.getElementById('slidesMeses').innerHTML = mesesSlidesHTML;
@@ -224,7 +280,7 @@
         startTimer('meses');
       }
 
-      // Solicitamos a Telegram que renderice las cajas inyectadas con sus imágenes reales
+      // Solicitamos a la pasarela de Telegram que dibuje los widgets remotos
       if (window.Telegram && window.Telegram.MyWidgets) {
         window.Telegram.MyWidgets.init();
       }
@@ -237,40 +293,6 @@
     function updateBanner(key) {
       const config = bannersConfig[key];
       const slides = document.getElementById(config.slidesId);
-      const dots = document.querySelectorAll('.' + config.dotClass);
-      if (slides) {
-        slides.style.transform = `translateX(-${config.currentIndex * 100}%)`;
-        dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === config.currentIndex);
-        });
-      }
-    }
 
-    function moveSlide(key, direction) {
-      const config = bannersConfig[key];
-      if (config.totalSlides === 0) return;
-      config.currentIndex = (config.currentIndex + direction + config.totalSlides) % config.totalSlides;
-      updateBanner(key);
-      resetTimer(key);
-    }
 
-    function currentSlide(key, index) {
-      bannersConfig[key].currentIndex = index;
-      updateBanner(key);
-      resetTimer(key);
-    }
-
-    function startTimer(key) {
-      bannersConfig[key].interval = setInterval(() => {
-        moveSlide(key, 1);
-      }, intervalTime);
-    }
-
-    function resetTimer(key) {
-      clearInterval(bannersConfig[key].interval);
-      startTimer(key);
-    }
-  </script>
-
-</body>
-</html>
+    const dots = document.querySelectorAll('.' + config.dotClass);if (slides) {slides.style.transform = translateX(-${config.currentIndex * 100}%);dots.forEach((dot, index) => {dot.classList.toggle('active', index === config.currentIndex);});}}function moveSlide(key, direction) {const config = bannersConfig[key];if (config.totalSlides === 0) return;config.currentIndex = (config.currentIndex + direction + config.totalSlides) % config.totalSlides;updateBanner(key);resetTimer(key);}function currentSlide(key, index) {bannersConfig[key].currentIndex = index;updateBanner(key);resetTimer(key);}function startTimer(key) {bannersConfig[key].interval = setInterval(() => {moveSlide(key, 1);}, intervalTime);}function resetTimer(key) {clearInterval(bannersConfig[key].interval);startTimer(key);}
