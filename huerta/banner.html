@@ -2,315 +2,103 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <title>Banners Universales Integrados - Estado del Arte</title>
+  <title>Rebolledo de la Torre - Huerta - Banners</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  
   <style>
-    :root {
-      --banner-max-width: 900px;
-      --banner-radius: 16px;
-      --transition-speed: 0.6s;
-    }
-
-    body {
-      background-color: #f0f2f5;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 10px;
-    }
-
-    /* --- CONTENEDORES DE DISEÑO DE VANGUARDIA --- */
-    .banner-container {
-      width: 100%;
-      max-width: var(--banner-max-width);
-      margin: 40px auto;
-      overflow: hidden;
-      position: relative;
-      background: #ffffff;
-      border-radius: var(--banner-radius);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-      border: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 24px;
-      box-sizing: border-box;
-    }
-
-    .banner-header-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #1c1e21;
-      margin-top: 0;
-      margin-bottom: 20px;
-      padding-left: 12px;
-      border-left: 5px solid #0088cc;
-      letter-spacing: -0.3px;
-    }
-
-    .banner-viewport {
-      width: 100%;
-      overflow: hidden;
-      position: relative;
-      border-radius: 12px;
-    }
-
-    .banner-slides {
-      display: flex;
-      transition: transform var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
-      width: 100%;
-    }
-
-    .slide {
-      min-width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #fafafa;
-      /* Ajuste dinámico de altura para contener cómodamente los posts con imágenes de Telegram */
-      min-height: 480px; 
-      position: relative;
-    }
-
-    /* Estilo SOTA para aislamiento y carga de IFrames Nativos */
-    .slide iframe {
-      width: 100%;
-      max-width: 600px;
-      height: 480px;
-      border: none;
-      background: transparent;
-      overflow: hidden;
-      transition: opacity 0.3s ease;
-    }
-
-    /* Controles de Navegación Ergonométricos */
-    .nav-btn {
-      position: absolute;
-      top: 55%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(4px);
-      color: #1c1e21;
-      border: 1px solid rgba(0,0,0,0.08);
-      width: 44px;
-      height: 44px;
-      cursor: pointer;
-      font-size: 18px;
-      border-radius: 50%;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: all 0.2s ease;
-    }
-
-    .nav-btn:hover { 
-      background: #0088cc; 
-      color: #ffffff;
-      transform: translateY(-50%) scale(1.05);
-    }
-    .prev { left: 10px; }
-    .next { right: 10px; }
-
-    /* Indicadores de progreso (Dots) minimalistas */
-    .dots-container {
-      text-align: center;
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .dot {
-      cursor: pointer;
-      height: 8px;
-      width: 8px;
-      background-color: #e4e6eb;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-    }
-
-    .dot.active { 
-      background-color: #0088cc; 
-      width: 24px;
-    }
-
-    /* Caja aislada en memoria */
-    #sandbox-data { display: none; }
-    .error-card { color: #e11d48; text-align: center; padding: 24px; font-weight: 500; }
+    :root { --banner-radius: 16px; --transition-speed: 0.6s; }
+    body { background-color: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; }
+    .banner-container { width: 100%; max-width: 900px; margin: 40px auto; overflow: hidden; position: relative; background: #ffffff; border-radius: var(--banner-radius); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.06); padding: 24px; box-sizing: border-box; }
+    .banner-header-title { font-size: 1.3rem; font-weight: 700; color: #1c1e21; margin: 0 0 20px 0; padding-left: 12px; border-left: 5px solid #0088cc; }
+    .banner-viewport { width: 100%; overflow: hidden; position: relative; border-radius: 12px; }
+    .banner-slides { display: flex; transition: transform var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
+    .slide { min-width: 100%; box-sizing: border-box; display: flex; justify-content: center; align-items: center; background: #fafafa; min-height: 480px; }
+    .slide iframe { width: 100%; max-width: 600px; height: 480px; border: none; }
+    .nav-btn { position: absolute; top: 55%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.9); color: #1c1e21; border: 1px solid rgba(0,0,0,0.08); width: 44px; height: 44px; cursor: pointer; font-size: 18px; border-radius: 50%; z-index: 10; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .nav-btn:hover { background: #0088cc; color: #ffffff; }
+    .prev { left: 10px; } .next { right: 10px; }
+    .dots-container { text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 8px; }
+    .dot { cursor: pointer; height: 8px; width: 8px; background-color: #e4e6eb; border-radius: 4px; transition: all 0.3s ease; }
+    .dot.active { background-color: #0088cc; width: 24px; }
   </style>
 </head>
 <body>
 
-  <!-- CONTENEDOR MAESTRO: BANNER GENERAL -->
-  <div class="banner-container" id="containerGeneral" style="display:none;">
-    <div class="banner-header-title" id="titleGeneral">Novedades Generales</div>
-    <div class="banner-viewport">
-      <div class="banner-slides" id="slidesGeneral"></div>
-    </div>
+  <!-- BANNER GENERAL -->
+  <div class="banner-container" id="containerGeneral" style="display:block">
+    <div class="banner-header-title">Rebolledo de la Torre - Huerta - Novedades Generales</div>
+    <div class="banner-viewport"><div class="banner-slides" id="slidesGeneral"><div class="slide"><iframe src="https://t.merebolledodelatorrehuerta/7?embed=1" scrolling="no"></iframe></div>
+<div class="slide"><iframe src="https://t.merebolledodelatorrehuerta/8?embed=1" scrolling="no"></iframe></div>
+<div class="slide"><iframe src="https://t.merebolledodelatorrehuerta/9?embed=1" scrolling="no"></iframe></div>
+<div class="slide"><iframe src="https://t.merebolledodelatorrehuerta/10?embed=1" scrolling="no"></iframe></div>
+<div class="slide"><iframe src="https://t.merebolledodelatorrehuerta/11?embed=1" scrolling="no"></iframe></div>
+<div class="slide"><iframe src="https://t.merebolledodelatorrehuerta/12?embed=1" scrolling="no"></iframe></div>
+</div></div>
     <button class="nav-btn prev" onclick="moveSlide('general', -1)">❮</button>
     <button class="nav-btn next" onclick="moveSlide('general', 1)">❯</button>
-    <div class="dots-container" id="dotsGeneral"></div>
+    <div class="dots-container" id="dotsGeneral"><span class="dot dot-general active" onclick="currentSlide('general', 0)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 1)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 2)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 3)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 4)"></span>
+<span class="dot dot-general " onclick="currentSlide('general', 5)"></span>
+</div>
   </div>
 
-  <!-- CONTENEDOR MAESTRO: BANNER CALENDARIO POR MESES -->
-  <div class="banner-container" id="containerMeses" style="display:none;">
-    <div class="banner-header-title" id="titleMeses">Calendario de Labores</div>
-    <div class="banner-viewport">
-      <div class="banner-slides" id="slidesMeses"></div>
-    </div>
+  <!-- BANNER MESES -->
+  <div class="banner-container" id="containerMeses" style="display:block">
+    <div class="banner-header-title">Rebolledo de la Torre - Huerta - Calendario de Labores</div>
+    <div class="banner-viewport"><div class="banner-slides" id="slidesMeses"><div class="slide"><iframe src="https://t.merebolledodelatorrehuerta/14?embed=1" scrolling="no"></iframe></div>
+<div class="slide"><iframe src="https://t.merebolledodelatorrehuerta/15?embed=1" scrolling="no"></iframe></div>
+</div></div>
     <button class="nav-btn prev" onclick="moveSlide('meses', -1)">❮</button>
     <button class="nav-btn next" onclick="moveSlide('meses', 1)">❯</button>
-    <div class="dots-container" id="dotsMeses"></div>
+    <div class="dots-container" id="dotsMeses"><span class="dot dot-meses active" onclick="currentSlide('meses', 0)"></span>
+<span class="dot dot-meses " onclick="currentSlide('meses', 1)"></span>
+</div>
   </div>
 
-  <!-- CAJA EN LA SOMBRA PARA INGENIERÍA DE DATOS -->
-  <div id="sandbox-data"></div>
-
   <script>
-    const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-
     const bannersConfig = {
-      general: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesGeneral', dotsContainerId: 'dotsGeneral', dotClass: 'dot-general' },
-      meses: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesMeses', dotsContainerId: 'dotsMeses', dotClass: 'dot-meses' }
+      general: { currentIndex: 0, totalSlides: 6, interval: null, slidesId: 'slidesGeneral', dotClass: 'dot-general' },
+      meses: { currentIndex: 0, totalSlides: 2, interval: null, slidesId: 'slidesMeses', dotClass: 'dot-meses' }
     };
 
-    document.addEventListener("DOMContentLoaded", function() {
-      // Extracción asíncrona automatizada desde la misma carpeta raíz
-      fetch('messages.html')
-        .then(response => {
-          if (!response.ok) throw new Error('messages.html no encontrado.');
-          return response.text();
-        })
-        .then(html => {
-          const sandbox = document.getElementById('sandbox-data');
-          sandbox.innerHTML = html;
-          
-          ejecutarArquitecturaSOTA();
-        })
-        .catch(err => {
-          console.error(err);
-          document.getElementById('containerGeneral').innerHTML = `<p class="error-card">Fallo de Origen: Asegúrate de alojar "banner.html" y "messages.html" juntos en un entorno local con servidor web (como VS Code Live Server).</p>`;
-          document.getElementById('containerGeneral').style.display = 'block';
-        });
-    });
+    const intervalTime = 7000;
 
-    function ejecutarArquitecturaSOTA() {
-      const sandbox = document.getElementById('sandbox-data');
-      
-      // 1. EXTRACCIÓN AVANZADA DE METADATOS Y ALIAS REALES
-      const headerTextEl = sandbox.querySelector('.page_header .content .text.bold');
-      const nombreGrupoRaw = headerTextEl ? headerTextEl.textContent.trim() : 'Rebolledo de la Torre - Huerta';
-
-      // Algoritmo de filtrado de alias: busca enlaces internos del chat fijado para obtener el alias web real exacto
-      let aliasTelegramPublico = "";
-      const linksServicio = sandbox.querySelectorAll('.message.service a[href*="#go_to_message"]');
-      
-      // Buscamos patrones de Telegram como enlaces que contengan alias si los hubiera o limpiamos la cabecera de forma segura
-      aliasTelegramPublico = nombreGrupoRaw
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-zA-Z0-9]/g, "")
-        .toLowerCase();
-
-      // Forzamos compatibilidad exacta detectada para tu canal en los servidores
-      if (aliasTelegramPublico.includes("rebolledodelatorrehuerta")) {
-        aliasTelegramPublico = "rebolledodelatorrehuerta";
+    function updateBanner(key) {
+      const config = bannersConfig[key];
+      const slides = document.getElementById(config.slidesId);
+      const dots = document.querySelectorAll('.' + config.dotClass);
+      if (slides) {
+        slides.style.transform = 'translateX(-' + (config.currentIndex * 100) + '%)';
+        dots.forEach((dot, index) => { dot.classList.toggle('active', index === config.currentIndex); });
       }
-
-      // Modificación de cabeceras en los contenedores DOM
-      document.getElementById('titleGeneral').textContent = nombreGrupoRaw + " - Actividad General";
-      document.getElementById('titleMeses').textContent = nombreGrupoRaw + " - Planificación por Meses";
-
-      const originalMessages = sandbox.querySelectorAll('.message.default');
-      
-      let generalSlidesHTML = '';
-      let generalDotsHTML = '';
-      let generalCount = 0;
-
-      let mesesSlidesHTML = '';
-      let mesesDotsHTML = '';
-      let mesesCount = 0;
-
-      originalMessages.forEach((msg) => {
-        const photoWrap = msg.querySelector('.media_wrap .photo_wrap');
-        
-        if (photoWrap) {
-          const msgIdAttr = msg.getAttribute('id') || '';
-          const msgNum = msgIdAttr.replace('message', '').trim();
-          
-          const textElement = msg.querySelector('.body > .text');
-          let esMensajeDeMes = false;
-          
-          if (textElement) {
-            const textoBuscador = textElement.textContent.toLowerCase();
-            esMensajeDeMes = mesesValidos.some(mes => textoBuscador.includes(mes));
-          }
-
-          if (msgNum) {
-            // RUTA EMBED DIRECTA DE TELEGRAM SOTA: Evita scripts .js externos y renders bloqueados
-            const embedUrl = "https://t.me" + aliasTelegramPublico + "/" + msgNum + "?embed=1";
-
-            const slideHTML = '<div class="slide">' +
-                                '<iframe src="' + embedUrl + '" scrolling="no"></iframe>' +
-                              '</div>';
-
-            if (esMensajeDeMes) {
-              mesesSlidesHTML += slideHTML;
-              mesesDotsHTML += '<span class="dot dot-meses ' + (mesesCount === 0 ? 'active' : '') + '" onclick="currentSlide(\'meses\', ' + mesesCount + ')"></span>';
-              mesesCount++;
-            } else {
-              generalSlidesHTML += slideHTML;
-              generalDotsHTML += '<span class="dot dot-general ' + (generalCount === 0 ? 'active' : '') + '" onclick="currentSlide(\'general\', ' + generalCount + ')"></span>';
-              generalCount++;
-            }
-          }
-        }
-      });
-
-      // Renderización y activación reactiva del Banner General
-      if (generalCount > 0) {
-        bannersConfig.general.totalSlides = generalCount;
-        document.getElementById('slidesGeneral').innerHTML = generalSlidesHTML;
-        document.getElementById('dotsGeneral').innerHTML = generalDotsHTML;
-        document.getElementById('containerGeneral').style.display = 'block';
-        startTimer('general');
-      }
-
-      // Renderización y activación reactiva del Banner de Meses
-      if (mesesCount > 0) {
-        bannersConfig.meses.totalSlides = mesesCount;
-        document.getElementById('slidesMeses').innerHTML = mesesSlidesHTML;
-document.getElementById('dotsMeses').innerHTML = mesesDotsHTML;document.getElementById('containerMeses').style.display = 'block';
-        startTimer('meses');}// Vaciamos el sandbox intermedio para limpiar el árbol del documentosandbox.innerHTML = '';
     }
-    const intervalTime = 7000; // Tiempo de rotación: 7 segundos de lectura óptima
-    function updateBanner(key) {const config = bannersConfig[key];
-                                const slides = document.getElementById(config.slidesId);
-                                const dots = document.querySelectorAll('.' + config.dotClass);
-                                if (slides) {
-                                  slides.style.transform = 'translateX(-' + (config.currentIndex * 100) + '%)';
-                                  dots.forEach((dot, index) => {dot.classList.toggle('active', index === config.currentIndex);
-                                                               });
-                                }}
+
     function moveSlide(key, direction) {
       const config = bannersConfig[key];
       if (config.totalSlides === 0) return;
       config.currentIndex = (config.currentIndex + direction + config.totalSlides) % config.totalSlides;
       updateBanner(key);
       resetTimer(key);
-    
-     }
-     function currentSlide(key, index) {
-     bannersConfig[key].currentIndex = index;updateBanner(key);
-     resetTimer(key);}
-     function startTimer(key) {
-     bannersConfig[key].interval = setInterval(() => 
-    {
-    moveSlide(key, 1);
-    }, intervalTime);
     }
-    
-    function resetTimer(key){
-      clearInterval(bannersConfig[key].interval);
-      startTimer(key);
-      }
+
+    function currentSlide(key, index) {
+      bannersConfig[key].currentIndex = index;
+      updateBanner(key);
+      resetTimer(key);
+    }
+
+    function startTimer(key) {
+      bannersConfig[key].interval = setInterval(() => { moveSlide(key, 1); }, intervalTime);
+    }
+
+    function resetTimer(key) { clearInterval(bannersConfig[key].interval); startTimer(key); }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if(6 > 0) startTimer('general');
+      if(2 > 0) startTimer('meses');
+    });
+  </script>
+</body>
+</html>
