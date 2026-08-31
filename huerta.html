@@ -1,310 +1,9 @@
-```python
-# Create an HTML file without any favicon or icon links, strictly focused on fixing the issue.
-html_content = """<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8"/>
-  <title>Banner Rotatorio Dinámico - Rebolledo de la Torre</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  
-  <style>
-    /* Ocultamos la vista de chat clásica */
-    .page_wrap, .page_header, .chat_page { display: none; }
-
-    /* --- ESTILOS DEL BANNER ROTATORIO --- */
-    .banner-container {
-      width: 100%;
-      max-width: 900px;
-      margin: 20px auto;
-      overflow: hidden;
-      position: relative;
-      background: #1a1a1a;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .banner-slides {
-      display: flex;
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-      width: 100%;
-    }
-
-    .slide {
-      min-width: 100%;
-      box-sizing: border-box;
-      min-height: 480px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-    }
-
-    .slide::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
-      z-index: 1;
-    }
-
-    .slide-content {
-      position: relative;
-      z-index: 2;
-      color: #ffffff;
-      padding: 30px 40px 45px 40px;
-      width: 100%;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-    }
-
-    .banner-title {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #818cf8;
-    }
-
-    .banner-text {
-      font-size: 1.1rem;
-      line-height: 1.5;
-      max-width: 750px;
-      color: #f3f4f6;
-    }
-
-    .banner-text blockquote {
-      margin: 0 0 8px 0;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #38bdf8;
-      border-left: 3px solid #38bdf8;
-      padding-left: 8px;
-    }
-
-    .nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.3);
-      padding: 14px 18px;
-      cursor: pointer;
-      font-size: 20px;
-      border-radius: 50%;
-      z-index: 3;
-      transition: all 0.3s;
-    }
-
-    .nav-btn:hover { background: rgba(255, 255, 255, 0.9); color: #111; }
-    .prev { left: 20px; }
-    .next { right: 20px; }
-
-    .dots-container {
-      text-align: center;
-      position: absolute;
-      bottom: 15px;
-      width: 100%;
-      z-index: 3;
-    }
-
-    .dot {
-      cursor: pointer;
-      height: 10px;
-      width: 10px;
-      margin: 0 6px;
-      background-color: rgba(255, 255, 255, 0.4);
-      border-radius: 50%;
-      display: inline-block;
-      transition: all 0.4s ease;
-    }
-
-    .active, .dot:hover { background-color: #ffffff; transform: scale(1.3); }
-  </style>
-</head>
-<body>
-
-  <!-- CONTENEDOR PRINCIPAL DEL BANNER -->
-  <div id="dinamicBanner"></div>
-
-  <!-- HTML EXPORTADO DE TELEGRAM -->
-  <div class="page_wrap">
-    <div class="page_header">
-      <div class="content">
-        <div class="text bold">Rebolledo de la Torre - Huerta</div>
-      </div>
-    </div>
-
-    <div class="page_body chat_page">
-      <div class="history">
-
-        <div class="message default clearfix" id="message4">
-          <div class="body">
-            <div class="from_name">Rebolledo de la Torre - Huerta</div>
-            <div class="media_wrap clearfix">
-              <a class="photo_wrap clearfix pull_left" href="photos/photo_1@24-08-2026_12-27-16.jpg">
-                <img class="photo" src="photos/photo_1@24-08-2026_12-27-16.jpg"/>
-              </a>
-            </div>
-            <div class="text">
-              <blockquote>Tomate de Penjar</blockquote><br><strong>Siembra:</strong> marzo, abril, mayo<br><strong>Cosecha:</strong> agosto, septiembre, octubre<br><strong>Info:</strong> Variedad rústica muy resistente a la sequía.
-            </div>
-          </div>
-        </div>
-
-        <div class="message default clearfix joined" id="message5">
-          <div class="body">
-            <div class="from_name">Rebolledo de la Torre - Huerta</div>
-            <div class="media_wrap clearfix">
-              <a class="photo_wrap clearfix pull_left" href="photos/photo_2@24-08-2026_12-32-52.jpg">
-                <img class="photo" src="photos/photo_2@24-08-2026_12-32-52.jpg"/>
-              </a>
-            </div>
-            <div class="text">
-              <blockquote>Pepino Español</blockquote><br><strong>Siembra:</strong> abril, mayo, junio<br><strong>Cosecha:</strong> junio, julio, septiembre<br><strong>Info:</strong> Se recomienda sombreado parcial en horas críticas.
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const originalMessages = document.querySelectorAll('.message.default');
-      let slidesHTML = '';
-      let dotsHTML = '';
-      let validSlideCount = 0;
-
-      originalMessages.forEach((msg) => {
-        const photoWrap = msg.querySelector('.media_wrap .photo_wrap');
-        
-        if (photoWrap) {
-          const imgElement = photoWrap.querySelector('img');
-          let imgSrc = photoWrap.getAttribute('href') || (imgElement ? imgElement.getAttribute('src') : '');
-          
-          const textElement = msg.querySelector('.body > .text');
-          const commentText = textElement ? textElement.innerHTML : 'Sin descripción';
-          
-          const fromNameElement = msg.querySelector('.from_name');
-          const slideTitle = fromNameElement ? fromNameElement.textContent.trim() : 'Rebolledo de la Torre - Huerta';
-
-          if (imgSrc) {
-            slidesHTML += `
-              <div class="slide" style="background-image: url('${imgSrc}');">
-                <div class="slide-content">
-                  <div class="banner-title">${slideTitle}</div>
-                  <div class="banner-text">${commentText}</div>
-                </div>
-              </div>
-            `;
-            
-            dotsHTML += `<span class="dot ${validSlideCount === 0 ? 'active' : ''}" onclick="currentSlide(${validSlideCount})"></span>`;
-            validSlideCount++;
-          }
-        }
-      });
-
-      if (validSlideCount > 0) {
-        const bannerWrapper = document.getElementById('dinamicBanner');
-        bannerWrapper.innerHTML = `
-          <div class="banner-container">
-            <div class="banner-slides" id="bannerSlides">${slidesHTML}</div>
-            <button class="nav-btn prev" onclick="moveSlide(-1)">❮</button>
-            <button class="nav-btn next" onclick="moveSlide(1)">❯</button>
-            <div class="dots-container">${dotsHTML}</div>
-          </div>
-        `;
-        
-        initBannerEngine(validSlideCount);
-      }
-    });
-
-    let currentIndex = 0;
-    let totalSlides = 0;
-    const intervalTime = 6000; 
-    let slideInterval;
-
-    function initBannerEngine(slideCount) {
-      totalSlides = slideCount;
-      startTimer();
-    }
-
-    function updateBanner() {
-      const slides = document.getElementById('bannerSlides');
-      const dots = document.querySelectorAll('.dot');
-      if (slides) {
-        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-        dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentIndex);
-        });
-      }
-    }
-
-    function moveSlide(direction) {
-      if (totalSlides === 0) return;
-      currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
-      updateBanner();
-      resetTimer();
-    }
-
-    function currentSlide(index) {
-      currentIndex = index;
-      updateBanner();
-      resetTimer();
-    }
-
-    function startTimer() {
-      slideInterval = setInterval(() => {
-        moveSlide(1);
-      }, intervalTime);
-    }
-
-    function resetTimer() {
-      clearInterval(slideInterval);
-      startTimer();
-    }
-  </script>
-
-</body>
-</html>
-"""
-
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
-
-print("HTML file written successfully without favicon tags.")
-
-
-```
-
-```text
-HTML file written successfully without favicon tags.
-
-
-```
-
-Aquí tienes el código de nuevo sin ningún tipo de etiqueta de favicon ni llamadas a iconos externos.
-
-Además, si el navegador web te sigue dando una advertencia `404 Not Found (favicon.ico)` en la consola, puedes añadir la siguiente etiqueta transparente dentro de `<head>` para indicarle explícitamente al navegador que no busque favicon:
-
-```html
-<link rel="icon" href="data:,">
-
-```
-
-### Código HTML limpio completo:
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
   <title>Banner Rotatorio Dinámico - Rebolledo de la Torre</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <!-- Evita peticiones 404 de favicon en la consola -->
   <link rel="icon" href="data:,">
   
   <style>
@@ -326,16 +25,20 @@ Además, si el navegador web te sigue dando una advertencia `404 Not Found (favi
 
     .banner-slides {
       display: flex;
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
       width: 100%;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
+    /* Solución al ancho 0: width 100% estricto y flex-shrink 0 */
     .slide {
+      width: 100%;
       min-width: 100%;
+      flex-shrink: 0;
       box-sizing: border-box;
       min-height: 480px;
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       position: relative;
       display: flex;
       align-items: flex-end;
@@ -355,6 +58,7 @@ Además, si el navegador web te sigue dando una advertencia `404 Not Found (favi
       color: #ffffff;
       padding: 30px 40px 45px 40px;
       width: 100%;
+      box-sizing: border-box;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
     }
 
@@ -425,7 +129,6 @@ Además, si el navegador web te sigue dando una advertencia `404 Not Found (favi
 </head>
 <body>
 
-  <!-- CONTENEDOR PRINCIPAL DEL BANNER -->
   <div id="dinamicBanner"></div>
 
   <!-- HTML EXPORTADO DE TELEGRAM -->
@@ -529,6 +232,7 @@ Además, si el navegador web te sigue dando una advertencia `404 Not Found (favi
 
     function initBannerEngine(slideCount) {
       totalSlides = slideCount;
+      updateBanner();
       startTimer();
     }
 
@@ -536,6 +240,7 @@ Además, si el navegador web te sigue dando una advertencia `404 Not Found (favi
       const slides = document.getElementById('bannerSlides');
       const dots = document.querySelectorAll('.dot');
       if (slides) {
+        // Garantiza el desplazamiento exacto por porcentaje de slide
         slides.style.transform = `translateX(-${currentIndex * 100}%)`;
         dots.forEach((dot, index) => {
           dot.classList.toggle('active', index === currentIndex);
@@ -570,5 +275,3 @@ Además, si el navegador web te sigue dando una advertencia `404 Not Found (favi
 
 </body>
 </html>
-
-```
