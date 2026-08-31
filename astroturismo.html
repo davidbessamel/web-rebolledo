@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astroturismo en Rebolledo de la Torre</title>
+ <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1>Astroturismo desde Rebolledo de la Torre</h1>
+    <p>Observación astronómica en el Geoparque Mundial de la UNESCO Las Loras</p>
+  </header>
+
+  <main>
+    <!-- Banner Rotatorio de Constelaciones y Astrofotografía -->
+    <section id="banner-astronomico">
+      <h2>Galeria del Firmamento</h2>
+      <div>
+        <img src="imagenes/constelacion-orion.jpg" alt="Constelación de Orión visible en los cielos de invierno" data-slide="active">
+        <img src="imagenes/constelacion-orion-dibujo.png" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras">
+        <img src="imagenes/via-lactea-loras.jpg" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras">
+        <img src="imagenes/constelacion-osa-mayor.jpg" alt="La Osa Mayor alineada con el norte sobre la Iglesia de San Julián y Santa Basilisa">
+        <img src="imagenes/nebulosas-cielo-profundo.jpg" alt="Fotografía de cielo profundo capturada desde el término municipal">
+      </div>
+    </section>
+
+
+
+
+
+
+    
+  </main>
+
+  <footer>
+    <p>Asociación de Astroturismo y Conservación del Cielo Nocturno - Rebolledo de la Torre</p>
+  </footer>
+
+  <!-- Lógica de Rotación del Banner (Cada 10 segundos) -->
+  <script>
+    (function() {
+      const imagenesBanner = document.querySelectorAll('#banner-astronomico img');
+      let indiceActual = 0;
+      const intervaloTiempo = 3000;
+
+      function rotarImagen() {
+        if (imagenesBanner.length <= 1) return;
+        imagenesBanner[indiceActual].removeAttribute('data-slide');
+        indiceActual = (indiceActual + 1) % imagenesBanner.length;
+        imagenesBanner[indiceActual].setAttribute('data-slide', 'active');
+      }
+
+      if (imagenesBanner.length > 1) {
+        setInterval(rotarImagen, intervaloTiempo);
+      }
+    })();
+  </script>
+
+
+
+
+
+  
+</body>
+</html>
