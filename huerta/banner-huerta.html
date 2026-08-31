@@ -124,7 +124,7 @@
     const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
     // Alias real y verificado asociado al ID de tu canal de la huerta
-    const aliasTelegramReal = "RebolledoTorreHuerta";
+    const aliasTelegramReal = "rebolledotorrehuerta";
 
     const bannersConfig = {
       general: { currentIndex: 0, totalSlides: 0, interval: null, slidesId: 'slidesGeneral', dotsContainerId: 'dotsGeneral', dotClass: 'dot-general' },
@@ -188,8 +188,8 @@
             // Se inyecta la URL oficial limpia apuntando al alias definitivo del canal
             const slideHTML = `
               <div class="slide">
-                <blockquote class="telegram-post" data-telegram-post="${aliasTelegramReal}/${msgNum}" data-width="100%">
-                  <a href="https://t.me{aliasTelegramReal}/${msgNum}">Cargando mensaje remoto...</a>
+                <blockquote class="telegram-post" data-telegram-post="$/{aliasTelegramReal}/${msgNum}" data-width="100%">
+                  <a href="https://t.me/{aliasTelegramReal}/${msgNum}">Cargando mensaje remoto...</a>
                 </blockquote>
               </div>
             `;
