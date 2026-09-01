@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>Visor Mensual - Rebolledo de la Torre</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <!-- Evita bloqueos de seguridad y errores de favicon de Firefox/Chrome -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; img-src 'self' data: https:;">
+  <link rel="icon" href="data:,">
+  
+  <style>
+    body {
+      background-color: #0f172a;
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #f8fafc;
+    }
+
+    .banner-container {
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+      background: #1e293b;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      contain: layout paint;
+    }
+
+    .banner-slides {
+      display: flex;
+      width: 100%;
+      min-height: 420px;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 420px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 60%, rgba(0, 0, 0, 0.1) 100%);
+      z-index: 1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      padding: 32px;
+      box-sizing: border-box;
+    }
+
+    .banner-tag {
+      display: inline-block;
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .banner-text {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    .banner-text blockquote {
+      margin: 0 0 10px 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #38bdf8;
+      border-left: 4px solid #38bdf8;
+      padding-left: 12px;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 50%;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover { background: #0284c7; border-color: #0284c7; }
+    .prev { left: 16px; }
+    .next { right: 16px; }
+
+    .dots-container {
+      position: absolute;
+      bottom: 12px;
+      width: 100%;
+      text-align: center;
+      z-index: 3;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 8px;
+      width: 8px;
+      margin: 0 4px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .active, .dot:hover { background-color: #38bdf8; transform: scale(1.4); }
+    
+    /* Mantiene los datos ocultos para que solo los procese el script */
+    #data-buffer { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- BANNER VISUAL -->
+  <div class="banner-container" id="bannerContainer">
+    <div class="banner-slides" id="bannerSlides"></div>
+    <button class="nav-btn prev" onclick="moveSlide(-1)">❮</button>
+    <button class="nav-btn next" onclick="moveSlide(1)">❯</button>
+    <div class="dots-container" id="dotsContainer"></div>
+  </div>
+
+  <!-- ZONA DE DATOS: Pega aquí los mensajes de Telegram tal cual los exportas -->
+  <div id="data-buffer">
+    
+    <div class="message default" id="message1">
+      <div class="body">
+        <div class="media_wrap">
+          <a class="photo_wrap" href="photos/photo_8@30-08-2026_00-49-04_thumb.jpg">
+            <img class="photo" src="photos/photo_8@30-08-2026_00-49-04_thumb.jpg"/>
+          </a>
+        </div>
+        <div class="text">
+          <blockquote>Tomate de Penjar</blockquote><br>
+          <strong>Siembra:</strong> marzo, abril, mayo<br>
+          <strong>Cosecha:</strong> agosto, septiembre, octubre
+        </div>
+      </div>
+    </div>
+
+    <div class="message default" id="message2">
+      <div class="body">
+        <div class="media_wrap">
+          <a class="photo_wrap" href="photos/photo_1@24-08-2026_12-27-16.jpg">
+            <img class="photo" src="photos/photo_1@24-08-2026_12-27-16.jpg"/>
+          </a>
+        </div>
+        <div class="text">
+          <blockquote>Pepino Español</blockquote><br>
+          <strong>Siembra:</strong> abril, mayo, junio<br>
+          <strong>Cosecha:</strong> julio, agosto, septiembre
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+    let currentIndex = 0;
+    let totalSlides = 0;
+    let slideInterval;
+
+    document.addEventListener("DOMContentLoaded", function() {
+      construirBanner();
+    });
+
+    function construirBanner() {
+      const buffer = document.getElementById('data-buffer');
+      const messages = buffer.querySelectorAll('.message.default');
+      
+      let slidesHTML = '';
+      let dotsHTML = '';
+      let slideCount = 0;
+
+      messages.forEach((msg) => {
+        const textElement = msg.querySelector('.body > .text');
+        const textContent = textElement ? textElement.textContent.toLowerCase() : '';
+
+        // Filtra automáticamente si el texto menciona un mes
+        const esMensajeMensual = mesesValidos.some(mes => textContent.includes(mes));
+
+        if (esMensajeMensual) {
+          const photoWrap = msg.querySelector('.media_wrap .photo_wrap');
+          let imgSrc = '';
+          
+          if (photoWrap) {
+            const imgElement = photoWrap.querySelector('img');
+            imgSrc = photoWrap.getAttribute('href') || (imgElement ? imgElement.getAttribute('src') : '');
+          }
+
+          const commentHTML = textElement ? textElement.innerHTML : '';
+
+          slidesHTML += `
+            <div class="slide" style="background-image: url('${encodeURI(imgSrc)}');">
+              <div class="slide-content">
+                <span class="banner-tag">Calendario Huerta</span>
+                <div class="banner-text">${commentHTML}</div>
+              </div>
+            </div>
+          `;
+
+          dotsHTML += `<span class="dot ${slideCount === 0 ? 'active' : ''}" onclick="currentSlide(${slideCount})"></span>`;
+          slideCount++;
+        }
+      });
+
+      if (slideCount > 0) {
+        totalSlides = slideCount;
+        document.getElementById('bannerSlides').innerHTML = slidesHTML;
+        document.getElementById('dotsContainer').innerHTML = dotsHTML;
+        
+        updateBanner();
+        startTimer();
+      }
+    }
+
+    function updateBanner() {
+      const slides = document.getElementById('bannerSlides');
+      const dots = document.querySelectorAll('.dot');
+      if (slides) {
+        slides.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentIndex);
+        });
+      }
+    }
+
+    function moveSlide(direction) {
+      if (totalSlides === 0) return;
+      currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+      updateBanner();
+      resetTimer();
+    }
+
+    function currentSlide(index) {
+      currentIndex = index;
+      updateBanner();
+      resetTimer();
+    }
+
+    function startTimer() {
+      slideInterval = setInterval(() => moveSlide(1), 7000);
+    }
+
+    function resetTimer() {
+      clearInterval(slideInterval);
+      startTimer();
+    }
+  </script>
+
+</body>
+</html>
