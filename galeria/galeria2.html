@@ -5,7 +5,6 @@
   <title>Visor Mensual - Rebolledo de la Torre</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   
-  <!-- Evita bloqueos de seguridad y errores de favicon de Firefox/Chrome -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; img-src 'self' data: https:;">
   <link rel="icon" href="data:,">
   
@@ -141,54 +140,26 @@
 
     .active, .dot:hover { background-color: #38bdf8; transform: scale(1.4); }
     
-    /* Mantiene los datos ocultos para que solo los procese el script */
-    #data-buffer { display: none; }
+    .status-msg { text-align: center; padding: 40px; color: #94a3b8; }
+    
+    /* Ocultamos el iframe de carga */
+    #data-frame { display: none; }
   </style>
 </head>
 <body>
 
-  <!-- BANNER VISUAL -->
-  <div class="banner-container" id="bannerContainer">
+  <!-- CONTENEDOR DEL BANNER -->
+  <div class="banner-container" id="bannerContainer" style="display: none;">
     <div class="banner-slides" id="bannerSlides"></div>
     <button class="nav-btn prev" onclick="moveSlide(-1)">❮</button>
     <button class="nav-btn next" onclick="moveSlide(1)">❯</button>
     <div class="dots-container" id="dotsContainer"></div>
   </div>
 
-  <!-- ZONA DE DATOS: Pega aquí los mensajes de Telegram tal cual los exportas -->
-  <div id="data-buffer">
-    
-    <div class="message default" id="message1">
-      <div class="body">
-        <div class="media_wrap">
-          <a class="photo_wrap" href="photos/tomate-penjar.jpg">
-            <img class="photo" src="photos/tomate-penjar.jpg"/>
-          </a>
-        </div>
-        <div class="text">
-          <blockquote>Tomate de Penjar</blockquote><br>
-          <strong>Siembra:</strong> marzo, abril, mayo<br>
-          <strong>Cosecha:</strong> agosto, septiembre, octubre
-        </div>
-      </div>
-    </div>
+  <div id="status" class="status-msg">Cargando datos desde photos/messages.html...</div>
 
-    <div class="message default" id="message2">
-      <div class="body">
-        <div class="media_wrap">
-          <a class="photo_wrap" href="photos/pepino-espanol.jpg">
-            <img class="photo" src="photos/pepino-espanol.jpg"/>
-          </a>
-        </div>
-        <div class="text">
-          <blockquote>Pepino Español</blockquote><br>
-          <strong>Siembra:</strong> abril, mayo, junio<br>
-          <strong>Cosecha:</strong> julio, agosto, septiembre
-        </div>
-      </div>
-    </div>
-
-  </div>
+  <!-- IFRAME OCULTO PARA LEER EL ARCHIVO EXTERNO DIRECTAMENTE -->
+  <iframe id="data-frame" src="photos/messages.html" onload="procesarDatosRemotos()"></iframe>
 
   <script>
     const mesesValidos = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -197,57 +168,72 @@
     let totalSlides = 0;
     let slideInterval;
 
-    document.addEventListener("DOMContentLoaded", function() {
-      construirBanner();
-    });
-
-    function construirBanner() {
-      const buffer = document.getElementById('data-buffer');
-      const messages = buffer.querySelectorAll('.message.default');
-      
-      let slidesHTML = '';
-      let dotsHTML = '';
-      let slideCount = 0;
-
-      messages.forEach((msg) => {
-        const textElement = msg.querySelector('.body > .text');
-        const textContent = textElement ? textElement.textContent.toLowerCase() : '';
-
-        // Filtra automáticamente si el texto menciona un mes
-        const esMensajeMensual = mesesValidos.some(mes => textContent.includes(mes));
-
-        if (esMensajeMensual) {
-          const photoWrap = msg.querySelector('.media_wrap .photo_wrap');
-          let imgSrc = '';
-          
-          if (photoWrap) {
-            const imgElement = photoWrap.querySelector('img');
-            imgSrc = photoWrap.getAttribute('href') || (imgElement ? imgElement.getAttribute('src') : '');
-          }
-
-          const commentHTML = textElement ? textElement.innerHTML : '';
-
-          slidesHTML += `
-            <div class="slide" style="background-image: url('${encodeURI(imgSrc)}');">
-              <div class="slide-content">
-                <span class="banner-tag">Calendario Huerta</span>
-                <div class="banner-text">${commentHTML}</div>
-              </div>
-            </div>
-          `;
-
-          dotsHTML += `<span class="dot ${slideCount === 0 ? 'active' : ''}" onclick="currentSlide(${slideCount})"></span>`;
-          slideCount++;
-        }
-      });
-
-      if (slideCount > 0) {
-        totalSlides = slideCount;
-        document.getElementById('bannerSlides').innerHTML = slidesHTML;
-        document.getElementById('dotsContainer').innerHTML = dotsHTML;
+    function procesarDatosRemotos() {
+      try {
+        const frame = document.getElementById('data-frame');
+        const frameDoc = frame.contentDocument || frame.contentWindow.document;
         
-        updateBanner();
-        startTimer();
+        const messages = frameDoc.querySelectorAll('.message.default');
+        
+        let slidesHTML = '';
+        let dotsHTML = '';
+        let slideCount = 0;
+
+        messages.forEach((msg) => {
+          const textElement = msg.querySelector('.body > .text');
+          const textContent = textElement ? textElement.textContent.toLowerCase() : '';
+
+          // Filtra los mensajes que contienen referencias a meses
+          const esMensajeMensual = mesesValidos.some(mes => textContent.includes(mes));
+
+          if (esMensajeMensual) {
+            const photoWrap = msg.querySelector('.media_wrap .photo_wrap');
+            let imgSrc = '';
+            
+            if (photoWrap) {
+              const imgElement = photoWrap.querySelector('img');
+              let rawPath = photoWrap.getAttribute('href') || (imgElement ? imgElement.getAttribute('src') : '');
+              
+              // Ajusta la ruta si las fotos están dentro de la carpeta "photos/"
+              if (rawPath && !rawPath.startsWith('photos/') && !rawPath.startsWith('http')) {
+                imgSrc = 'photos/' + rawPath;
+              } else {
+                imgSrc = rawPath;
+              }
+            }
+
+            const commentHTML = textElement ? textElement.innerHTML : '';
+
+            slidesHTML += `
+              <div class="slide" style="background-image: url('${encodeURI(imgSrc)}');">
+                <div class="slide-content">
+                  <span class="banner-tag">Calendario Huerta</span>
+                  <div class="banner-text">${commentHTML}</div>
+                </div>
+              </div>
+            `;
+
+            dotsHTML += `<span class="dot ${slideCount === 0 ? 'active' : ''}" onclick="currentSlide(${slideCount})"></span>`;
+            slideCount++;
+          }
+        });
+
+        if (slideCount > 0) {
+          totalSlides = slideCount;
+          document.getElementById('bannerSlides').innerHTML = slidesHTML;
+          document.getElementById('dotsContainer').innerHTML = dotsHTML;
+          
+          document.getElementById('status').style.display = 'none';
+          document.getElementById('bannerContainer').style.display = 'block';
+
+          updateBanner();
+          startTimer();
+        } else {
+          document.getElementById('status').textContent = 'No se encontraron mensajes con meses en photos/messages.html';
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById('status').textContent = 'Error: Comprueba que el archivo "messages.html" existe dentro de la carpeta "photos/".';
       }
     }
 
