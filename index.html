@@ -87,6 +87,9 @@
     }
   </style>
 </head>
+
+
+  
 <body>
 
   <!-- NAVEGACIÓN -->
@@ -159,72 +162,49 @@
       <article id="horarios" class="card-section">
         <h2>📅 Servicios y Horarios</h2>
         <div class="iframe-container">
-          <iframe src="horarios.html"></iframe>
+        <iframe src="horarios.html">  </iframe>
         </div>
-      </article>
+        </article>
 
       <article id="astroturismo" class="card-section">
         <h2>✨ AstroTurismo</h2>
         <div class="iframe-container">
-          <iframe src="astroturismo.html"></iframe>
+        <iframe src="astroturismo.html">  </iframe>
         </div>
       </article> 
 
       <article id="huerta" class="card-section">
         <h2>🌱 Huerta Tradicional</h2>
         <div class="iframe-container">
-          <iframe src="huerta/vis_mes.html" scrolling="no"></iframe>
+        <iframe src="huerta/vis_mes.html" scrolling="no"> </iframe>
         </div>
       </article>
 
       <article id="galeria" class="card-section">
         <h2>🖼️ Galería</h2>
-        <div class="iframe-container"> <iframe src="galeria.html"></iframe>
+        <div class="iframe-container">
+        <iframe src="galeria.html"> </iframe>
         </div>
       </article>
 
       <article id="rutas" class="card-section">
         <!-- <h2>🥾 Rutas y Senderismo</h2> -->
-          <div class="iframe-container">
-          <iframe id="mi-iframe" src="rutas.html">  </iframe>
-      </div>
+        <div class="iframe-container">
+        <iframe id="mi-iframe" src="rutas.html">  </iframe>
+        </div>
       </article>
+      
     </section>
-        
-    <script>
-    window.addEventListener('message', function(event) {
-    if (event.data.frameHeight) {
-    const iframe = document.getElementById('mi-iframe');
-    iframe.style.height = event.data.frameHeight + 'px';
-    }
-    }, false);
-    </script>
+
+    
 
 
 
 
-        
+ <!--        
 <iframe id="mi-iframe-1" src="astroturismo.html"></iframe>
 <iframe id="mi-iframe-2" src="huerta.html"></iframe>
-
-<script>
-  window.addEventListener("message", function (event) {
-    const altura = event.data?.frameHeight;
-
-    if (typeof altura !== "number") {
-      return;
-    }
-
-    const iframes = document.querySelectorAll("iframe");
-
-    iframes.forEach(function (iframe) {
-      if (iframe.contentWindow === event.source) {
-        iframe.style.height = `${altura}px`;
-      }
-    });
-  });
-</script>
-
+-->
 
 
 
@@ -340,17 +320,27 @@
 
 
   
-  
-  
+
+
   
 <script>
-window.addEventListener('message', function(event) {
-if (event.data.frameHeight) {
-const iframe = document.getElementById('mi-iframe');
-iframe.style.height = event.data.frameHeight + 'px';
-}
-}, false);
+  window.addEventListener("message", function (event) {
+    const altura = event.data?.frameHeight;
+
+    if (typeof altura !== "number") {
+      return;
+    }
+
+    const iframes = document.querySelectorAll("iframe");
+
+    iframes.forEach(function (iframe) {
+      if (iframe.contentWindow === event.source) {
+        iframe.style.height = `${altura}px`;
+      }
+    });
+  });
 </script>
+
 
 
   
