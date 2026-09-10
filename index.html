@@ -272,6 +272,22 @@ window.addEventListener('message', function(event) {
           <!-- </div>  
       </div>   -->
 
+
+
+
+<script>
+window.addEventListener('message', function(event) {
+  if (event.data.frameHeight) {
+    const iframe = document.getElementById('mi-iframe');
+    iframe.style.height = event.data.frameHeight + 'px';
+  }
+}, false);
+</script>
+
+
+
+
+      
     </aside>
 
   </main>
