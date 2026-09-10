@@ -1,0 +1,261 @@
+¡Mil disculpas! Tienes toda la razón, al limpiar el layout quité los iframes locales que tenías configurados. Vamos a rehacerlo bien, recuperando absolutamente todo, aplicando tu función de autoajuste de altura y montando la estructura exacta que has pedido paso a paso.
+Aquí tienes el código completo con la nueva estructura de bloques secuenciales a lo ancho y las columnas abajo.
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rebolledo de la Torre | Portal Municipal y Turismo</title>
+  
+  <style>
+    /* Reset básico */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f6f8; color: #333; }
+
+    /* 1. MENÚ DE NAVEGACIÓN PERMANENTE */
+    .navbar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: #1a252c;
+      color: white;
+      padding: 1rem 2rem;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .navbar h1 { font-size: 1.4rem; }
+
+    /* 2. IFRAME GIGANTE CON VIDEO DE FONDO Y TEXTO SOBREPUESTO */
+    .hero-video-container {
+      position: relative;
+      width: 100%;
+      height: 70vh; /* Ocupa el 70% de la altura de la pantalla */
+      overflow: hidden;
+      background: #000;
+    }
+    .hero-video-container iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 100vw; height: 56.25vw; /* Ratio 16:9 */
+      min-height: 100vh; min-width: 177.77vh;
+      transform: translate(-50%, -50%);
+      border: none;
+      pointer-events: none; /* Para que no interfiera con el scroll o clicks */
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4); /* Capa oscura para leer bien el nombre */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .hero-overlay h2 {
+      color: white;
+      font-size: 3.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+
+    /* 3. SECCIÓN ANCHO COMPLETO PARA LOS 2 IFRAMES LOCALES (MÁS ANCHOS) */
+    .full-width-section {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .iframe-adaptable-container {
+      width: 100%;
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .iframe-adaptable-container h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #1a252c;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+    }
+    .iframe-adaptable-container iframe {
+      width: 100%;
+      border: 0;
+      border-radius: 6px;
+      display: block;
+    }
+
+    /* 4. SECCIÓN INFERIOR: CONTENIDO CENTRAL EN 3 COLUMNAS Y TELEGRAM A LA DERECHA (1 COLUMNA) */
+    .bottom-layout-grid {
+      display: grid;
+      grid-template-columns: 3fr 1fr; /* Zona central 75% | Columna Telegram 25% */
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem 1.5rem;
+    }
+
+    /* Subgrid para hacer 3 columnas dentro de la zona central */
+    .center-section-3cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+      gap: 1.5rem;
+      align-content: start;
+    }
+
+    /* Columna derecha exclusiva para Telegram */
+    .right-telegram-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Tarjetas generales para organizar los posts sueltos */
+    .card-post {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .card-post h4 {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      color: #1a252c;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 0.3rem;
+    }
+
+    /* Contenedor para envolver los scripts de telegram */
+    .telegram-wrapper {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Ajustes móviles */
+    @media (max-width: 1024px) {
+      .bottom-layout-grid { grid-template-columns: 1fr; }
+      .center-section-3cols { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .center-section-3cols { grid-template-columns: 1fr; }
+      .hero-overlay h2 { font-size: 2rem; }
+    }
+  </style>
+
+  <!-- FUNCIÓN JAVASCRIPT REINSTALADA PARA ALTURA AUTOMÁTICA -->
+  <script>
+    function resizeIframe(obj) {
+      try {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+      } catch (e) {
+        // Respaldo de altura por defecto si da error cross-origin en pruebas
+        obj.style.height = '600px'; 
+        console.warn("Ajustada altura por defecto para iframe local.");
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <!-- ==================== 1. MENÚ PERMANENTE ==================== -->
+  <nav class="navbar">
+    <h1>Rebolledo de la Torre — Portal Municipal</h1>
+  </nav>
+
+  <!-- ==================== 2. IFRAME GIGANTE (VIDEO + TEXTO) ==================== -->
+  <header class="hero-video-container">
+    <!-- Pon aquí el html o enlace de tu video local o de streaming -->
+    <iframe src="video-fondo.html" title="Video de fondo del pueblo"></iframe>
+    <div class="hero-overlay">
+      <h2>REBOLLEDO DE LA TORRE</h2>
+    </div>
+  </header>
+
+  <!-- ==================== 3. DOS IFRAMES ANCHOS LOCALES AUTOPROPORCIONALES ==================== -->
+  <main class="full-width-section">
+    
+    <!-- IFRAME LOCAL 1 -->
+    <div class="iframe-adaptable-container">
+      <h3>Visor Principal / Mapa del Municipio</h3>
+      <iframe src="visor-mapa.html" title="Visor Local" onload="resizeIframe(this)"></iframe>
+    </div>
+
+    <!-- IFRAME LOCAL 2 -->
+    <div class="iframe-adaptable-container">
+      <h3>Sección Especial BOCYL / Tablón</h3>
+      <iframe src="tablon-bocyl.html" title="BOCYL Local" onload="resizeIframe(this)"></iframe>
+    </div>
+
+  </main>
+
+  <!-- ==================== 4. SECCIÓN MIXTA INFERIOR ==================== -->
+  <div class="bottom-layout-grid">
+    
+    <!-- SECCIÓN CENTRAL (Dividida automáticamente en 3 columnas de posts) -->
+    <section class="center-section-3cols">
+      
+      <!-- Post Central 1 -->
+      <div class="card-post">
+        <h4>Noticia Destacada 1</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+
+      <!-- Post Central 2 -->
+      <div class="card-post">
+        <h4>Noticia Destacada 2</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+
+      <!-- Post Central 3 -->
+      <div class="card-post">
+        <h4>Noticia Destacada 3</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+
+      <!-- Post Central 4 (Fluirá abajo solo en la cuadrícula de 3) -->
+      <div class="card-post">
+        <h4>Actividad Cultural</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- COLUMNA LATERAL DERECHA (1 Sola fila vertical de posts de Telegram) -->
+    <aside class="right-telegram-sidebar">
+      
+      <!-- Post Lateral 1 -->
+      <div class="card-post">
+        <h4>Aviso Urgente</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+
+      <!-- Post Lateral 2 -->
+      <div class="card-post">
+        <h4>BOCYL Diario</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+</body>
+</html>
+
+
+
