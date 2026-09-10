@@ -197,6 +197,38 @@ window.addEventListener('message', function(event) {
 }, false);
 </script>
 
+
+
+
+        
+<iframe id="mi-iframe-1" src="pagina1.html"></iframe>
+<iframe id="mi-iframe-2" src="pagina2.html"></iframe>
+
+<script>
+  window.addEventListener("message", function (event) {
+    const altura = event.data?.frameHeight;
+
+    if (typeof altura !== "number") {
+      return;
+    }
+
+    const iframes = document.querySelectorAll("iframe");
+
+    iframes.forEach(function (iframe) {
+      if (iframe.contentWindow === event.source) {
+        iframe.style.height = `${altura}px`;
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+        
+
   </article>
 
 
