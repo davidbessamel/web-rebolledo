@@ -108,3 +108,11 @@
   </div>
 </div>
 <!-- Fin del Componente Embebible -->
+
+
+<script>
+window.onload = function() {
+  const height = document.body.scrollHeight;
+  window.parent.postMessage({ frameHeight: height }, '*');
+};
+</script>
