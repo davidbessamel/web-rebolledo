@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rebolledo de la Torre | Portal Municipal y Turismo</title>
   
-  <style>
+ <style>
     /* Reset básico */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f6f8; color: #333; }
@@ -23,24 +23,25 @@
     }
     .navbar h1 { font-size: 1.4rem; }
 
-    /* 2. IFRAME GIGANTE CON VIDEO DE FONDO Y TEXTO SOBREPUESTO */
-   /* Ajustes para el vídeo nativo de fondo */
+    /* 2. CONTENEDOR GIGANTE CON VIDEO DE FONDO Y TEXTO SOBREPUESTO */
+    .hero-video-container {
+      position: relative;
+      width: 100%;
+      height: 70vh; /* Ocupa el 70% de la altura de la pantalla */
+      overflow: hidden;
+      background: #000;
+    }
+    
+    /* Ajustes limpios para el vídeo nativo de fondo */
     .hero-video-container .hero-video {
       position: absolute;
       top: 50%; left: 50%;
       width: 100%; height: 100%;
       object-fit: cover; /* Hace que el video llene el contenedor sin deformarse */
       transform: translate(-50%, -50%);
-/*    }
-    .hero-video-container iframe {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 100vw; height: 56.25vw; /* Ratio 16:9 */
-      min-height: 100vh; min-width: 177.77vh;
-      transform: translate(-50%, -50%);
-      border: none;
-      pointer-events: none; /* Para que no interfiera con el scroll o clicks */
-    }    */
+      z-index: 1;
+    }
+    
     .hero-overlay {
       position: absolute;
       top: 0; left: 0;
@@ -51,6 +52,7 @@
       justify-content: center;
       z-index: 2;
     }
+    
     .hero-overlay h2 {
       color: white;
       font-size: 3.5rem;
@@ -141,7 +143,7 @@
       .center-section-3cols { grid-template-columns: 1fr; }
       .hero-overlay h2 { font-size: 2rem; }
     }
-  </style>
+</style>
 
   <!-- FUNCIÓN JAVASCRIPT REINSTALADA PARA ALTURA AUTOMÁTICA -->
   <script>
