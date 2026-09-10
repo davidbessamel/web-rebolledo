@@ -107,3 +107,27 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function enviarAltura() {
+    window.parent.postMessage(
+      {
+        frameHeight: document.documentElement.scrollHeight
+      },
+      "*"
+    );
+  }
+
+  window.addEventListener("load", enviarAltura);
+  window.addEventListener("resize", enviarAltura);
+</script>
