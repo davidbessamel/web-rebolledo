@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astroturismo en Rebolledo de la Torre</title>
+  <!-- <link rel="stylesheet" href="estilos.css"> -->
+  <style>
+    /* Estilos del carrusel */
+    .contenedor {
+      height: 500px;      /* Altura ajustable del carrusel */
+      width: 100%;   
+      overflow: hidden;  
+      position: relative; /* Necesario para posicionar los botones encima */
+    }
+
+    .imagen-ajustada {
+      height: 100%;    
+      width: 100%;     
+      object-fit: cover; 
+      display: none;      /* Oculta las imágenes por defecto */
+    }
+
+    /* Muestra la imagen activa */
+    .imagen-ajustada[data-slide="active"] {
+      display: block;     
+    }
+
+    /* Estilos para los botones de navegación */
+    .btn-carrusel {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 15px;
+      cursor: pointer;
+      font-size: 18px;
+      z-index: 10;
+    }
+
+    .btn-izq { left: 10px; }
+    .btn-der { right: 10px; }
+    .btn-carrusel:hover { background: rgba(0, 0, 0, 0.8); }
+
+    /* Estilos para el pie de página */
+    footer {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #1a1a2e;
+      color: #e0e0e0;
+      text-align: center;
+      border-top: 1px solid #162447;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Astroturismo desde Rebolledo de la Torre</h1>
+    <p>Observación astronómica en el Geoparque Mundial de la UNESCO Las Loras</p>
+  </header>
+
+  <main>
+    <!-- Banner Rotatorio de Constelaciones y Astrofotografía -->
+    <section id="banner-astronomico">
+      <h2>Galería del Firmamento</h2>
+      
+      <!-- Contenedor del Carrusel corregido y cerrado -->
+      <div class="contenedor">
+        <img src="imagenes/constelacion-orion.jpg" alt="Constelación de Orión visible en los cielos de invierno" class="imagen-ajustada" data-slide="active">
+        <img src="imagenes/constelacion-orion-dibujo.png" alt="Dibujo de la Constelación de Orión" class="imagen-ajustada">
+        <img src="imagenes/via-lactea-loras.jpg" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras" class="imagen-ajustada">
+        <img src="imagenes/constelacion-osa-mayor.jpg" alt="La Osa Mayor alineada con el norte sobre la Iglesia de San Julián y Santa Basilisa" class="imagen-ajustada">
+        <img src="imagenes/constelacionoriondepie.jpg" alt="Constelación de Orión de pie en el horizonte" class="imagen-ajustada">
+        
+        <!-- Botones de control -->
+        <button class="btn-carrusel btn-izq" onclick="cambiarSlide(-1)">&#10094;</button>
+        <button class="btn-carrusel btn-der" onclick="cambiarSlide(1)">&#10095;</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie de página con los datos de la Asociación -->
+  <footer>
+    <p>Asociación de Astroturismo y Conservación del Cielo Nocturno - Rebolledo de la Torre</p>
+  </footer>
+
+  <!-- Lógica de funcionamiento del carrusel -->
+  <script>
+    let indiceActual = 0;
+    const slides = document.querySelectorAll('.imagen-ajustada');
+
+    function cambiarSlide(direccion) {
+      // Quita el estado activo a la imagen actual
+      slides[indiceActual].removeAttribute('data-slide');
+      
+      // Calcula el nuevo índice (con bucle infinito)
+      indiceActual += direccion;
+      if (indiceActual >= slides.length) indiceActual = 0;
+      if (indiceActual < 0) indiceActual = slides.length - 1;
+      
+      // Añade el estado activo a la nueva imagen
+      slides[indiceActual].setAttribute('data-slide', 'active');
+    }
+
+    // Cambio automático cada 5 segundos
+    setInterval(() => cambiarSlide(1), 5000);
+  </script>
+
+</body>
+</html>
