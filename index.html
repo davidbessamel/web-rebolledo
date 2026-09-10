@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rebolledo de la Torre | Portal Municipal y Turismo</title>
+  
+  <style>
+    /* Reset básico */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f6f8; color: #333; }
+
+    /* 1. MENÚ DE NAVEGACIÓN PERMANENTE */
+    .navbar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: #1a252c;
+      color: white;
+      padding: 1rem 2rem;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .navbar h1 { font-size: 1.4rem; }
+
+    /* 2. CONTENEDOR GIGANTE CON VIDEO DE FONDO Y TEXTO SOBREPUESTO */
+    .hero-video-container {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      overflow: hidden;
+      background: #000;
+    }
+    .hero-video-container .hero-video {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .hero-overlay h2 {
+      color: white;
+      font-size: 3.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+
+    /* 3. SECCIÓN ANCHO COMPLETO PARA LOS 2 IFRAMES LOCALES */
+    .full-width-section {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .iframe-adaptable-container {
+      width: 100%;
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .iframe-adaptable-container h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #1a252c;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+    }
+    .iframe-adaptable-container iframe {
+      width: 100%;
+      border: 0;
+      border-radius: 6px;
+      display: block;
+    }
+
+    /* 4. SECCIÓN INFERIOR: CONTENIDO CENTRAL EN 3 COLUMNAS Y TELEGRAM A LA DERECHA */
+    .bottom-layout-grid {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem 1.5rem;
+    }
+
+    .center-section-3cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-content: start;
+    }
+
+    .right-telegram-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .card-post {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .card-post h4 {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      color: #1a252c;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 0.3rem;
+    }
+
+    .telegram-wrapper {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* ==================== NUEVO: ESTILOS DEL ROTADOR DE TELEGRAM ==================== */
+    .telegram-carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .telegram-carousel h4 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: #1a252c;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+    }
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      min-height: 450px; /* Altura estimada para que quepa el post */
+    }
+    .carousel-slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease-in-out, visibility 0.5s;
+      z-index: 1;
+    }
+    /* Clase activa para mostrar el post actual */
+    .carousel-slide.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+
+    /* Ajustes móviles */
+    @media (max-width: 1024px) {
+      .bottom-layout-grid { grid-template-columns: 1fr; }
+      .center-section-3cols { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .center-section-3cols { grid-template-columns: 1fr; }
+      .hero-overlay h2 { font-size: 2rem; }
+    }
+  </style>
+
+  <!-- FUNCIÓN JAVASCRIPT PARA ALTURA AUTOMÁTICA DE IFRAMES LOCALES -->
+  <script>
+    function resizeIframe(obj) {
+      try {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+      } catch (e) {
+        obj.style.height = '600px'; 
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <!-- 1. MENÚ PERMANENTE -->
+  <nav class="navbar">
+    <h1>Rebolledo de la Torre — Portal Municipal</h1>
+  </nav>
+
+  <!-- 2. VIDEO DE FONDO -->
+  <header class="hero-video-container">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="cielo-nocturno.mp4" type="video/mp4">
+      Tu navegador no soporta vídeos.
+    </video>
+    <div class="hero-overlay">
+      <h2>REBOLLEDO DE LA TORRE</h2>
+    </div>
+  </header>
+
+  <!-- 3. DOS IFRAMES ANCHOS LOCALES -->
+  <main class="full-width-section">
+    <div class="iframe-adaptable-container">
+      <h3>Visor Principal / Mapa del Municipio</h3>
+      <iframe src="visor-mapa.html" title="Visor Local" onload="resizeIframe(this)"></iframe>
+    </div>
+
+    <div class="iframe-adaptable-container">
+      <h3>Sección Especial BOCYL / Tablón</h3>
+      <iframe src="tablon-bocyl.html" title="BOCYL Local" onload="resizeIframe(this)"></iframe>
+    </div>
+  </main>
+
+  <!-- 4. SECCIÓN MIXTA INFERIOR -->
+  <div class="bottom-layout-grid">
+    
+    <!-- SECCIÓN CENTRAL (3 columnas fijas de posts estáticos) -->
+    <section class="center-section-3cols">
+      <div class="card-post">
+        <h4>Noticia Destacada 1</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+      <div class="card-post">
+        <h4>Noticia Destacada 2</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+      <div class="card-post">
+        <h4>Noticia Destacada 3</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLUMNA LATERAL DERECHA (Con el nuevo Rotador Automático) -->
+    <aside class="right-telegram-sidebar">
+      
+      <!-- CONTENEDOR DEL ROTADOR -->
+      <div class="telegram-carousel">
+        <h4>Tablón Rotativo</h4>
+        <div class="carousel-container">
+          
+          <!-- Post en rotación 1 -->
+          <div class="carousel-slide active">
+            <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+          </div>
+
+          <!-- Post en rotación 2 -->
+          <div class="carousel-slide">
+            <script async src="https://telegram.org" data-telegram-post="telegram/200" data-width="100%"></script>
+          </div>
+
+          <!-- Post en rotación 3 -->
+          <div class="carousel-slide">
+            <script async src="https://telegram.org" data-telegram-post="durov/42" data-width="100%"></script>
+          </div>
+
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- SCRIPT PARA HACER ROTAR LOS POSTS AUTOMÁTICAMENTE -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const slides = document.querySelectorAll('.carousel-slide');
+      let currentSlide = 0;
+      const intervalTime = 5000; // Tiempo en milisegundos (5000ms = 5 segundos)
+
+      function nextSlide() {
+        // Quita la clase activa al post actual
+        slides[currentSlide].classList.remove('active');
+        // Avanza al siguiente post (y vuelve al primero si llega al final)
+        currentSlide = (currentSlide + 1) % slides.length;
+        // Añade la clase activa al nuevo post
+        slides[currentSlide].classList.add('active');
+      }
+
+      // Inicia el temporizador de rotación continua
+      if(slides.length > 0) {
+        setInterval(nextSlide, intervalTime);
+      }
+    });
+  </script>
+
+</body>
+</html>
