@@ -4,21 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rebolledo de la Torre | Portal Municipal y Turismo</title>
- <!-- <link rel="stylesheet" href="estilos.css">  -->
-  
   
   <style>
-    /* Reset básico 
+    /* 1. RESET ACTIVADO (Crucial para quitar márgenes rebeldes) */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f6f8; }   */
+    body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f6f8; color: #333; }
 
-    /* Contenedor del Banner Superior Rotativo */
+    /* Contenedor del Banner Superior (Fuera del grid para que ocupe todo el ancho) */
     .banner-rotativo-container {
       position: relative;
       width: 100%;
       height: 260px;
       overflow: hidden;
-      border-radius: 8px;
       margin-bottom: 2rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
@@ -38,14 +35,14 @@
     /* ESTRUCTURA PRINCIPAL EN 2 COLUMNAS */
     .main-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr; /* Columna principal 66% | Lateral 33% */
+      grid-template-columns: 2fr 1fr; /* Izquierda 66% | Derecha 33% */
       gap: 2rem;
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 1.5rem 3rem 1.5rem;
     }
 
-    /* Estilos generales para las tarjetas/secciones */
+    /* Estilos de las tarjetas */
     .card-section {
       background: #ffffff;
       border-radius: 10px;
@@ -62,322 +59,58 @@
       padding-bottom: 0.5rem;
     }
 
-    /* Alturas ajustadas para los iFrames de la columna principal 
-    .iframe-container { width: 100%; height:100%; border: 0; }
-    .iframe-container iframe { width: 100%; height: 100%; border: 0; border-radius: 6px; }  */
+    .iframe-container { width: 100%; height: 400px; border: 0; }
+    .iframe-container iframe { width: 100%; height: 100%; border: 0; border-radius: 6px; }
 
-    /* Contenedores sin barra de desplazamiento para la columna lateral */
-    .iframe-sidebar { 
-      height: 100%; 
-      overflow: hidden; /* Oculta cualquier scroll en el contenedor */
-    }
-    
-    .iframe-sidebar iframe { 
-      width: 100%; 
-      height: 100%; 
-      border: 0; 
-      border-radius: 6px; 
-      overflow: hidden; /* Oculta el scrollbar del iframe */
-    }
-
-    /* Adaptación para pantallas móviles (1 columna) */
-    @media (max-width: 900px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
+    /* Responsivo: En celulares se transforma en 1 sola columna */
+    @media (max-width: 768px) {
+      .main-grid { grid-template-columns: 1fr; gap: 1rem; }
     }
   </style>
 </head>
-
-
-  
 <body>
 
-  <!-- NAVEGACIÓN -->
-  <nav class="navbar">
-    <a href="#" class="nav-brand">Rebolledo de la Torre</a>
-    <ul class="nav-links">
-      <li><a href="#horarios">Servicios y Horarios</a></li>
-      <li><a href="#astroturismo">AstroTurismo</a></li>
-      <li><a href="#rutas">Rutas</a></li>
-      <li><a href="#huerta">Huerta</a></li>
-      <li><a href="#tienda">Tienda</a></li>
-      <li class="dropdown">
-        <a href="#desplegable" class="dropdown-toggle">Desplegable ▾</a>
-        <ul class="dropdown-menu">
-          <li><a href="#geoparque">Geoparque</a></li>
-          <li><a href="#romanico">Románico</a></li>
-          <li><a href="#historia">Historia y Patrimonio</a></li>
-          <li><a href="#meteo">Previsión Meteorológica</a></li>
-          <li><a href="#galeria">Galería</a></li>
-          <li><a href="#proximapelu">Próxima Peluquería</a></li>
-          <li><a href="#coro">Coro</a></li>
-          <li><a href="#asistencia">Contacto</a></li>
-          <li><a href="#enlaces">Enlaces de interés</a></li>
-        </ul>
-      </li>
-      <li><a href="#bocyl">BOCYL</a></li>
-    </ul>
-  </nav>
-
-  <!-- WIDGET CLIMA SUPERIOR -->
-  <div class="weather-bar">
-    <a class="weatherwidget-io" href="https://forecast7.com/es/42d69n4d23/rebolledo-de-la-torre/" data-icons="Climacons Animated" data-mode="Current" data-theme="dark" data-basecolor="rgba(0, 0, 0, 0.02)">Rebolledo de la Torre, Spain</a>
-    <script>
-      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-    </script>
-  </div>
-
-  <!-- HERO HEADER -->
-  <header class="hero-container">
-    <video class="hero-video" autoplay loop muted playsinline>
-      <source src="cielo-nocturno.mp4" type="video/mp4">
-    </video>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1 class="hero-title">Rebolledo de la Torre</h1>
-      <p class="hero-subtitle">Naturaleza, historia y cielos limpios</p>
-    </div>
-  </header>
-
-  <!-- BANNER ROTATIVO (Ancho completo) -->
-  <div class="banner-rotativo-container" style="max-width: 1400px; margin: 2rem auto;">
+  <!-- Banner Superior (Ocupa el ancho completo de la pantalla) -->
+  <div class="banner-rotativo-container">
     <div class="slide active">
-      <iframe src="https://embed.windy.com/embed.html?type=forecast&location=coordinates&detail=true&detailLat=42.6889148&detailLon=-4.2271222999999996&metricTemp=default&metricRain=default&metricWind=default"></iframe>
+      <!-- Reemplaza src con tu URL real -->
+      <iframe src="about:blank" title="Banner Rotativo"></iframe>
     </div>
-    <div class="slide"><iframe src="horarios.html"></iframe></div>
-    <div class="slide"><iframe src="astroturismo.html"></iframe></div>
-    <div class="slide"><iframe src="huerta/vis_mes.html"></iframe></div>
-    <div class="slide"><iframe src="noticias.html"></iframe></div>
-    <div class="slide"><iframe src="bocylemb.html"></iframe></div>
-    <div class="slide"><iframe src="rutas.html"></iframe></div>
-    <div class="slide"><iframe src="galeria.html"></iframe></div>
   </div>
 
-  <!-- CONTENEDOR PRINCIPAL EN 2 COLUMNAS -->
-  <main class="main-grid">
-
-    <!-- COLUMNA PRINCIPAL (IZQUIERDA) -->
-    <section class="primary-column">
-
-      <article id="horarios" class="card-section">
-        <h2>📅 Servicios y Horarios</h2>
-        <div class="iframe-container">
-        <iframe src="horarios.html">  </iframe>
-        </div>
-        </article>
-
-      <article id="astroturismo" class="card-section">
-        <h2>✨ AstroTurismo</h2>
-        <div class="iframe-container">
-        <iframe src="astroturismo.html">  </iframe>
-        </div>
-      </article> 
-
-      <article id="huerta" class="card-section">
-        <h2>🌱 Huerta Tradicional</h2>
-        <div class="iframe-container">
-        <iframe src="huerta/vis_mes.html" scrolling="no"> </iframe>
-        </div>
-      </article>
-
-
-
-
-
-      
-      <article id="galeria" class="card-section">
-        <h2>🖼️ Galería</h2>
-        <div class="iframe-container">
-        <iframe src="galeria.html"> </iframe>
-        </div>
-      </article>
-
-
-
-
-      
-      <article id="rutas" class="card-section">
-        <!-- <h2>🥾 Rutas y Senderismo</h2> -->
-        <div class="iframe-container">
-        <iframe id="mi-iframe" src="rutas.html">  </iframe>
-        </div>
-      </article>
-      
-    </section>
-
+  <!-- Contenedor Grid Principal -->
+  <div class="main-grid">
     
+    <!-- COLUMNA IZQUIERDA: Contenido Principal (66%) -->
+    <main class="left-column">
+      <section class="card-section">
+        <h2>Noticias y Actualidad Municipal</h2>
+        <p>Aquí irá la información principal del municipio de Rebolledo de la Torre...</p>
+      </section>
 
-
-
-
- <!--        
-<iframe id="mi-iframe-1" src="astroturismo.html"></iframe>
-<iframe id="mi-iframe-2" src="huerta.html"></iframe>
--->
-
-
-
-
-
-        
-
- 
-
-
-
-
-
-
-      <article id="rutas" class="sidebar-column">
-        <!-- <h2>🥾 Rutas y Senderismo</h2> -->
-          <div class="iframe-container">
-          <iframe id="mi-iframe" src="huerta.html">  </iframe>
-          </div>
-          </article>
-
-
-
-
-
-      
-      
-<!--       <article id="bocyl" class="card-section">
-        <h2>📜 Publicaciones BOCYL</h2>
+      <section class="card-section">
+        <h2>Visores y Mapas Turísticos</h2>
         <div class="iframe-container">
-          <iframe src="bocylemb.html"></iframe>
+          <!-- Reemplaza src con tu mapa o visor -->
+          <iframe src="about:blank" title="Mapa Turístico"></iframe>
         </div>
-      </article>   -->
+      </section>
+    </main>
 
-    </section>
+    <!-- COLUMNA DERECHA: Lateral / Sidebar (33%) -->
+    <aside class="right-column">
+      <section class="card-section">
+        <h2>Horarios y Teléfonos</h2>
+        <p>Lunes a Viernes: 9:00 - 14:00</p>
+      </section>
 
-    <!-- COLUMNA LATERAL / SIDEBAR (DERECHA - SIN SCROLLBARS) -->
-    <aside class="sidebar-column">
+      <section class="card-section">
+        <h2>Enlaces de Interés</h2>
+        <p>Acceso a Sede Electrónica, turismo provincial, etc.</p>
+      </section>
+    </aside>
 
-      <div id="meteo" class="sidebar-column">
-        <h2>🌤️ Radar y Tiempo</h2>
-        <div class="iframe-container iframe-sidebar">
-          <iframe src="https://embed.windy.com/embed.html?type=forecast&location=coordinates&detail=true&detailLat=42.6889148&detailLon=-4.2271222999999996" scrolling="no"></iframe>
-        </div>
-      </div>
+  </div>
 
-      <div id="noticias" class="sidebar-column">
-        <h2>📰 ÚLTIMAS NOTICIAS</h2>
-        <div class="iframe-container iframe-sidebar">
-          <iframe src="noticias.html" scrolling="no"></iframe>
-        </div>
-      </div>
-
-      <!-- MARCO 1: Enlaces Locos -->
-      <div id="enlaces-locos" class="sidebar-column">
-        <h2>🔗 Enlaces Locos</h2>
-        <div class="iframe-container iframe-sidebar">
-          <iframe src="https://enlaces-bot.david-bessamel.workers.dev/3.2" title="Ticker de enlaces locos" loading="lazy" scrolling="no"></iframe>
-        </div>
-      </div>
-
-
-      
-      <!-- MARCO 2: Editable -->
-      <div id="bloque-sidebar-1" class="card-section">
-        <h2>📌 Título Bloque 1</h2>
-        <div class="iframe-container iframe-sidebar">
-          <iframe src="bocylemb.html" title="Contenido 1" loading="lazy" scrolling="no"></iframe>
-        </div>
-      </div>
-
-      <!-- MARCO 3: Editable -->
-      <div id="bloque-sidebar-2" class="sidebar-column">
-        <h2>📌 Título Bloque 2</h2>
-        <div class="iframe-container iframe-sidebar">
-          <iframe src="tu-pagina-2.html" title="Contenido 2" loading="lazy" scrolling="no"></iframe>
-        </div>
-      </div>
-
-      <!-- MARCO 4: Editable -->
-      <div id="bloque-sidebar-3" class="sidebar-column">
-       <h2>📌 Título Bloque 3</h2>
-          <div class="iframe-container iframe-sidebar">
-          <iframe src="tu-pagina-3.html" title="Contenido 3" loading="lazy" scrolling="no">  </iframe>
-          </div>
-      </div>
-
-
-<div>
-<article id="rutas" class="card-section">
-<h2>🥾 Rutas y Senderismo</h2>
-<div> <!-- class="iframe-container"> -->  
-<iframe id="mi-iframe" src="rutas.html"> </iframe>
-</div>
-</article>
-</div>
-
-
-
-
-      
-
-      
-<!-- MARCO 5: Editable  
-<div id="bloque-sidebar-4" class="card-section">  
-<h2>📌 Título Bloque 4</h2>  -->
-                                          <!-- <div class="iframe-container iframe-sidebar">  -->
-<iframe id="mi-iframe" src="bocylemb.html"> </iframe> 
-  
-                                            <!--  title="Contenido 4" loading="lazy" scrollingo="no"> </iframe>    -->
-</div>  
-</div>   
-</aside>
-</main>
-
-
-  
-
-
-  
-<script>
-  window.addEventListener("message", function (event) {
-    const altura = event.data?.frameHeight;
-
-    if (typeof altura !== "number") {
-      return;
-    }
-
-    const iframes = document.querySelectorAll("iframe");
-
-    iframes.forEach(function (iframe) {
-      if (iframe.contentWindow === event.source) {
-        iframe.style.height = `${altura}px`;
-      }
-    });
-  });
-</script>
-
-
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <!-- LÓGICA DEL SLIDER -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const slides = document.querySelectorAll('.banner-rotativo-container .slide');
-      let currentSlide = 0;
-      const tiempoCambio = 10000;
-
-      function cambiarSlide() {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }
-
-      setInterval(cambiarSlide, tiempoCambio);
-    });
-  </script>
 </body>
 </html>
