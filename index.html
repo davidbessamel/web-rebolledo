@@ -27,17 +27,16 @@
     .hero-video-container {
       position: relative;
       width: 100%;
-      height: 70vh; /* Ocupa el 70% de la altura de la pantalla */
+      height: 70vh;
       overflow: hidden;
       background: #000;
     }
     
-    /* Ajustes limpios para el vídeo nativo de fondo */
     .hero-video-container .hero-video {
       position: absolute;
       top: 50%; left: 50%;
       width: 100%; height: 100%;
-      object-fit: cover; /* Hace que el video llene el contenedor sin deformarse */
+      object-fit: cover;
       transform: translate(-50%, -50%);
       z-index: 1;
     }
@@ -46,7 +45,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.4); /* Capa oscura para leer bien el nombre */
+      background: rgba(0, 0, 0, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -81,32 +80,35 @@
       display: block;
     }
 
-    /* 4. SECCIÓN INFERIOR: CONTENIDO CENTRAL EN 3 COLUMNAS Y TELEGRAM A LA DERECHA (1 COLUMNA) */
+    /* 4. SECCIÓN INFERIOR: CONTENIDO CENTRAL EN 3 COLUMNAS Y TELEGRAM A LA DERECHA */
     .bottom-layout-grid {
       display: grid;
-      grid-template-columns: 3fr 1fr; /* Zona central 75% | Columna Telegram 25% */
+      grid-template-columns: 3fr 1fr;
       gap: 2rem;
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 1.5rem 3rem 1.5rem;
     }
 
-    /* Subgrid para hacer 3 columnas dentro de la zona central */
+    /* Subgrid de 3 columnas de noticias */
     .center-section-3cols {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       align-content: start;
     }
 
-    /* Columna derecha exclusiva para Telegram */
+    /* Columna derecha: Hace que se quede fija arriba al hacer scroll */
     .right-telegram-sidebar {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      position: sticky;
+      top: 5rem; /* Margen para que no choque con la barra de navegación */
+      height: fit-content;
     }
 
-    /* Tarjetas generales para organizar los posts sueltos */
+    /* Tarjetas generales */
     .card-post {
       background: #ffffff;
       border-radius: 10px;
@@ -121,13 +123,12 @@
       padding-bottom: 0.3rem;
     }
 
-    /* Contenedor para envolver los scripts de telegram */
     .telegram-wrapper {
       width: 100%;
       overflow: hidden;
     }
 
-    /* ==================== ESTILOS PARA EL ROTADOR LATERAL DE TELEGRAM ==================== */
+    /* ROTADOR LATERAL SUPERIOR DE TELEGRAM */
     .telegram-carousel {
       width: 100%;
       background: #ffffff;
@@ -145,7 +146,7 @@
     .carousel-container {
       position: relative;
       width: 100%;
-      min-height: 520px; /* Altura de seguridad para que quepan los posts de Telegram */
+      min-height: 520px; /* Altura de seguridad para la carga de posts */
     }
     .carousel-slide {
       position: absolute;
@@ -162,10 +163,11 @@
       z-index: 2;
     }
 
-    /* Ajustes móviles */
+    /* Ajustes dinámicos móviles */
     @media (max-width: 1024px) {
       .bottom-layout-grid { grid-template-columns: 1fr; }
       .center-section-3cols { grid-template-columns: 1fr 1fr; }
+      .right-telegram-sidebar { position: static; } /* Desactiva el fijo en móviles */
     }
     @media (max-width: 640px) {
       .center-section-3cols { grid-template-columns: 1fr; }
@@ -173,14 +175,13 @@
     }
   </style>
 
-  <!-- FUNCIÓN JAVASCRIPT PARA ALTURA AUTOMÁTICA -->
+  <!-- FUNCIÓN PARA ALTURA AUTOMÁTICA -->
   <script>
     function resizeIframe(obj) {
       try {
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
       } catch (e) {
         obj.style.height = '600px'; 
-        console.warn("Ajustada altura por defecto para iframe local debido a restricciones.");
       }
     }
   </script>
@@ -206,17 +207,17 @@
   <!-- ==================== 3. IFRAMES ANCHOS LOCALES ==================== -->
   <main class="full-width-section">
     
-    <!-- IFRAME LOCAL 1: Windy (Corregido atributos de cierre) -->
+    <!-- Windy -->
     <div class="iframe-adaptable-container">
-      <iframe src="https://embed.windy.com/embed.html?type=forecast&location=coordinates&detail=true&detailLat=42.6889148&detailLon=-4.2271222999999996&metricTemp=default&metricRain=default&metricWind=default" title="Visor Local Windy" height="450"></iframe>
+      <iframe src="https://windy.com" title="Visor Local Windy" height="450"></iframe>
     </div>
 
-    <!-- IFRAME LOCAL 2: Astroturismo -->
+    <!-- Astroturismo -->
     <div class="iframe-adaptable-container">
       <iframe src="astroturismo.html" title="Astroturismo" scrolling="no" onload="resizeIframe(this)"></iframe>
     </div>
 
-    <!-- IFRAME LOCAL 3: Rutas -->
+    <!-- Rutas -->
     <div class="iframe-adaptable-container">
       <iframe src="rutas.html" title="Rutas" scrolling="no" onload="resizeIframe(this)"></iframe>
     </div>
@@ -226,10 +227,8 @@
   <!-- ==================== 4. SECCIÓN MIXTA INFERIOR ==================== -->
   <div class="bottom-layout-grid">
     
-    <!-- SECCIÓN CENTRAL (Cuadrícula estática de 3 columnas) -->
+    <!-- SECCIÓN CENTRAL (Noticias fijas en 3 columnas) -->
     <section class="center-section-3cols">
-      
-      <!-- Post Central 1 -->
       <div class="card-post">
         <h4>Noticia Destacada 1</h4>
         <div class="telegram-wrapper">
@@ -237,7 +236,6 @@
         </div>
       </div>
 
-      <!-- Post Central 2 -->
       <div class="card-post">
         <h4>Noticia Destacada 2</h4>
         <div class="telegram-wrapper">
@@ -245,7 +243,6 @@
         </div>
       </div>
 
-      <!-- Post Central 3 -->
       <div class="card-post">
         <h4>Noticia Destacada 3</h4>
         <div class="telegram-wrapper">
@@ -253,34 +250,30 @@
         </div>
       </div>
 
-      <!-- Post Central 4 -->
       <div class="card-post">
         <h4>Actividad Cultural</h4>
         <div class="telegram-wrapper">
           <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
         </div>
       </div>
-
     </section>
 
-    <!-- COLUMNA LATERAL DERECHA (Rotador dinámico de posts uno a uno) -->
+    <!-- COLUMNA LATERAL DERECHA (Rotador ahora arriba del todo) -->
     <aside class="right-telegram-sidebar">
       
+      <!-- 1. EL ROTADOR (Ocupa la primera posición) -->
       <div class="telegram-carousel">
         <h4>Avisos en Rotación</h4>
         <div class="carousel-container">
           
-          <!-- Slide de Rotación 1 -->
           <div class="carousel-slide active">
             <script async src="https://telegram.org" data-telegram-post="rebolledodelatorrehuerta/22" data-width="100%"></script>
           </div>
 
-          <!-- Slide de Rotación 2 -->
           <div class="carousel-slide">
             <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
           </div>
 
-          <!-- Slide de Rotación 3 -->
           <div class="carousel-slide">
             <script async src="https://telegram.org" data-telegram-post="telegram/200" data-width="100%"></script>
           </div>
@@ -288,11 +281,17 @@
         </div>
       </div>
 
+      <!-- 2. OTROS ENLACES O INFORMACIÓN (Aparecerán debajo del rotador) -->
+      <div class="card-post">
+        <h4>Horarios del Ayuntamiento</h4>
+        <p>Atención al público de lunes a viernes.</p>
+      </section>
+
     </aside>
 
   </div>
 
-  <!-- SCRIPT QUE HACE FUNCIONAR EL ROTADOR AUTOMÁTICO -->
+  <!-- SCRIPT DEL ROTADOR AUTOMÁTICO -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const slides = document.querySelectorAll('.carousel-slide');
