@@ -407,6 +407,114 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // ========================================================
+    // ⚙️ CONFIGURACIÓN PERSONALIZADA PARA TU WEB
+    // ========================================================
+    const PALABRAS_OBLIGATORIAS = ["rural", "ayuda"]; 
+    const PALABRAS_PRIORITARIAS = ["prioritaria", "prioritario", "prioritarias"];
+    const NUMERO_RESULTADOS = 5; 
+    // ========================================================
+
+    const listContainer = document.getElementById("bocyl-news-list");
+    const tagsContainer = document.getElementById("bocyl-tags-container");
+
+    // Mostrar los términos clave en la interfaz del widget
+    tagsContainer.innerHTML = `<span class="bocyl-tag">🌾 Rural y Ayudas</span> <span class="bocyl-tag" style="background:#fff3cd; color:#856404;">⭐ Prioritarias</span>`;
+
+    // 1. Construir condición obligatoria: Debe tener 'rural' Y 'ayuda'
+    const obligatoriasQuery = PALABRAS_OBLIGATORIAS.map(word => `(titulo:"${word}" OR sumario:"${word}")`).join(" AND ");
+
+    // 2. Construir condición de prioridad: Que contenga además términos relacionados con "prioritaria"
+    const prioridadQuery = PALABRAS_PRIORITARIAS.map(word => `(titulo:"${word}" OR sumario:"${word}")`).join(" OR ");
+
+    // 3. Combinamos: Buscamos prioritarias primero, pero ordenamos por fecha. 
+    // La API de la Junta nos permite ponderar esto en el parámetro 'where'
+    const whereCondition = `(${obligatoriasQuery}) AND (${prioridadQuery})`;
+    
+    // Respaldos (Si la búsqueda estricta de "prioritarias" no devuelve nada, usamos la general)
+    const backupCondition = `(${obligatoriasQuery})`;
+
+    const apiUrl = "https://jcyl.es";
+
+    function consultarAPI(condicionBusqueda, esIntentoBackup = false) {
+        const urlParams = new URLSearchParams({
+            where: condicionBusqueda,
+            order_by: "fecha_publicacion DESC",
+            limit: NUMERO_RESULTADOS
+        });
+
+        fetch(`${apiUrl}?${urlParams.toString()}`)
+            .then(response => {
+                if (!response.ok) throw new Error("Error de red");
+                return response.json();
+            })
+            .then(data => {
+                // Si la búsqueda con "prioritarias" está vacía, reintentamos automáticamente con el contenido relacionado ("rural y ayuda")
+                if ((!data.results || data.results.length === 0) && !esIntentoBackup) {
+                    console.log("No se encontraron estrictamente prioritarias. Cargando contenido relacionado...");
+                    consultarAPI(backupCondition, true);
+                    return;
+                }
+
+                listContainer.innerHTML = ""; // Limpiar el cargando
+
+                if (!data.results || data.results.length === 0) {
+                    listContainer.innerHTML = '<div class="bocyl-state">No hay convocatorias rurales vigentes en este momento.</div>';
+                    return;
+                }
+
+                // Renderizar las publicaciones encontradas
+                data.results.forEach(item => {
+                    let fechaEs = item.fecha_publicacion || "";
+                    if (fechaEs.includes("-")) {
+                        const partes = fechaEs.split("-");
+                        fechaEs = `${partes[2]}/${partes[1]}/${partes[0]}`; // Formato DD/MM/YYYY corregido
+                    }
+
+                    const titulo = item.titulo || "Sin descripción";
+                    const boletinNum = item.numero_bocyl ? `BOCyL Nº ${item.numero_bocyl}` : "BOCyL";
+                    const pdf = item.enlace_fichero_pdf || "#";
+                    const htmlVersion = item.enlace_fichero_html;
+
+                    // Detectar si es de las prioritarias para ponerle una etiqueta visual en tu web
+                    const textoCompleto = (titulo + " " + (item.sumario || "")).toLowerCase();
+                    const esPrioritario = PALABRAS_PRIORITARIAS.some(p => textoCompleto.includes(p));
+                    const badgePrioridad = esPrioritario ? '<span style="background:#d4edda; color:#155724; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:bold; margin-left:10px;">⭐ PRIORITARIO</span>' : '';
+
+                    let accionesHtml = `<a href="${pdf}" target="_blank" class="bocyl-link">📄 Descargar PDF</a>`;
+                    if(htmlVersion) {
+                        accionesHtml += `<a href="${htmlVersion}" target="_blank" class="bocyl-link">🌐 Leer en Web</a>`;
+                    }
+
+                    listContainer.innerHTML += `
+                        <li class="bocyl-item">
+                            <div class="bocyl-meta">
+                                <span>📅 ${fechaEs} ${badgePrioridad}</span>
+                                <span>🏛️ ${boletinNum}</span>
+                            </div>
+                            <h4 class="bocyl-title">${titulo}</h4>
+                            <div class="bocyl-actions">${accionesHtml}</div>
+                        </li>
+                    `;
+                });
+            })
+            .catch(err => {
+                console.error("Error en BOCyL API:", err);
+                listContainer.innerHTML = '<div class="bocyl-state" style="color:red;">⚠️ Error al sincronizar con Datos Abiertos de JCyL.</div>';
+            });
+    }
+
+    // Arrancar primera consulta con el filtro estricto prioritario
+    consultarAPI(whereCondition);
+});
+</script>
+
+
+    
+
 
     
 
