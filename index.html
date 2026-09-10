@@ -186,18 +186,19 @@
 
       <article id="rutas" class="card-section">
         <!-- <h2>🥾 Rutas y Senderismo</h2> -->
-        <div class="iframe-container">
-          <iframe id="mi-iframe" src="rutas.html">
-      </iframe>
-        </div>
+          <div class="iframe-container">
+          <iframe id="mi-iframe" src="rutas.html">  </iframe>
+          </div>
+      </article>
+        
     <script>
-window.addEventListener('message', function(event) {
-  if (event.data.frameHeight) {
+    window.addEventListener('message', function(event) {
+    if (event.data.frameHeight) {
     const iframe = document.getElementById('mi-iframe');
     iframe.style.height = event.data.frameHeight + 'px';
-  }
-}, false);
-</script>
+    }
+    }, false);
+    </script>
 
 
 
@@ -240,20 +241,13 @@ window.addEventListener('message', function(event) {
 
       <article id="rutas" class="card-section">
         <!-- <h2>🥾 Rutas y Senderismo</h2> -->
-        <div class="iframe-container">
-          <iframe id="mi-iframe" src="rutas.html">
-      </iframe>
-        </div>
-    <script>
-window.addEventListener('message', function(event) {
-  if (event.data.frameHeight) {
-    const iframe = document.getElementById('mi-iframe');
-    iframe.style.height = event.data.frameHeight + 'px';
-  }
-}, false);
-</script>
+          <div class="iframe-container">
+          <iframe id="mi-iframe" src="rutas.html">  </iframe>
+          </div>
+          </article>
 
-  </article>
+
+
 
 
       
@@ -310,285 +304,62 @@ window.addEventListener('message', function(event) {
 
       <!-- MARCO 4: Editable -->
       <div id="bloque-sidebar-3" class="card-section">
-        <h2>📌 Título Bloque 3</h2>
-        <div class="iframe-container iframe-sidebar">
-          <iframe src="tu-pagina-3.html" title="Contenido 3" loading="lazy" scrolling="no"></iframe>
-        </div>
+       <h2>📌 Título Bloque 3</h2>
+          <div class="iframe-container iframe-sidebar">
+          <iframe src="tu-pagina-3.html" title="Contenido 3" loading="lazy" scrolling="no">  </iframe>
+          </div>
       </div>
 
 
-      <div>
-
+<div>
 <article id="rutas" class="card-section">
-        <!-- <h2>🥾 Rutas y Senderismo</h2> -->
-        <div> <!-- class="iframe-container"> -->  
-          <iframe id="mi-iframe" src="rutas.html">
-        </iframe>
-    
+<h2>🥾 Rutas y Senderismo</h2>
+<div> <!-- class="iframe-container"> -->  
+<iframe id="mi-iframe" src="rutas.html"> </iframe>
+</div>
+</article>
+</div>
 
 
+
+
+      
+
+      
+<!-- MARCO 5: Editable  -->
+<div id="bloque-sidebar-4" class="card-section">  
+<h2>📌 Título Bloque 4</h2>
+<!-- <div class="iframe-container iframe-sidebar">  -->
+<iframe id="mi-iframe" src="bocylemb.html"> </iframe> 
+<!--  title="Contenido 4" loading="lazy" scrollingo="no"> </iframe>    -->
+</div>  
+</div>   
+</aside>
+</main>
+
+
+  
+  
+  
+  
 <script>
 window.addEventListener('message', function(event) {
-  if (event.data.frameHeight) {
-    const iframe = document.getElementById('mi-iframe');
-    iframe.style.height = event.data.frameHeight + 'px';
-  </script>
-
-        
-        </div>
-
-  </article>
-
-
-      
-      <!-- MARCO 5: Editable  -->
-   <div id="bloque-sidebar-4" class="card-section">  
-        <h2>📌 Título Bloque 4</h2>
-         <!-- <div class="iframe-container iframe-sidebar">  -->
-                <iframe id="mi-iframe" src="bocylemb.html"> </iframe> 
-                         <!--  title="Contenido 4" loading="lazy" scrollingo="no"> </iframe>    -->
-           </div>  
-      </div>   
-      
-    </aside>
-
-
-
-
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    
-    // ========================================================
-    // ⚙️ CONFIGURACIÓN PERSONALIZADA PARA TU WEB
-    // ========================================================
-    const PALABRAS_OBLIGATORIAS = ["rural", "ayuda"]; 
-    const PALABRAS_PRIORITARIAS = ["prioritaria", "prioritario", "prioritarias"];
-    const NUMERO_RESULTADOS = 5; 
-    // ========================================================
-
-    const listContainer = document.getElementById("bocyl-news-list");
-    const tagsContainer = document.getElementById("bocyl-tags-container");
-
-    // Mostrar los términos clave en la interfaz del widget
-    tagsContainer.innerHTML = `<span class="bocyl-tag">🌾 Rural y Ayudas</span> <span class="bocyl-tag" style="background:#fff3cd; color:#856404;">⭐ Prioritarias</span>`;
-
-    // 1. Construir condición obligatoria: Debe tener 'rural' Y 'ayuda'
-    const obligatoriasQuery = PALABRAS_OBLIGATORIAS.map(word => `(titulo:"${word}" OR sumario:"${word}")`).join(" AND ");
-
-    // 2. Construir condición de prioridad: Que contenga además términos relacionados con "prioritaria"
-    const prioridadQuery = PALABRAS_PRIORITARIAS.map(word => `(titulo:"${word}" OR sumario:"${word}")`).join(" OR ");
-
-    // 3. Combinamos: Buscamos prioritarias primero, pero ordenamos por fecha. 
-    // La API de la Junta nos permite ponderar esto en el parámetro 'where'
-    const whereCondition = `(${obligatoriasQuery}) AND (${prioridadQuery})`;
-    
-    // Respaldos (Si la búsqueda estricta de "prioritarias" no devuelve nada, usamos la general)
-    const backupCondition = `(${obligatoriasQuery})`;
-
-    const apiUrl = "https://jcyl.es";
-
-    function consultarAPI(condicionBusqueda, esIntentoBackup = false) {
-        const urlParams = new URLSearchParams({
-            where: condicionBusqueda,
-            order_by: "fecha_publicacion DESC",
-            limit: NUMERO_RESULTADOS
-        });
-
-        fetch(`${apiUrl}?${urlParams.toString()}`)
-            .then(response => {
-                if (!response.ok) throw new Error("Error de red");
-                return response.json();
-            })
-            .then(data => {
-                // Si la búsqueda con "prioritarias" está vacía, reintentamos automáticamente con el contenido relacionado ("rural y ayuda")
-                if ((!data.results || data.results.length === 0) && !esIntentoBackup) {
-                    console.log("No se encontraron estrictamente prioritarias. Cargando contenido relacionado...");
-                    consultarAPI(backupCondition, true);
-                    return;
-                }
-
-                listContainer.innerHTML = ""; // Limpiar el cargando
-
-                if (!data.results || data.results.length === 0) {
-                    listContainer.innerHTML = '<div class="bocyl-state">No hay convocatorias rurales vigentes en este momento.</div>';
-                    return;
-                }
-
-                // Renderizar las publicaciones encontradas
-                data.results.forEach(item => {
-                    let fechaEs = item.fecha_publicacion || "";
-                    if (fechaEs.includes("-")) {
-                        const partes = fechaEs.split("-");
-                        fechaEs = `${partes[2]}/${partes[1]}/${partes[0]}`; // Formato DD/MM/YYYY corregido
-                    }
-
-                    const titulo = item.titulo || "Sin descripción";
-                    const boletinNum = item.numero_bocyl ? `BOCyL Nº ${item.numero_bocyl}` : "BOCyL";
-                    const pdf = item.enlace_fichero_pdf || "#";
-                    const htmlVersion = item.enlace_fichero_html;
-
-                    // Detectar si es de las prioritarias para ponerle una etiqueta visual en tu web
-                    const textoCompleto = (titulo + " " + (item.sumario || "")).toLowerCase();
-                    const esPrioritario = PALABRAS_PRIORITARIAS.some(p => textoCompleto.includes(p));
-                    const badgePrioridad = esPrioritario ? '<span style="background:#d4edda; color:#155724; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:bold; margin-left:10px;">⭐ PRIORITARIO</span>' : '';
-
-                    let accionesHtml = `<a href="${pdf}" target="_blank" class="bocyl-link">📄 Descargar PDF</a>`;
-                    if(htmlVersion) {
-                        accionesHtml += `<a href="${htmlVersion}" target="_blank" class="bocyl-link">🌐 Leer en Web</a>`;
-                    }
-
-                    listContainer.innerHTML += `
-                        <li class="bocyl-item">
-                            <div class="bocyl-meta">
-                                <span>📅 ${fechaEs} ${badgePrioridad}</span>
-                                <span>🏛️ ${boletinNum}</span>
-                            </div>
-                            <h4 class="bocyl-title">${titulo}</h4>
-                            <div class="bocyl-actions">${accionesHtml}</div>
-                        </li>
-                    `;
-                });
-            })
-            .catch(err => {
-                console.error("Error en BOCyL API:", err);
-                listContainer.innerHTML = '<div class="bocyl-state" style="color:red;">⚠️ Error al sincronizar con Datos Abiertos de JCyL.</div>';
-            });
-    }
-
-    // Arrancar primera consulta con el filtro estricto prioritario
-    consultarAPI(whereCondition);
-});
+if (event.data.frameHeight) {
+const iframe = document.getElementById('mi-iframe');
+iframe.style.height = event.data.frameHeight + 'px';
+}
+}, false);
 </script>
 
 
-
-
-
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    
-    // ========================================================
-    // ⚙️ CONFIGURACIÓN PERSONALIZADA PARA TU WEB
-    // ========================================================
-    const PALABRAS_OBLIGATORIAS = ["rural", "ayuda"]; 
-    const PALABRAS_PRIORITARIAS = ["prioritaria", "prioritario", "prioritarias"];
-    const NUMERO_RESULTADOS = 5; 
-    // ========================================================
-
-    const listContainer = document.getElementById("bocyl-news-list");
-    const tagsContainer = document.getElementById("bocyl-tags-container");
-
-    // Mostrar los términos clave en la interfaz del widget
-    tagsContainer.innerHTML = `<span class="bocyl-tag">🌾 Rural y Ayudas</span> <span class="bocyl-tag" style="background:#fff3cd; color:#856404;">⭐ Prioritarias</span>`;
-
-    // 1. Construir condición obligatoria: Debe tener 'rural' Y 'ayuda'
-    const obligatoriasQuery = PALABRAS_OBLIGATORIAS.map(word => `(titulo:"${word}" OR sumario:"${word}")`).join(" AND ");
-
-    // 2. Construir condición de prioridad: Que contenga además términos relacionados con "prioritaria"
-    const prioridadQuery = PALABRAS_PRIORITARIAS.map(word => `(titulo:"${word}" OR sumario:"${word}")`).join(" OR ");
-
-    // 3. Combinamos: Buscamos prioritarias primero, pero ordenamos por fecha. 
-    // La API de la Junta nos permite ponderar esto en el parámetro 'where'
-    const whereCondition = `(${obligatoriasQuery}) AND (${prioridadQuery})`;
-    
-    // Respaldos (Si la búsqueda estricta de "prioritarias" no devuelve nada, usamos la general)
-    const backupCondition = `(${obligatoriasQuery})`;
-
-    const apiUrl = "https://jcyl.es";
-
-    function consultarAPI(condicionBusqueda, esIntentoBackup = false) {
-        const urlParams = new URLSearchParams({
-            where: condicionBusqueda,
-            order_by: "fecha_publicacion DESC",
-            limit: NUMERO_RESULTADOS
-        });
-
-        fetch(`${apiUrl}?${urlParams.toString()}`)
-            .then(response => {
-                if (!response.ok) throw new Error("Error de red");
-                return response.json();
-            })
-            .then(data => {
-                // Si la búsqueda con "prioritarias" está vacía, reintentamos automáticamente con el contenido relacionado ("rural y ayuda")
-                if ((!data.results || data.results.length === 0) && !esIntentoBackup) {
-                    console.log("No se encontraron estrictamente prioritarias. Cargando contenido relacionado...");
-                    consultarAPI(backupCondition, true);
-                    return;
-                }
-
-                listContainer.innerHTML = ""; // Limpiar el cargando
-
-                if (!data.results || data.results.length === 0) {
-                    listContainer.innerHTML = '<div class="bocyl-state">No hay convocatorias rurales vigentes en este momento.</div>';
-                    return;
-                }
-
-                // Renderizar las publicaciones encontradas
-                data.results.forEach(item => {
-                    let fechaEs = item.fecha_publicacion || "";
-                    if (fechaEs.includes("-")) {
-                        const partes = fechaEs.split("-");
-                        fechaEs = `${partes[2]}/${partes[1]}/${partes[0]}`; // Formato DD/MM/YYYY corregido
-                    }
-
-                    const titulo = item.titulo || "Sin descripción";
-                    const boletinNum = item.numero_bocyl ? `BOCyL Nº ${item.numero_bocyl}` : "BOCyL";
-                    const pdf = item.enlace_fichero_pdf || "#";
-                    const htmlVersion = item.enlace_fichero_html;
-
-                    // Detectar si es de las prioritarias para ponerle una etiqueta visual en tu web
-                    const textoCompleto = (titulo + " " + (item.sumario || "")).toLowerCase();
-                    const esPrioritario = PALABRAS_PRIORITARIAS.some(p => textoCompleto.includes(p));
-                    const badgePrioridad = esPrioritario ? '<span style="background:#d4edda; color:#155724; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:bold; margin-left:10px;">⭐ PRIORITARIO</span>' : '';
-
-                    let accionesHtml = `<a href="${pdf}" target="_blank" class="bocyl-link">📄 Descargar PDF</a>`;
-                    if(htmlVersion) {
-                        accionesHtml += `<a href="${htmlVersion}" target="_blank" class="bocyl-link">🌐 Leer en Web</a>`;
-                    }
-
-                    listContainer.innerHTML += `
-                        <li class="bocyl-item">
-                            <div class="bocyl-meta">
-                                <span>📅 ${fechaEs} ${badgePrioridad}</span>
-                                <span>🏛️ ${boletinNum}</span>
-                            </div>
-                            <h4 class="bocyl-title">${titulo}</h4>
-                            <div class="bocyl-actions">${accionesHtml}</div>
-                        </li>
-                    `;
-                });
-            })
-            .catch(err => {
-                console.error("Error en BOCyL API:", err);
-                listContainer.innerHTML = '<div class="bocyl-state" style="color:red;">⚠️ Error al sincronizar con Datos Abiertos de JCyL.</div>';
-            });
-    }
-
-    // Arrancar primera consulta con el filtro estricto prioritario
-    consultarAPI(whereCondition);
-});
-</script>
-
-
-    
-
-
-    
-
-
-
-
-
-
-
-
-    
-  </main>
-
+  
+  
+  
+  
+  
+  
+  
+  
   <!-- LÓGICA DEL SLIDER -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
