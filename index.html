@@ -1,91 +1,184 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rebolledo de la Torre | Portal Municipal y Turismo</title>
-  <link rel="stylesheet" href="estilos.css">
-  <style>
-    /* Reset básico */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f6f8; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas de Turismo Activo y Rural - Rebolledo de la Torre</title>
 
-    /* Contenedor del Banner Superior Rotativo */
-    .banner-rotativo-container {
-      position: relative;
-      width: 100%;
-      height: 260px;
-      overflow: hidden;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+   
+    <style>
+        :root {
+            --primary-color: #2c5e3b;
+            --secondary-color: #8b5a2b;
+            --bg-color: #f7f9f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
 
-    .banner-rotativo-container .slide {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-      z-index: 1;
-    }
+        header {
+            background: linear-gradient(rgba(44, 94, 59, 0.85), rgba(44, 94, 59, 0.95)), url('https://unsplash.com') center/cover;
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
 
-    .banner-rotativo-container .slide.active { opacity: 1; z-index: 2; }
-    .banner-rotativo-container iframe { width: 100%; height: 100%; border: none; }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
 
-    /* ESTRUCTURA PRINCIPAL EN 2 COLUMNAS */
-    .main-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr; /* Columna principal 50% | Lateral 50% */
-      gap: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem 3rem 1.5rem;
-    }
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 1rem auto 0;
+        }
 
-    /* Estilos generales para las tarjetas/secciones */
-    .card-section {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 1.25rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
 
-    .card-section h2 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: #1a252c;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 0.5rem;
-    }
+        .category-title {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+            font-size: 1.8rem;
+        }
 
-    /* Alturas ajustadas para los iFrames de la columna principal */
-    .iframe-container { heigh: 500px width: 100%; border: 0; }
-    .iframe-container iframe { width: 100%; border: 0; border-radius: 6px; }
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
 
-    /* Contenedores sin barra de desplazamiento para la columna lateral */
-    .iframe-sidebar { 
-      height: 1700px; 
-      overflow: hidden; /* Oculta cualquier scroll en el contenedor */
-    }
-    .iframe-sidebar iframe { 
-      width: 100%; 
-      height: 100%; 
-      border: 0; 
-      border-radius: 6px; 
-      overflow: hidden; /* Oculta el scrollbar del iframe */
-    }
+        .route-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* Adaptación para pantallas móviles (1 columna) */
-    @media (max-width: 900px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+        .route-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .route-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .route-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            align-self: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .route-badge.geo { background-color: #4a6fa5; }
+        .route-badge.bici { background-color: #d97706; }
+        .route-badge.cultura { background-color: #7c3aed; }
+
+        .route-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.4rem;
+            color: #111827;
+        }
+
+        .route-desc {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .route-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            padding: 0.75rem 0;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .meta-item strong {
+            display: block;
+            color: #1f2937;
+        }
+
+        .route-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 0.6rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e4028;
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+
+        footer {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 5rem;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-<body>
+
+  
+  
+  <body>
 
   <!-- NAVEGACIÓN -->
   <nav class="navbar">
