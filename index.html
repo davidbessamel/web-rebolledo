@@ -59,7 +59,7 @@
       text-align: center;
     }
 
-    /* 3. SECCIÓN ANCHO COMPLETO PARA LOS IFRAMES LOCALES (MÁS ANCHOS) */
+    /* 3. SECCIÓN ANCHO COMPLETO PARA LOS IFRAMES LOCALES */
     .full-width-section {
       max-width: 1400px;
       margin: 2rem auto;
@@ -98,13 +98,13 @@
       align-content: start;
     }
 
-    /* Columna derecha: Hace que se quede fija arriba al hacer scroll */
+    /* Columna derecha fija */
     .right-telegram-sidebar {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
       position: sticky;
-      top: 5rem; /* Margen para que no choque con la barra de navegación */
+      top: 5rem;
       height: fit-content;
     }
 
@@ -126,6 +126,7 @@
     .telegram-wrapper {
       width: 100%;
       overflow: hidden;
+      min-height: 200px; /* Asegura un espacio visual mínimo mientras carga */
     }
 
     /* ROTADOR LATERAL SUPERIOR DE TELEGRAM */
@@ -146,7 +147,7 @@
     .carousel-container {
       position: relative;
       width: 100%;
-      min-height: 520px; /* Altura de seguridad para la carga de posts */
+      min-height: 520px;
     }
     .carousel-slide {
       position: absolute;
@@ -167,7 +168,7 @@
     @media (max-width: 1024px) {
       .bottom-layout-grid { grid-template-columns: 1fr; }
       .center-section-3cols { grid-template-columns: 1fr 1fr; }
-      .right-telegram-sidebar { position: static; } /* Desactiva el fijo en móviles */
+      .right-telegram-sidebar { position: static; }
     }
     @media (max-width: 640px) {
       .center-section-3cols { grid-template-columns: 1fr; }
@@ -258,7 +259,7 @@
       </div>
     </section>
 
-    <!-- COLUMNA LATERAL DERECHA (Estructura de etiquetas corregida) -->
+    <!-- COLUMNA LATERAL DERECHA (Rotador fijado arriba) -->
     <aside class="right-telegram-sidebar">
       
       <!-- 1. EL ROTADOR -->
@@ -281,7 +282,7 @@
         </div>
       </div>
 
-      <!-- 2. HORARIOS (Corregido: Abre con div y cierra con div) -->
+      <!-- 2. HORARIOS -->
       <div class="card-post">
         <h4>Horarios del Ayuntamiento</h4>
         <p>Atención al público de lunes a viernes.</p>
