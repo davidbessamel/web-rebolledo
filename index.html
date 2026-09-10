@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rebolledo de la Torre | Portal Municipal y Turismo</title>
+  
+  <style>
+    /* Reset básico */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f6f8; color: #333; }
+
+    /* Contenedor del Banner Superior Rotativo */
+    .banner-rotativo-container {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .banner-rotativo-container iframe { width: 100%; height: 100%; border: none; }
+
+    /* ESTRUCTURA PRINCIPAL EN 2 COLUMNAS */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr; /* Principal 66% | Lateral 33% */
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem 1.5rem;
+    }
+
+    /* Tarjetas */
+    .card-section {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .card-section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #1a252c;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+    }
+
+    /* Contenedor específico para que el Widget de Telegram no se desborde */
+    .telegram-wrapper {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Responsivo Celulares */
+    @media (max-width: 768px) {
+      .main-grid { grid-template-columns: 1fr; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Banner Superior -->
+  <div class="banner-rotativo-container">
+    <iframe src="about:blank" title="Banner Rotativo"></iframe>
+  </div>
+
+  <!-- Contenedor Grid Principal -->
+  <div class="main-grid">
+    
+    <!-- COLUMNA IZQUIERDA: Contenido Principal (66%) -->
+    <main class="left-column">
+      <section class="card-section">
+        <h2>Noticias y Actualidad Municipal</h2>
+        <p>Contenido del municipio de Rebolledo de la Torre...</p>
+      </section>
+    </main>
+
+    <!-- COLUMNA DERECHA: Lateral (33%) -->
+    <aside class="right-column">
+      <section class="card-section">
+        <h2>Horarios y Teléfonos</h2>
+        <p>Lunes a Viernes: 9:00 - 14:00</p>
+      </section>
+
+      <!-- SECCIÓN TELEGRAM (Ajustada al 100% de la columna) -->
+      <section class="card-section">
+        <h2>Últimas publicaciones (BOCYL)</h2>
+        <div class="telegram-wrapper">
+          
+          <!-- SCRIPT OFICIAL DE TELEGRAM -->
+          <!-- Reemplaza "durov/43" por tu canal y el número de post correspondiente -->
+          <script async 
+                  src="https://telegram.org" 
+                  data-telegram-post="durov/43" 
+                  data-width="100%">
+          </script>
+          
+        </div>
+      </section>
+    </aside>
+
+  </div>
+
+</body>
+</html>
