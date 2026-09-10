@@ -11,18 +11,36 @@
   <header>
     <h1>Astroturismo desde Rebolledo de la Torre</h1>
     <p>Observación astronómica en el Geoparque Mundial de la UNESCO Las Loras</p>
+    <style>
+      .contenedor {
+  height: 80px; /* El div puede tener cualquier altura */
+  width: 100%;   /* O el ancho que tú quieras */
+  overflow: hidden; /* Oculta lo que sobresalga */
+}
+
+.imagen-ajustada {
+  height: 100%;    /* Fuerza a la imagen a medir lo mismo que el div */
+  width: 100%;     /* Llena también el ancho */
+  object-fit: cover; /* Ajusta y recorta la imagen sin deformarla */
+}
+    </style>
   </header>
 
   <main>
     <!-- Banner Rotatorio de Constelaciones y Astrofotografía -->
     <section id="banner-astronomico">
       <h2>Galeria del Firmamento</h2>
-      <div style="height: 60px;" >
-        <img src="imagenes/constelacion-orion.jpg" alt="Constelación de Orión visible en los cielos de invierno" data-slide="active">
-        <img src="imagenes/constelacion-orion-dibujo.png" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras">
-        <img src="imagenes/via-lactea-loras.jpg" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras">
-        <img src="imagenes/constelacion-osa-mayor.jpg" alt="La Osa Mayor alineada con el norte sobre la Iglesia de San Julián y Santa Basilisa">
-        <img src="imagenes/nebulosas-cielo-profundo.jpg" alt="Fotografía de cielo profundo capturada desde el término municipal">
+      <div class="contenedor">
+
+<div class="contenedor">
+  <img src="tu-imagen.jpg" alt="Ejemplo" class="imagen-ajustada">
+</div>
+        
+        <img src="imagenes/constelacion-orion.jpg" alt="Constelación de Orión visible en los cielos de invierno" class="imagen-ajustada" data-slide="active">
+        <img src="imagenes/constelacion-orion-dibujo.png" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras" class="imagen-ajustada">
+        <img src="imagenes/via-lactea-loras.jpg" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras" class="imagen-ajustada">
+        <img src="imagenes/constelacion-osa-mayor.jpg" alt="La Osa Mayor alineada con el norte sobre la Iglesia de San Julián y Santa Basilisa" class="imagen-ajustada">
+        <img src="imagenes/nebulosas-cielo-profundo.jpg" alt="Fotografía de cielo profundo capturada desde el término municipal" class="imagen-ajustada">
       </div>
     </section>
     
