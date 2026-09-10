@@ -48,7 +48,25 @@
 <script>
 window.onload = function() {
   const height = document.body.scrollHeight;
-  window.parent.postMessage({ frameHeight: height }, '*');
+  window.parent.postMessage({ frameHeight: height }, '*')
 };                        
 
 </script>    
+
+
+
+
+
+<script>
+  function enviarAltura() {
+    window.parent.postMessage(
+      {
+        frameHeight: document.documentElement.scrollHeight
+      },
+      "*"
+    );
+  }
+
+  window.addEventListener("load", enviarAltura);
+  window.addEventListener("resize", enviarAltura);
+</script>
