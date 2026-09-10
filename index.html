@@ -27,28 +27,32 @@
     .hero-video-container {
       position: relative;
       width: 100%;
-      height: 70vh;
+      height: 70vh; /* Ocupa el 70% de la altura de la pantalla */
       overflow: hidden;
       background: #000;
     }
+    
+    /* Ajustes limpios para el vídeo nativo de fondo */
     .hero-video-container .hero-video {
       position: absolute;
       top: 50%; left: 50%;
       width: 100%; height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* Hace que el video llene el contenedor sin deformarse */
       transform: translate(-50%, -50%);
       z-index: 1;
     }
+    
     .hero-overlay {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.4); /* Capa oscura para leer bien el nombre */
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 2;
     }
+    
     .hero-overlay h2 {
       color: white;
       font-size: 3.5rem;
@@ -56,7 +60,7 @@
       text-align: center;
     }
 
-    /* 3. SECCIÓN ANCHO COMPLETO PARA LOS 2 IFRAMES LOCALES */
+    /* 3. SECCIÓN ANCHO COMPLETO PARA LOS IFRAMES LOCALES (MÁS ANCHOS) */
     .full-width-section {
       max-width: 1400px;
       margin: 2rem auto;
@@ -70,13 +74,6 @@
       margin-bottom: 2rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-    .iframe-adaptable-container h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: #1a252c;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 0.5rem;
-    }
     .iframe-adaptable-container iframe {
       width: 100%;
       border: 0;
@@ -84,29 +81,32 @@
       display: block;
     }
 
-    /* 4. SECCIÓN INFERIOR: CONTENIDO CENTRAL EN 3 COLUMNAS Y TELEGRAM A LA DERECHA */
+    /* 4. SECCIÓN INFERIOR: CONTENIDO CENTRAL EN 3 COLUMNAS Y TELEGRAM A LA DERECHA (1 COLUMNA) */
     .bottom-layout-grid {
       display: grid;
-      grid-template-columns: 3fr 1fr;
+      grid-template-columns: 3fr 1fr; /* Zona central 75% | Columna Telegram 25% */
       gap: 2rem;
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 1.5rem 3rem 1.5rem;
     }
 
+    /* Subgrid para hacer 3 columnas dentro de la zona central */
     .center-section-3cols {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
       gap: 1.5rem;
       align-content: start;
     }
 
+    /* Columna derecha exclusiva para Telegram */
     .right-telegram-sidebar {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
+    /* Tarjetas generales para organizar los posts sueltos */
     .card-post {
       background: #ffffff;
       border-radius: 10px;
@@ -121,32 +121,31 @@
       padding-bottom: 0.3rem;
     }
 
+    /* Contenedor para envolver los scripts de telegram */
     .telegram-wrapper {
       width: 100%;
       overflow: hidden;
     }
 
-    /* ==================== NUEVO: ESTILOS DEL ROTADOR DE TELEGRAM ==================== */
+    /* ==================== ESTILOS PARA EL ROTADOR LATERAL DE TELEGRAM ==================== */
     .telegram-carousel {
-      position: relative;
       width: 100%;
-      overflow: hidden;
       background: #ffffff;
       border-radius: 10px;
-      padding: 1.25rem;
+      padding: 1rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     .telegram-carousel h4 {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
       color: #1a252c;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 0.3rem;
     }
     .carousel-container {
       position: relative;
       width: 100%;
-      min-height: 450px; /* Altura estimada para que quepa el post */
+      min-height: 520px; /* Altura de seguridad para que quepan los posts de Telegram */
     }
     .carousel-slide {
       position: absolute;
@@ -157,7 +156,6 @@
       transition: opacity 0.5s ease-in-out, visibility 0.5s;
       z-index: 1;
     }
-    /* Clase activa para mostrar el post actual */
     .carousel-slide.active {
       opacity: 1;
       visibility: visible;
@@ -175,25 +173,26 @@
     }
   </style>
 
-  <!-- FUNCIÓN JAVASCRIPT PARA ALTURA AUTOMÁTICA DE IFRAMES LOCALES -->
+  <!-- FUNCIÓN JAVASCRIPT PARA ALTURA AUTOMÁTICA -->
   <script>
     function resizeIframe(obj) {
       try {
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
       } catch (e) {
         obj.style.height = '600px'; 
+        console.warn("Ajustada altura por defecto para iframe local debido a restricciones.");
       }
     }
   </script>
 </head>
 <body>
 
-  <!-- 1. MENÚ PERMANENTE -->
+  <!-- ==================== 1. MENÚ PERMANENTE ==================== -->
   <nav class="navbar">
     <h1>Rebolledo de la Torre — Portal Municipal</h1>
   </nav>
 
-  <!-- 2. VIDEO DE FONDO -->
+  <!-- ==================== 2. VIDEO DE FONDO ==================== -->
   <header class="hero-video-container">
     <video autoplay muted loop playsinline class="hero-video">
       <source src="cielo-nocturno.mp4" type="video/mp4">
@@ -204,65 +203,86 @@
     </div>
   </header>
 
-  <!-- 3. DOS IFRAMES ANCHOS LOCALES -->
+  <!-- ==================== 3. IFRAMES ANCHOS LOCALES ==================== -->
   <main class="full-width-section">
+    
+    <!-- IFRAME LOCAL 1: Windy (Corregido atributos de cierre) -->
     <div class="iframe-adaptable-container">
-      <h3>Visor Principal / Mapa del Municipio</h3>
-      <iframe src="visor-mapa.html" title="Visor Local" onload="resizeIframe(this)"></iframe>
+      <iframe src="https://embed.windy.com/embed.html?type=forecast&location=coordinates&detail=true&detailLat=42.6889148&detailLon=-4.2271222999999996&metricTemp=default&metricRain=default&metricWind=default" title="Visor Local Windy" height="450"></iframe>
     </div>
 
+    <!-- IFRAME LOCAL 2: Astroturismo -->
     <div class="iframe-adaptable-container">
-      <h3>Sección Especial BOCYL / Tablón</h3>
-      <iframe src="tablon-bocyl.html" title="BOCYL Local" onload="resizeIframe(this)"></iframe>
+      <iframe src="astroturismo.html" title="Astroturismo" scrolling="no" onload="resizeIframe(this)"></iframe>
     </div>
+
+    <!-- IFRAME LOCAL 3: Rutas -->
+    <div class="iframe-adaptable-container">
+      <iframe src="rutas.html" title="Rutas" scrolling="no" onload="resizeIframe(this)"></iframe>
+    </div>
+
   </main>
 
-  <!-- 4. SECCIÓN MIXTA INFERIOR -->
+  <!-- ==================== 4. SECCIÓN MIXTA INFERIOR ==================== -->
   <div class="bottom-layout-grid">
     
-    <!-- SECCIÓN CENTRAL (3 columnas fijas de posts estáticos) -->
+    <!-- SECCIÓN CENTRAL (Cuadrícula estática de 3 columnas) -->
     <section class="center-section-3cols">
+      
+      <!-- Post Central 1 -->
       <div class="card-post">
         <h4>Noticia Destacada 1</h4>
         <div class="telegram-wrapper">
-          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+          <script async src="https://telegram.org" data-telegram-post="rebolledodelatorrehuerta/22" data-width="100%"></script>
         </div>
       </div>
+
+      <!-- Post Central 2 -->
       <div class="card-post">
         <h4>Noticia Destacada 2</h4>
         <div class="telegram-wrapper">
           <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
         </div>
       </div>
+
+      <!-- Post Central 3 -->
       <div class="card-post">
         <h4>Noticia Destacada 3</h4>
         <div class="telegram-wrapper">
           <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
         </div>
       </div>
+
+      <!-- Post Central 4 -->
+      <div class="card-post">
+        <h4>Actividad Cultural</h4>
+        <div class="telegram-wrapper">
+          <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
+        </div>
+      </div>
+
     </section>
 
-    <!-- COLUMNA LATERAL DERECHA (Con el nuevo Rotador Automático) -->
+    <!-- COLUMNA LATERAL DERECHA (Rotador dinámico de posts uno a uno) -->
     <aside class="right-telegram-sidebar">
       
-      <!-- CONTENEDOR DEL ROTADOR -->
       <div class="telegram-carousel">
-        <h4>Tablón Rotativo</h4>
+        <h4>Avisos en Rotación</h4>
         <div class="carousel-container">
           
-          <!-- Post en rotación 1 -->
+          <!-- Slide de Rotación 1 -->
           <div class="carousel-slide active">
+            <script async src="https://telegram.org" data-telegram-post="rebolledodelatorrehuerta/22" data-width="100%"></script>
+          </div>
+
+          <!-- Slide de Rotación 2 -->
+          <div class="carousel-slide">
             <script async src="https://telegram.org" data-telegram-post="durov/43" data-width="100%"></script>
           </div>
 
-          <!-- Post en rotación 2 -->
+          <!-- Slide de Rotación 3 -->
           <div class="carousel-slide">
             <script async src="https://telegram.org" data-telegram-post="telegram/200" data-width="100%"></script>
-          </div>
-
-          <!-- Post en rotación 3 -->
-          <div class="carousel-slide">
-            <script async src="https://telegram.org" data-telegram-post="durov/42" data-width="100%"></script>
           </div>
 
         </div>
@@ -272,24 +292,21 @@
 
   </div>
 
-  <!-- SCRIPT PARA HACER ROTAR LOS POSTS AUTOMÁTICAMENTE -->
+  <!-- SCRIPT QUE HACE FUNCIONAR EL ROTADOR AUTOMÁTICO -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const slides = document.querySelectorAll('.carousel-slide');
       let currentSlide = 0;
-      const intervalTime = 5000; // Tiempo en milisegundos (5000ms = 5 segundos)
+      const intervalTime = 5000; // Cambia cada 5 segundos
 
       function nextSlide() {
-        // Quita la clase activa al post actual
+        if(slides.length === 0) return;
         slides[currentSlide].classList.remove('active');
-        // Avanza al siguiente post (y vuelve al primero si llega al final)
         currentSlide = (currentSlide + 1) % slides.length;
-        // Añade la clase activa al nuevo post
         slides[currentSlide].classList.add('active');
       }
 
-      // Inicia el temporizador de rotación continua
-      if(slides.length > 0) {
+      if(slides.length > 1) {
         setInterval(nextSlide, intervalTime);
       }
     });
