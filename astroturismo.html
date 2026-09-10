@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astroturismo en Rebolledo de la Torre</title>
+  <link rel="stylesheet" href="estilos.css">
+  <style>
+    /* Estilos del carrusel */
+    .contenedor {
+      height: 80px;      /* Cambia este valor para ajustar la altura de tu carrusel */
+      width: 100%;   
+      overflow: hidden;  
+      position: relative; /* Necesario para que las imágenes no se apilen hacia abajo */
+    }
+
+    .imagen-ajustada {
+      height: 100%;    
+      width: 100%;     
+      object-fit: cover; 
+      display: none;      /* 1. OCULTAMOS todas las imágenes por defecto */
+    }
+
+    /* 2. SÓLO SE MUESTRA la imagen que tenga el atributo data-slide="active" */
+    .imagen-ajustada[data-slide="active"] {
+      display: block;     
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Astroturismo desde Rebolledo de la Torre</h1>
+    <p>Observación astronómica en el Geoparque Mundial de la UNESCO Las Loras</p>
+  </header>
+
+  <main>
+    <!-- Banner Rotatorio de Constelaciones y Astrofotografía -->
+    <section id="banner-astronomico">
+      <h2>Galeria del Firmamento</h2>
+      
+      <!-- Contenedor único corregido -->
+      <div class="contenedor">
+        <img src="imagenes/constelacion-orion.jpg" alt="Constelación de Orión visible en los cielos de invierno" class="imagen-ajustada" data-slide="active">
+        <img src="imagenes/constelacion-orion-dibujo.png" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras" class="imagen-ajustada">
+        <img src="imagenes/via-lactea-loras.jpg" alt="Núcleo de la Vía Láctea sobre el paisaje de las Loras" class="imagen-ajustada">
+        <img src="imagenes/constelacion-osa-mayor.jpg" alt="La Osa Mayor alineada con el norte sobre la Iglesia de San Julián y Santa Basilisa" class="imagen-ajustada">
+        <img src="imagenes/nebulosas-cielo-profundo.jpg" alt="Fotografía de cielo profundo capturada desde el término municipal" class="imagen-ajustada">
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Asociación de Astroturismo y Conservación del Cielo Nocturno - Rebolledo de la Torre</p>
+  </footer>
+
+  <!-- Lógica de Rotación del Banner (Cada 3 segundos) -->
+  <script>
+    (function() {
+      const imagenesBanner = document.querySelectorAll('#banner-astronomico img');
+      let indiceActual = 0;
+      const intervaloTiempo = 3000;
+
+      function rotarImagen() {
+        if (imagenesBanner.length <= 1) return;
+        imagenesBanner[indiceActual].removeAttribute('data-slide');
+        indiceActual = (indiceActual + 1) % imagenesBanner.length;
+        imagenesBanner[indiceActual].setAttribute('data-slide', 'active');
+        
+        // Notificar el cambio de altura por si el DOM cambia de tamaño
+        if (typeof enviarAltura === 'function') enviarAltura();
+      }
+
+      if (imagenesBanner.length > 1) {
+        setInterval(rotarImagen, intervaloTiempo);
+      }
+    })();
+  </script>
+
+  <!-- Lógica para enviar la altura real a la ventana padre (iFrame) -->
+  <script>
+    function enviarAltura() {
+      // Se añade un pequeño retraso para asegurar que el navegador ha renderizado el cambio
+      setTimeout(() => {
+        window.parent.postMessage(
+          {
+            frameHeight: document.documentElement.scrollHeight
+          },
+          "*"
+        );
+      }, 50);
+    }
+
+    window.addEventListener("load", enviarAltura);
+    window.addEventListener("resize", enviarAltura);
+  </script>
+  
+</body>
+</html>
