@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<style>
+
+/* Reset básico */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f6f8; color: #333; }
+
+.iframe-adaptable-container {
+      width: 100%;
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+   </style>
+
+
+
+  <title>Rebolledo de la Torre | Naturaleza Historia y ✨Estrellas </title>
+<head>
+<body>
+  
+
+<div class="iframe-adaptable-container">
+
+
+
+
+
+
+
+
+
+
+
+<!-- Contenedor donde se cargará la foto -->
+<div id="espacio-galeria"></div>
+
+<script>
+  const rutaImagen = "ChatExport/photos/fotoseventoanterior/photo_1@08-09-2026_06-18-03.jpg";
+
+  const htmlGaleria = `
+    <div class="galeria-contenedor" style="float: left; width: 40%; max-width: 350px; margin: 5px 20px 15px 0; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: relative; font-family: sans-serif;">
+      <div class="galeria-slides" style="position: relative; height: 230px; background: #000;">
+        <img src="${rutaImagen}" alt="Foto del evento" class="slide"
+             style="position: absolute; width: 100%; height: 100%; object-fit: cover;"
+             onload="console.log('✅ Imagen cargada correctamente:', this.src)"
+             onerror="console.error('❌ Error al cargar la imagen:', this.src)">
+      </div>
+    </div>
+  `;
+
+  document.getElementById('espacio-galeria').innerHTML = htmlGaleria;
+</script>
+
+
+
+
+
+
+
+
+
+<!-- Contenedor donde se cargará el pase de fotos -->
+<div id="espacio-galeria"></div>
+
+<script>
+  // ==========================================
+  // CONFIGURACIÓN DE TUS IMÁGENES
+  // ==========================================
+  const carpeta = "ChatExport/photos/fotoseventoanterior/"; 
+  const prefijo = "photo_"; 
+  const sufijo = "@08-09-2026_06-18-03";
+  const extension = ".jpg"; 
+
+  // 1. ESCANEO AUTOMÁTICO COMPATIBLE DE IMÁGENES
+  function probarExisteImagen(url) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);  
+      img.onerror = () => resolve(false); 
+      img.src = url;
+    });
+  }
+
+  async function buscarImagenes() {
+    const imagenesEncontradas = [];
+    let contador = 1;
+    let buscando = true;
+
+    while (buscando) {
+      const rutaPropuesta = `${carpeta}${prefijo}${contador}${sufijo}${extension}`;
+      const existe = await probarExisteImagen(rutaPropuesta);
+      
+      if (existe) {
+        imagenesEncontradas.push(rutaPropuesta);
+        contador++;
+      } else {
+        buscando = false; 
+      }
+      
+      if (contador > 100) buscando = false; // Límite de seguridad
+    }
+    return imagenesEncontradas;
+  }
+
+  // 2. MONTAJE DE LA PRESENTACIÓN ROTATORIA
+  buscarImagenes().then(misImagenes => {
+    if (misImagenes.length === 0) {
+      console.warn("No se encontraron imágenes en la ruta especificada.");
+      return; 
+    }
+
+    // Código HTML del carrusel (puedes cambiar float:left por margin:0 auto si quieres centrarlo)
+    const htmlGaleria = `
+      <div class="galeria-contenedor" style="float: left; width: 40%; max-width: 350px; margin: 5px 20px 15px 0; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: relative; font-family: sans-serif;">
+        <div class="galeria-slides" style="position: relative; height: 230px; background: #000;">
+          ${misImagenes.map((src, idx) => `
+            <img src="${src}" alt="Foto del evento" class="slide" style="position: absolute; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s ease-in-out;">
+          `).join('')}
+        </div>
+        <button id="galeria-prev" style="position: absolute; top: 50%; left: 5px; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px; cursor: pointer; border-radius: 50%; width: 30px; height: 30px; font-weight: bold; font-size:12px;">&lt;</button>
+        <button id="galeria-next" style="position: absolute; top: 50%; right: 5px; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px; cursor: pointer; border-radius: 50%; width: 30px; height: 30px; font-weight: bold; font-size:12px;">&gt;</button>
+        <button id="galeria-pausa" style="position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; padding: 3px 8px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">Pausar</button>
+      </div>
+    `;
+
+    document.getElementById('espacio-galeria').innerHTML = htmlGaleria;
+    inicializarGaleria();
+  });
+
+  // 3. FUNCIONALIDAD INTERACTIVA DEL CARRUSEL
+  function inicializarGaleria() {
+    const slides = document.querySelectorAll('.slide');
+    if (!slides.length) return;
+
+    let indexActual = 0;
+    let autoPlayInterval = null;
+    let estaReproduciendo = true;
+
+    function mostrarSlide(nuevoIndex) {
+      slides[indexActual].style.opacity = 0;
+      indexActual = (nuevoIndex + slides.length) % slides.length;
+      slides[indexActual].style.opacity = 1;
+    }
+
+    function iniciarAutoPlay() {
+      if (autoPlayInterval) clearInterval(autoPlayInterval);
+      autoPlayInterval = setInterval(() => {
+        mostrarSlide(indexActual + 1);
+      }, 3000);
+    }
+
+    function detenerAutoPlay() {
+      clearInterval(autoPlayInterval);
+    }
+
+    document.getElementById('galeria-next').addEventListener('click', () => mostrarSlide(indexActual + 1));
+    document.getElementById('galeria-prev').addEventListener('click', () => mostrarSlide(indexActual - 1));
+
+    const btnPausa = document.getElementById('galeria-pausa');
+    btnPausa.addEventListener('click', () => {
+      if (estaReproduciendo) {
+        detenerAutoPlay();
+        btnPausa.innerText = "Reproducir";
+        btnPausa.style.backgroundColor = "rgba(0,123,255,0.8)";
+      } else {
+        iniciarAutoPlay();
+        btnPausa.innerText = "Pausar";
+        btnPausa.style.backgroundColor = "rgba(0,0,0,0.7)";
+      }
+      estaReproduciendo = !estaReproduciendo;
+    });
+
+    iniciarAutoPlay();
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Contenedor principal con el texto original completo -->
+<div id="articulo-eclipse" style="max-width: 800px; margin: 0 auto; line-height: 1.6; font-family: sans-serif; text-align: justify;">
+  ¡Qué tarde tan increíble vivimos ayer en el pueblo! Nos reunimos todos en la plaza del ayuntamiento, armados con nuestras gafas especiales y muchas ganas de compartir un momento histórico. El ambiente era una mezcla de emoción y asombro mientras esperábamos el gran momento. Cuando la Luna cubrió por completo al Sol, un silencio mágico inundó el lugar, seguido de aplausos y abrazos espontáneos. 
+</div>
+
+<script>
+  // ==========================================
+  // CONFIGURACIÓN DE TUS IMÁGENES
+  // ==========================================
+  const carpeta = "ChatExport/photos/fotoseventoanterior/"; 
+  const prefijo = "photo_"; 
+  const sufijo = "_08-09-2026_06-18-03";
+//  const extension = ".jpg";   
+
+  const contenedor = document.getElementById('articulo-eclipse');
+  const textoCompleto = contenedor.innerText.trim();
+  const palabras = textoCompleto.split(/\s+/);
+
+
+
+// 1. LÓGICA DE DETECCIÓN DEL PUNTO (aprox. la mitad del texto)
+let indiceCorte = palabras.length;
+const mitad = Math.ceil(palabras.length / 2);
+
+for (let i = mitad; i < palabras.length; i++) {
+  if (palabras[i].includes('.')) {
+    indiceCorte = i + 1; // corta justo después del punto más cercano a la mitad
+    break;
+  }
+}
+
+
+  // 2. ESCANEO AUTOMÁTICO DE IMÁGENES (Fetch HEAD)
+  async function buscarImagenes() {
+    const imagenesEncontradas = [];
+    let contador = 1;
+    let buscando = true;
+
+    while (buscando) {
+      const rutaPropuesta = `${carpeta}${prefijo}${contador}${sufijo}${extension}`;
+      try {
+        const respuesta = await fetch(rutaPropuesta, { method: 'HEAD' });
+        if (respuesta.ok) {
+          imagenesEncontradas.push(rutaPropuesta);
+          contador++;
+        } else {
+          buscando = false; 
+        }
+      } catch (error) {
+        buscando = false;
+      }
+      if (contador > 100) buscando = false; 
+    }
+    return imagenesEncontradas;
+  }
+
+// 3. MONTAJE DE LA ESTRUCTURA HTML (Galería al principio de todo)
+if (indiceCorte < palabras.length) {
+    const textoVisible = palabras.slice(0, indiceCorte).join(' ');
+    const textoOculto = palabras.slice(indiceCorte).join(' ');
+
+    // Al poner el "espacio-galeria" arriba del todo dentro de <p>, el texto empieza a rodearlo inmediatamente
+    contenedor.innerHTML = `
+      <p>
+        <!-- Al principio de todo -->
+        <span id="espacio-galeria"></span>
+        
+        ${textoVisible}
+        
+        <button id="btn-leer-mas" style="display: inline-block; margin-left: 10px; padding: 4px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; vertical-align: middle;">
+          Leer más...
+        </button>
+      </p>
+      
+      <span id="contenido-oculto" style="display: none;">
+        <p>${textoOculto}</p>
+      </span>
+    `;
+
+    buscarImagenes().then(misImagenes => {
+      if (misImagenes.length === 0) return; 
+
+      const htmlGaleria = `
+        <div class="galeria-contenedor" style="float: left; width: 40%; max-width: 350px; margin: 5px 20px 15px 0; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: relative;">
+          <div class="galeria-slides" style="position: relative; height: 230px; background: #000;">
+            ${misImagenes.map((src, idx) => `
+              <img src="${src}" alt="Foto del evento" class="slide" style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: ${idx === 0 ? 1 : 0}; transition: opacity 0.5s ease-in-out;">
+            `).join('')}
+          </div>
+          <button id="galeria-prev" style="position: absolute; top: 50%; left: 5px; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px; cursor: pointer; border-radius: 50%; width: 30px; height: 30px; font-weight: bold; font-size:12px;">&lt;</button>
+          <button id="galeria-next" style="position: absolute; top: 50%; right: 5px; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px; cursor: pointer; border-radius: 50%; width: 30px; height: 30px; font-weight: bold; font-size:12px;">&gt;</button>
+          <button id="galeria-pausa" style="position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; padding: 3px 8px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">Pausar</button>
+        </div>
+      `;
+
+      document.getElementById('espacio-galeria').innerHTML = htmlGaleria;
+      inicializarGaleria();
+    });
+
+    document.getElementById('btn-leer-mas').addEventListener('click', function() {
+      document.getElementById('contenido-oculto').style.display = 'inline';
+      this.style.display = 'none'; 
+    });
+  }
+
+  // 4. FUNCIONALIDAD INTERACTIVA DEL CARRUSEL
+  function inicializarGaleria() {
+    const slides = document.querySelectorAll('.slide');
+    if (!slides.length) return;
+
+    let indexActual = 0;
+    let autoPlayInterval = null;
+    let estaReproduciendo = true;
+
+    function mostrarSlide(nuevoIndex) {
+      slides[indexActual].style.opacity = 0;
+      indexActual = (nuevoIndex + slides.length) % slides.length;
+      slides[indexActual].style.opacity = 1;
+    }
+
+    function iniciarAutoPlay() {
+      if (autoPlayInterval) clearInterval(autoPlayInterval);
+      autoPlayInterval = setInterval(() => {
+        mostrarSlide(indexActual + 1);
+      }, 3000);
+    }
+
+    function detenerAutoPlay() {
+      clearInterval(autoPlayInterval);
+    }
+
+    document.getElementById('galeria-next').addEventListener('click', () => mostrarSlide(indexActual + 1));
+    document.getElementById('galeria-prev').addEventListener('click', () => mostrarSlide(indexActual - 1));
+
+    const btnPausa = document.getElementById('galeria-pausa');
+    btnPausa.addEventListener('click', () => {
+      if (estaReproduciendo) {
+        detenerAutoPlay();
+        btnPausa.innerText = "Reproducir";
+        btnPausa.style.backgroundColor = "rgba(0,123,255,0.8)";
+      } else {
+        iniciarAutoPlay();
+        btnPausa.innerText = "Pausar";
+        btnPausa.style.backgroundColor = "rgba(0,0,0,0.7)";
+      }
+      estaReproduciendo = !estaReproduciendo;
+    });
+
+    iniciarAutoPlay();
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</body>
+</html>
